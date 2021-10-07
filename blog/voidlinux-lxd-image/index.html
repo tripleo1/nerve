@@ -1,0 +1,152 @@
+<!doctype html><html lang=en-us>
+<head>
+<meta charset=utf-8>
+<meta http-equiv=x-ua-compatible content="chrome=1">
+<meta name=HandheldFriendly content="True">
+<meta name=MobileOptimized content="320">
+<meta name=viewport content="width=device-width,initial-scale=1">
+<meta name=referrer content="no-referrer">
+<meta name=author content="tripleo1">
+<meta name=description content="Create image To make it work you need to bootstrap rootfs with void, write simple metadata file and add all this into a compressed tarball. So then you should import it to LXD.
+Create void rootfs like this:
+IMAGE=&#34;rootfs&#34; sudo mkdir -v ${IMAGE} sudo xbps-install -y -r ${PWD}/${IMAGE} --repository=http://repo.voidlinux.eu/current -S base-voidstrap sudo rm -rf ${PWD}/${IMAGE}/usr/share/doc ${PWD}/${IMAGE}/usr/share/man ${PWD}/${IMAGE}/var/cache/xbps Then create metadata.yaml with similiar content:
+architecture:x86_64creation_date:1532507327properties:description:Void Linux glibc 64bitos:Void Linuxrelease:rollingAdd all this to compressed tarball: tar cJf voidlinux-lxd-image.">
+<meta property="og:title" content="Voidlinux LXD image">
+<meta property="og:description" content="Create image To make it work you need to bootstrap rootfs with void, write simple metadata file and add all this into a compressed tarball. So then you should import it to LXD.
+Create void rootfs like this:
+IMAGE=&#34;rootfs&#34; sudo mkdir -v ${IMAGE} sudo xbps-install -y -r ${PWD}/${IMAGE} --repository=http://repo.voidlinux.eu/current -S base-voidstrap sudo rm -rf ${PWD}/${IMAGE}/usr/share/doc ${PWD}/${IMAGE}/usr/share/man ${PWD}/${IMAGE}/var/cache/xbps Then create metadata.yaml with similiar content:
+architecture:x86_64creation_date:1532507327properties:description:Void Linux glibc 64bitos:Void Linuxrelease:rollingAdd all this to compressed tarball: tar cJf voidlinux-lxd-image.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://tripleo1.github.io/blog/voidlinux-lxd-image/"><meta property="article:section" content="blog">
+<meta property="article:published_time" content="2018-10-11T09:34:49+00:00">
+<meta property="article:modified_time" content="2018-10-11T09:34:49+00:00">
+<title>
+Voidlinux LXD image
+</title>
+<link rel=canonical href=https://tripleo1.github.io/blog/voidlinux-lxd-image/>
+<link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/styles/default.min.css>
+<link rel=stylesheet href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Ubuntu+Mono:400,400i,700,700i|Raleway:500">
+<link rel=stylesheet href="https://tripleo1.github.io/css/reset.css?t=2021-10-07%2011%3a26%3a42.24825599%20%2b0000%20UTC%20m%3d%2b0.072302272">
+<link rel=stylesheet href="https://tripleo1.github.io/css/pygments.css?t=2021-10-07%2011%3a26%3a42.24825599%20%2b0000%20UTC%20m%3d%2b0.072302272">
+<link rel=stylesheet href="https://tripleo1.github.io/css/main.css?t=2021-10-07%2011%3a26%3a42.24825599%20%2b0000%20UTC%20m%3d%2b0.072302272">
+<link rel=stylesheet href="https://tripleo1.github.io/css/override.css?t=2021-10-07%2011%3a26%3a42.24825599%20%2b0000%20UTC%20m%3d%2b0.072302272">
+<link rel="shortcut icon" href=https://tripleo1.github.io/img/zen.ico>
+</head>
+<body lang=en>
+<section class=header>
+<div class=container>
+<div class=content>
+<a href=https://tripleo1.github.io/><img class=avatar src=https://tripleo1.github.io/img/zen.png srcset="https://tripleo1.github.io/img/zen.png 1x"></a>
+<a href=https://tripleo1.github.io/><div class=name>tripleo1</div></a>
+<nav>
+<ul>
+<li class=nav-blog><a href=https://tripleo1.github.io/blog/><span>Blog</span></a></li>
+<li class=nav-about><a href=https://tripleo1.github.io/about/><span>About</span></a></li>
+<li class=nav-code><a href=https://tripleo1.github.io/code/><span>Code</span></a></li>
+<li class=nav-links><a href=https://tripleo1.github.io/links/><span>Links</span></a></li>
+</ul>
+</nav>
+</div>
+</div>
+</section>
+<section class=icons>
+<div class=container>
+<div class=content>
+<a href=//github.com/tripleo1 target=_blank rel=noopener><img class=icon src=https://tripleo1.github.io/img/github.svg alt=github></a>
+<a href=//gitlab.com/tripleo1 target=_blank rel=noopener><img class=icon src=https://tripleo1.github.io/img/gitlab.svg alt=gitlab></a>
+<a href=//twitter.com/_tripleo1 target=_blank rel=noopener><img class=icon src=https://tripleo1.github.io/img/twitter.svg alt=twitter></a>
+<a href=//mastodon.social/@tripleo1 target=_blank rel=noopener><img class=icon src=https://tripleo1.github.io/img/mastodon.svg alt=mastodon></a>
+<a href=//linkedin.com/in/tripleo1 target=_blank rel=noopener><img class=icon src=https://tripleo1.github.io/img/linkedin.svg alt=linkedin></a>
+<a href=//instagram.com/homelessstreetcat target=_blank rel=noopener><img class=icon src=https://tripleo1.github.io/img/instagram.svg alt=instagram></a>
+<a href=//500px.com/tripleo1 target=_blank rel=noopener><img class=icon src=https://tripleo1.github.io/img/500px.svg alt=500px></a>
+<a href=mailto:tripleo1@protonmail.com><img class=icon src=https://tripleo1.github.io/img/email.svg alt=email></a>
+</div>
+</div>
+</section>
+<section class="main post non-narrow zero-top-spacing">
+<div class=container>
+<div class=content>
+<div class=front-matter>
+<div class=title-container>
+<div class=page-heading>
+Voidlinux LXD image
+</div>
+<div class=initials><a href=https://tripleo1.github.io></a></div>
+</div>
+<div class=meta>
+<div class=date title="Thu Oct 11 2018 09:34:49 UTC">Oct 11, 2018</div>
+<div class=reading-time><div class=middot></div>2 minutes read</div>
+</div>
+</div>
+<div class=markdown>
+<h1 id=create-image>Create image</h1>
+<p>To make it work you need to bootstrap rootfs with void, write simple metadata file and add all this into a compressed tarball.
+So then you should import it to LXD.</p>
+<p>Create void rootfs like this:</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=nv>IMAGE</span><span class=o>=</span><span class=s2>&#34;rootfs&#34;</span>
+sudo mkdir -v <span class=si>${</span><span class=nv>IMAGE</span><span class=si>}</span>
+sudo xbps-install -y -r <span class=si>${</span><span class=nv>PWD</span><span class=si>}</span>/<span class=si>${</span><span class=nv>IMAGE</span><span class=si>}</span> --repository<span class=o>=</span>http://repo.voidlinux.eu/current -S base-voidstrap
+sudo rm -rf <span class=si>${</span><span class=nv>PWD</span><span class=si>}</span>/<span class=si>${</span><span class=nv>IMAGE</span><span class=si>}</span>/usr/share/doc <span class=si>${</span><span class=nv>PWD</span><span class=si>}</span>/<span class=si>${</span><span class=nv>IMAGE</span><span class=si>}</span>/usr/share/man <span class=si>${</span><span class=nv>PWD</span><span class=si>}</span>/<span class=si>${</span><span class=nv>IMAGE</span><span class=si>}</span>/var/cache/xbps
+</code></pre></div><p>Then create <code>metadata.yaml</code> with similiar content:</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-yaml data-lang=yaml><span class=nt>architecture</span><span class=p>:</span><span class=w> </span><span class=l>x86_64</span><span class=w>
+</span><span class=w></span><span class=nt>creation_date</span><span class=p>:</span><span class=w> </span><span class=m>1532507327</span><span class=w>
+</span><span class=w></span><span class=nt>properties</span><span class=p>:</span><span class=w>
+</span><span class=w>  </span><span class=nt>description</span><span class=p>:</span><span class=w> </span><span class=l>Void Linux glibc 64bit</span><span class=w>
+</span><span class=w>  </span><span class=nt>os</span><span class=p>:</span><span class=w> </span><span class=l>Void Linux</span><span class=w>
+</span><span class=w>  </span><span class=nt>release</span><span class=p>:</span><span class=w> </span><span class=l>rolling</span><span class=w>
+</span></code></pre></div><p>Add all this to compressed tarball: <code>tar cJf voidlinux-lxd-image.tar.xz metadata.yaml rootfs</code>
+Now you can import and run Void containers from your image:</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=o>[</span>vagrant@voidlinux ~<span class=o>]</span>$ lxc image import voidlinux-lxd-image.tar.xz --alias void
+Image imported with fingerprint: 8730dddda4d5774336995018dc3e0af664fdbd9e42a30699be864e4de6835b74
+<span class=o>[</span>vagrant@voidlinux ~<span class=o>]</span>$ lxc image list
++-------+--------------+--------+------------------------+--------+---------+------------------------------+
+<span class=p>|</span> ALIAS <span class=p>|</span> FINGERPRINT  <span class=p>|</span> PUBLIC <span class=p>|</span>      DESCRIPTION       <span class=p>|</span>  ARCH  <span class=p>|</span>  SIZE   <span class=p>|</span>         UPLOAD DATE          <span class=p>|</span>
++-------+--------------+--------+------------------------+--------+---------+------------------------------+
+<span class=p>|</span> void  <span class=p>|</span> 8730dddda4d5 <span class=p>|</span> no     <span class=p>|</span> Void Linux glibc 64bit <span class=p>|</span> x86_64 <span class=p>|</span> 34.37MB <span class=p>|</span> Jul 25, <span class=m>2018</span> at 8:36am <span class=o>(</span>UTC<span class=o>)</span> <span class=p>|</span>
++-------+--------------+--------+------------------------+--------+---------+------------------------------+
+<span class=o>[</span>vagrant@voidlinux ~<span class=o>]</span>$ lxc launch void voidlxd
+Creating voidlxd
+Starting voidlxd
+<span class=o>[</span>vagrant@voidlinux ~<span class=o>]</span>$ lxc ls
++---------+---------+------+------+------------+-----------+
+<span class=p>|</span>  NAME   <span class=p>|</span>  STATE  <span class=p>|</span> IPV4 <span class=p>|</span> IPV6 <span class=p>|</span>    TYPE    <span class=p>|</span> SNAPSHOTS <span class=p>|</span>
++---------+---------+------+------+------------+-----------+
+<span class=p>|</span> voidlxd <span class=p>|</span> RUNNING <span class=p>|</span>      <span class=p>|</span>      <span class=p>|</span> PERSISTENT <span class=p>|</span> <span class=m>0</span>         <span class=p>|</span>
++---------+---------+------+------+------------+-----------+
+<span class=o>[</span>vagrant@voidlinux ~<span class=o>]</span>$ lxc <span class=nb>exec</span> voidlxd bash
+bash-4.4# poweroff
+bash-4.4# <span class=nb>exit</span>
+<span class=o>[</span>vagrant@voidlinux ~<span class=o>]</span>$
+</code></pre></div><h1 id=make-network-working>Make network working</h1>
+<ul>
+<li>In running container from your image you need to start <code>dhcpcd-eth0</code> service:</li>
+</ul>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash>ln -s /etc/sv/dhcpcd-eth0 /var/service
+</code></pre></div><ul>
+<li>Or before compressing tarball image just chroot into rootfs and enable it like this:</li>
+</ul>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash>ln -s /etc/sv/dhcpcd-eth0 /etc/runit/runsvdir/default/dhcpcd-eth0
+</code></pre></div><p>You can automate this with simple script. Then create tarball, import it and launch container.</p>
+<p>Here is the example:
+<a href=https://asciinema.org/a/nztoChkNK2ROiQ8IPiLVsD68D><img src=https://asciinema.org/a/nztoChkNK2ROiQ8IPiLVsD68D.png alt=asciicast></a></p>
+<hr>
+<br>
+<div class=tags>
+<strong>Tags:</strong>
+<a href=https://tripleo1.github.io/tags/linux>linux</a>
+<a href=https://tripleo1.github.io/tags/containers>containers</a>
+<a href=https://tripleo1.github.io/tags/lxd>lxd</a>
+</div>
+<br>
+<p class=back-to-posts><a href=https://tripleo1.github.io/blog>Back to posts</a></p>
+</div>
+<br>
+<div class=disqus>
+</div>
+</div>
+</div>
+</section>
+<script src=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/highlight.min.js></script>
+<script type=text/javascript>hljs.initHighlightingOnLoad()</script>
+</body>
+</html>

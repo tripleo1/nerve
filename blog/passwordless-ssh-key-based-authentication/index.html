@@ -1,0 +1,120 @@
+<!doctype html><html lang=en-us>
+<head>
+<meta charset=utf-8>
+<meta http-equiv=x-ua-compatible content="chrome=1">
+<meta name=HandheldFriendly content="True">
+<meta name=MobileOptimized content="320">
+<meta name=viewport content="width=device-width,initial-scale=1">
+<meta name=referrer content="no-referrer">
+<meta name=author content="tripleo1">
+<meta name=description content="To generate public/private pair of keys enter:
+ssh-keygen -b 4096 -t rsa -C &#34;username@email&#34; Next step is to copy key to the remote server:
+ssh-copy-id -i .ssh/id_rsa.pub user01@server2.example.com On remote server is adviceable to edit /etc/ssh/sshd_config:
+PasswordAuthentication no PubkeyAuthentication yes PermitRootLogin no Restart the sshd service:
+systemctl restart sshd And try to login:
+ssh server2.example.com Done!
+ ">
+<meta property="og:title" content="Passwordless SSH key-based authentication">
+<meta property="og:description" content="To generate public/private pair of keys enter:
+ssh-keygen -b 4096 -t rsa -C &#34;username@email&#34; Next step is to copy key to the remote server:
+ssh-copy-id -i .ssh/id_rsa.pub user01@server2.example.com On remote server is adviceable to edit /etc/ssh/sshd_config:
+PasswordAuthentication no PubkeyAuthentication yes PermitRootLogin no Restart the sshd service:
+systemctl restart sshd And try to login:
+ssh server2.example.com Done!
+ ">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://tripleo1.github.io/blog/passwordless-ssh-key-based-authentication/"><meta property="article:section" content="blog">
+<meta property="article:published_time" content="2017-03-20T12:22:43+03:00">
+<meta property="article:modified_time" content="2017-03-20T12:22:43+03:00">
+<title>
+Passwordless SSH key-based authentication
+</title>
+<link rel=canonical href=https://tripleo1.github.io/blog/passwordless-ssh-key-based-authentication/>
+<link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/styles/default.min.css>
+<link rel=stylesheet href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Ubuntu+Mono:400,400i,700,700i|Raleway:500">
+<link rel=stylesheet href="https://tripleo1.github.io/css/reset.css?t=2021-10-07%2011%3a26%3a42.249375389%20%2b0000%20UTC%20m%3d%2b0.073421571">
+<link rel=stylesheet href="https://tripleo1.github.io/css/pygments.css?t=2021-10-07%2011%3a26%3a42.249375389%20%2b0000%20UTC%20m%3d%2b0.073421571">
+<link rel=stylesheet href="https://tripleo1.github.io/css/main.css?t=2021-10-07%2011%3a26%3a42.249375389%20%2b0000%20UTC%20m%3d%2b0.073421571">
+<link rel=stylesheet href="https://tripleo1.github.io/css/override.css?t=2021-10-07%2011%3a26%3a42.249375389%20%2b0000%20UTC%20m%3d%2b0.073421571">
+<link rel="shortcut icon" href=https://tripleo1.github.io/img/zen.ico>
+</head>
+<body lang=en>
+<section class=header>
+<div class=container>
+<div class=content>
+<a href=https://tripleo1.github.io/><img class=avatar src=https://tripleo1.github.io/img/zen.png srcset="https://tripleo1.github.io/img/zen.png 1x"></a>
+<a href=https://tripleo1.github.io/><div class=name>tripleo1</div></a>
+<nav>
+<ul>
+<li class=nav-blog><a href=https://tripleo1.github.io/blog/><span>Blog</span></a></li>
+<li class=nav-about><a href=https://tripleo1.github.io/about/><span>About</span></a></li>
+<li class=nav-code><a href=https://tripleo1.github.io/code/><span>Code</span></a></li>
+<li class=nav-links><a href=https://tripleo1.github.io/links/><span>Links</span></a></li>
+</ul>
+</nav>
+</div>
+</div>
+</section>
+<section class=icons>
+<div class=container>
+<div class=content>
+<a href=//github.com/tripleo1 target=_blank rel=noopener><img class=icon src=https://tripleo1.github.io/img/github.svg alt=github></a>
+<a href=//gitlab.com/tripleo1 target=_blank rel=noopener><img class=icon src=https://tripleo1.github.io/img/gitlab.svg alt=gitlab></a>
+<a href=//twitter.com/_tripleo1 target=_blank rel=noopener><img class=icon src=https://tripleo1.github.io/img/twitter.svg alt=twitter></a>
+<a href=//mastodon.social/@tripleo1 target=_blank rel=noopener><img class=icon src=https://tripleo1.github.io/img/mastodon.svg alt=mastodon></a>
+<a href=//linkedin.com/in/tripleo1 target=_blank rel=noopener><img class=icon src=https://tripleo1.github.io/img/linkedin.svg alt=linkedin></a>
+<a href=//instagram.com/homelessstreetcat target=_blank rel=noopener><img class=icon src=https://tripleo1.github.io/img/instagram.svg alt=instagram></a>
+<a href=//500px.com/tripleo1 target=_blank rel=noopener><img class=icon src=https://tripleo1.github.io/img/500px.svg alt=500px></a>
+<a href=mailto:tripleo1@protonmail.com><img class=icon src=https://tripleo1.github.io/img/email.svg alt=email></a>
+</div>
+</div>
+</section>
+<section class="main post non-narrow zero-top-spacing">
+<div class=container>
+<div class=content>
+<div class=front-matter>
+<div class=title-container>
+<div class=page-heading>
+Passwordless SSH key-based authentication
+</div>
+<div class=initials><a href=https://tripleo1.github.io></a></div>
+</div>
+<div class=meta>
+<div class=date title="Mon Mar 20 2017 12:22:43 +0300">Mar 20, 2017</div>
+<div class=reading-time><div class=middot></div>One minute read</div>
+</div>
+</div>
+<div class=markdown>
+<p>To generate public/private pair of keys enter:</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash>ssh-keygen -b <span class=m>4096</span> -t rsa -C <span class=s2>&#34;username@email&#34;</span>
+</code></pre></div><p>Next step is to copy key to the remote server:</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash>ssh-copy-id -i .ssh/id_rsa.pub user01@server2.example.com
+</code></pre></div><p>On remote server is adviceable to edit <code>/etc/ssh/sshd_config</code>:</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-ini data-lang=ini><span class=na>PasswordAuthentication no</span>
+<span class=na>PubkeyAuthentication yes</span>
+<span class=na>PermitRootLogin no</span>
+</code></pre></div><p>Restart the sshd service:</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash>systemctl restart sshd
+</code></pre></div><p>And try to login:</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash>ssh server2.example.com
+</code></pre></div><p>Done!</p>
+<hr>
+<br>
+<div class=tags>
+<strong>Tags:</strong>
+<a href=https://tripleo1.github.io/tags/linux>linux</a>
+<a href=https://tripleo1.github.io/tags/ssh>ssh</a>
+</div>
+<br>
+<p class=back-to-posts><a href=https://tripleo1.github.io/blog>Back to posts</a></p>
+</div>
+<br>
+<div class=disqus>
+</div>
+</div>
+</div>
+</section>
+<script src=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/highlight.min.js></script>
+<script type=text/javascript>hljs.initHighlightingOnLoad()</script>
+</body>
+</html>
