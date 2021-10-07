@@ -39,7 +39,7 @@ And edit dhcp configuration file:
 #   see dhcpd.conf(5) man page
 #
 
-option domain-name "iaroki.io"; 
+option domain-name "tripleo1.io"; 
 option domain-name-servers 10.0.0.1;
 default-lease-time 600; 
 max-lease-time 7200; 
@@ -53,7 +53,7 @@ subnet 10.0.0.0 netmask 255.255.255.0 {
 }
 
 #host nas { 
-#  option host-name "nas.iaroki.io"; 
+#  option host-name "nas.tripleo1.io"; 
 #  hardware ethernet f0:9f:c2:1f:c1:12; 
 #  fixed-address 10.0.0.2; 
 #}
@@ -117,26 +117,26 @@ zone "." IN {
 	file "named.ca";
 };
 
-zone "iaroki.io" IN {
+zone "tripleo1.io" IN {
 	type master;
-	file "iaroki.io.zone";
+	file "tripleo1.io.zone";
 };
 
 include "/etc/named.rfc1912.zones";
 include "/etc/named.root.key";
 ```
 
-Then create `/var/named/iaroki.io.zone` file:
+Then create `/var/named/tripleo1.io.zone` file:
 ```
 $TTL 86400 
-@ IN SOA gw.iaroki.io. root.iaroki.io. ( 
+@ IN SOA gw.tripleo1.io. root.tripleo1.io. ( 
   2018103001	;Serial  
   3600		;Refresh 
   1800		;Retry 
   604800	;Expire 
   86400 )	;Minimum TTL
 
-		IN NS		gw.iaroki.io. 
+		IN NS		gw.tripleo1.io. 
 		IN A		10.0.0.1
 gw		IN A		10.0.0.1
 nas		IN A		10.0.0.2

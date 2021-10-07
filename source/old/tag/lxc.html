@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
         <meta charset="utf-8" />
-        <title>iaroki blog - lxc</title>
+        <title>tripleo1 blog - lxc</title>
         <link rel="stylesheet" href="/theme/css/main.css" />
 
         <!--[if IE]>
@@ -12,7 +12,7 @@
 
 <body id="index" class="home">
         <header id="banner" class="body">
-                <h1><a href="/">iaroki blog </a></h1>
+                <h1><a href="/">tripleo1 blog </a></h1>
                 <nav><ul>
                     <li><a href="/pages/links.html">Links</a></li>
                     <li><a href="/pages/tasks.html">Tasks</a></li>
@@ -34,59 +34,59 @@
         </abbr>
 
         <address class="vcard author">
-                By                         <a class="url fn" href="/author/iaroki.html">iaroki</a>
+                By                         <a class="url fn" href="/author/tripleo1.html">tripleo1</a>
         </address>
 <p>In <a href="/category/linux.html">Linux</a>.</p>
 <p>tags: <a href="/tag/linux.html">linux</a> <a href="/tag/fedora.html">fedora</a> <a href="/tag/lxc.html">lxc</a> <a href="/tag/lxd.html">lxd</a> <a href="/tag/containers.html">containers</a> </p>
 </footer><!-- /.post-info --><p>Create container:</p>
-<div class="highlight"><pre><span></span>[iaroki@fedora ~]$ lxc launch images:debian/stretch chrome
+<div class="highlight"><pre><span></span>[tripleo1@fedora ~]$ lxc launch images:debian/stretch chrome
 </pre></div>
 
 
 <p>Install needed tools:</p>
-<div class="highlight"><pre><span></span>[iaroki@fedora ~]$ lxc exec chrome bash
-root@chrome:~# adduser iaroki
+<div class="highlight"><pre><span></span>[tripleo1@fedora ~]$ lxc exec chrome bash
+root@chrome:~# adduser tripleo1
 root@chrome:~# apt update
 root@chrome:~# apt install x11-apps mesa-utils alsa-utils
 </pre></div>
 
 
 <p>Map UID and GID ramges:</p>
-<div class="highlight"><pre><span></span>[iaroki@fedora ~]$ echo &quot;root:1000:1&quot; | sudo tee -a /etc/subuid /etc/subgid
+<div class="highlight"><pre><span></span>[tripleo1@fedora ~]$ echo &quot;root:1000:1&quot; | sudo tee -a /etc/subuid /etc/subgid
 </pre></div>
 
 
 <p>Set UID/GUID ranges for container:</p>
-<div class="highlight"><pre><span></span>[iaroki@fedora ~]$ lxc config set chrome raw.idmap &quot;both $UID 1000&quot;
-[iaroki@fedora ~]$ lxc restart chrome
+<div class="highlight"><pre><span></span>[tripleo1@fedora ~]$ lxc config set chrome raw.idmap &quot;both $UID 1000&quot;
+[tripleo1@fedora ~]$ lxc restart chrome
 </pre></div>
 
 
 <p>Mount X11 socket and .Xauthority file:</p>
-<div class="highlight"><pre><span></span>[iaroki@fedora ~]$ lxc config device add chrome X0 disk path=/tmp/.X11-unix/X0 source=/tmp/.X11-unix/X0
-[iaroki@fedora ~]$ lxc config device add chrome Xauthority disk path=/home/iaroki/.Xauthority source=<span class="cp">${</span><span class="n">XAUTHORITY</span><span class="cp">}</span>
+<div class="highlight"><pre><span></span>[tripleo1@fedora ~]$ lxc config device add chrome X0 disk path=/tmp/.X11-unix/X0 source=/tmp/.X11-unix/X0
+[tripleo1@fedora ~]$ lxc config device add chrome Xauthority disk path=/home/tripleo1/.Xauthority source=<span class="cp">${</span><span class="n">XAUTHORITY</span><span class="cp">}</span>
 </pre></div>
 
 
 <p>Passthrough GPU device:</p>
-<div class="highlight"><pre><span></span>[iaroki@fedora ~]$ lxc config device add chrome GPU gpu
-[iaroki@fedora ~]$ lxc config device set GPU uid 1000
-[iaroki@fedora ~]$ lxc config device set GPU gid 1000
+<div class="highlight"><pre><span></span>[tripleo1@fedora ~]$ lxc config device add chrome GPU gpu
+[tripleo1@fedora ~]$ lxc config device set GPU uid 1000
+[tripleo1@fedora ~]$ lxc config device set GPU gid 1000
 </pre></div>
 
 
 <p>Check results with:</p>
-<div class="highlight"><pre><span></span>[iaroki@fedora ~]$ lxc exec chrome -- sudo --login --user iaroki
-iaroki@chrome:~$ export DISPLAY=:0
-iaroki@chrome:~$ echo &quot;export DISPLAY=:0&quot; &gt;&gt; ~/.profile
-iaroki@chrome:~$ glxgears
+<div class="highlight"><pre><span></span>[tripleo1@fedora ~]$ lxc exec chrome -- sudo --login --user tripleo1
+tripleo1@chrome:~$ export DISPLAY=:0
+tripleo1@chrome:~$ echo &quot;export DISPLAY=:0&quot; &gt;&gt; ~/.profile
+tripleo1@chrome:~$ glxgears
 </pre></div>
 
 
 <p>Now we can install and run chromium browser inside:</p>
-<div class="highlight"><pre><span></span>[iaroki@fedora ~]$ lxc exec chrome -- sudo --login --user iaroki
-iaroki@chrome:~$ sudo apt install chromium
-iaroki@chrome:~$ chromium
+<div class="highlight"><pre><span></span>[tripleo1@fedora ~]$ lxc exec chrome -- sudo --login --user tripleo1
+tripleo1@chrome:~$ sudo apt install chromium
+tripleo1@chrome:~$ chromium
 </pre></div>                </article>
             </aside><!-- /#featured -->
                 <section id="content" class="body">
@@ -107,7 +107,7 @@ iaroki@chrome:~$ chromium
         </abbr>
 
         <address class="vcard author">
-                By                         <a class="url fn" href="/author/iaroki.html">iaroki</a>
+                By                         <a class="url fn" href="/author/tripleo1.html">tripleo1</a>
         </address>
 <p>In <a href="/category/linux.html">Linux</a>.</p>
 <p>tags: <a href="/tag/linux.html">linux</a> <a href="/tag/fedora.html">fedora</a> <a href="/tag/lxc.html">lxc</a> <a href="/tag/lxd.html">lxd</a> <a href="/tag/containers.html">containers</a> </p>
@@ -144,7 +144,7 @@ iaroki@chrome:~$ chromium
         </abbr>
 
         <address class="vcard author">
-                By                         <a class="url fn" href="/author/iaroki.html">iaroki</a>
+                By                         <a class="url fn" href="/author/tripleo1.html">tripleo1</a>
         </address>
 <p>In <a href="/category/linux.html">Linux</a>.</p>
 <p>tags: <a href="/tag/linux.html">linux</a> <a href="/tag/lxc.html">lxc</a> <a href="/tag/containers.html">containers</a> <a href="/tag/backup.html">backup</a> </p>
@@ -181,7 +181,7 @@ iaroki@chrome:~$ chromium
         </abbr>
 
         <address class="vcard author">
-                By                         <a class="url fn" href="/author/iaroki.html">iaroki</a>
+                By                         <a class="url fn" href="/author/tripleo1.html">tripleo1</a>
         </address>
 <p>In <a href="/category/linux.html">Linux</a>.</p>
 <p>tags: <a href="/tag/containers.html">containers</a> <a href="/tag/linux.html">linux</a> <a href="/tag/lxc.html">lxc</a> </p>
@@ -209,7 +209,7 @@ iaroki@chrome:~$ chromium
         </abbr>
 
         <address class="vcard author">
-                By                         <a class="url fn" href="/author/iaroki.html">iaroki</a>
+                By                         <a class="url fn" href="/author/tripleo1.html">tripleo1</a>
         </address>
 <p>In <a href="/category/linux.html">Linux</a>.</p>
 <p>tags: <a href="/tag/containers.html">containers</a> <a href="/tag/linux.html">linux</a> <a href="/tag/lxc.html">lxc</a> </p>
@@ -244,7 +244,7 @@ PRIVATE_NETMASK=255.255.255.0
                         <h2>social</h2>
                         <ul>
 
-                            <li><a href="https://github.com/iaroki">Github</a></li>
+                            <li><a href="https://github.com/tripleo1">Github</a></li>
                             <li><a href="https://facebook.com/johnnymnemonic">Facebook</a></li>
                         </ul>
                 </div><!-- /.social -->

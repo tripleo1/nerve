@@ -36,7 +36,7 @@ sudo netns rm --bridge br0
 For Fedora:
 
 ```bash
-sudo dnf -y --releasever=28 --installroot=/home/iaroki/workstation --disablerepo='*' --enablerepo=fedora --enablerepo=updates install systemd passwd dnf fedora-release vim git tmux iproute iputils
+sudo dnf -y --releasever=28 --installroot=/home/tripleo1/workstation --disablerepo='*' --enablerepo=fedora --enablerepo=updates install systemd passwd dnf fedora-release vim git tmux iproute iputils
 ```
 
 Set root password:
@@ -56,7 +56,7 @@ sudo setenforce 0
 Start container:
 
 ```bash
-sudo systemd-nspawn -D /home/iaroki/workstation -b --network-bridge br0
+sudo systemd-nspawn -D /home/tripleo1/workstation -b --network-bridge br0
 ```
 
 # Setup network

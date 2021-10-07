@@ -6,7 +6,7 @@ Tags: linux, centos, redhat, rhel, kickstart
 I have generated kickstart file located on my pc and to make it available over local network I just start python server:
 
 ```
-[iaroki@workstation ~]$ python -m http.server
+[tripleo1@workstation ~]$ python -m http.server
 Serving HTTP on 0.0.0.0 port 8000 (http://0.0.0.0:8000/) ...
 ```
 

@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*- #
 from __future__ import unicode_literals
 
-AUTHOR = 'iaroki'
-SITENAME = 'iaroki blog'
+AUTHOR = 'tripleo1'
+SITENAME = 'tripleo1 blog'
 SITEURL = ''
 
 PATH = 'content'
@@ -29,7 +29,7 @@ LINKS = (('Pelican', 'http://getpelican.com/'),
          ('Jinja2', 'http://jinja.pocoo.org/'),)
 
 # Social widget
-SOCIAL = (('Github', 'https://github.com/iaroki'),
+SOCIAL = (('Github', 'https://github.com/tripleo1'),
           ('Facebook', 'https://facebook.com/johnnymnemonic'),)
 
 DEFAULT_PAGINATION = False

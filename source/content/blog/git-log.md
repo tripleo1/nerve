@@ -20,7 +20,7 @@ Date:   Mon Oct 30 16:12:08 2017 +0200
     new theme
 
 commit 0d2111b692b208c4f8106abe49bd53695b5eb851
-Author: iaroki <iaroki@protonmail.com>
+Author: tripleo1 <tripleo1@protonmail.com>
 Date:   Fri Oct 27 21:02:32 2017 +0300
 
     lxc backup
@@ -48,14 +48,14 @@ ae4e3c9 lxc bridge
 f5d9f12 add Markdown pages
 31af2b9 add docker pages
 743aa12 cleaning up
-f37cf4b Merge branch 'master' of https://github.com/iaroki/iaroki.github.io
+f37cf4b Merge branch 'master' of https://github.com/tripleo1/tripleo1.github.io
 58e097d Migration to Pelican
 be31a64 asterisk install
 e49e96e systemd unit creation
 72ede8b ncat/nc variant
 0dc9d79 TOR hidden service
 f7b9d3f GUI apps in LXD on Fedora
-63bd83c Merge branch 'master' of https://github.com/iaroki/iaroki.github.io
+63bd83c Merge branch 'master' of https://github.com/tripleo1/tripleo1.github.io
 643da0b LXD on Fedora
 43f1a47 added Volumes
 39b8cc9 added HTTP server info
@@ -78,7 +78,7 @@ To add visibility of merge point add `--graph`:
 * cea9209 date fix
 * 31af2b9 add docker pages
 * cb1e028 old page
-*   f37cf4b Merge branch 'master' of https://github.com/iaroki/iaroki.github.io
+*   f37cf4b Merge branch 'master' of https://github.com/tripleo1/tripleo1.github.io
 |\  
 | * be31a64 asterisk install
 * | 58e097d Migration to Pelican
@@ -87,7 +87,7 @@ To add visibility of merge point add `--graph`:
 * 72ede8b ncat/nc variant
 * 0dc9d79 TOR hidden service
 * f7b9d3f GUI apps in LXD on Fedora
-*   63bd83c Merge branch 'master' of https://github.com/iaroki/iaroki.github.io
+*   63bd83c Merge branch 'master' of https://github.com/tripleo1/tripleo1.github.io
 |\  
 | * 43f1a47 added Volumes
 | * 39b8cc9 added HTTP server info
@@ -124,7 +124,7 @@ So resulting alias may be: `alias gitgraph="git log --graph --oneline --all --de
 * 31af2b9 add docker pages
 * 743aa12 cleaning up
 * cb1e028 old page
-*   f37cf4b Merge branch 'master' of https://github.com/iaroki/iaroki.github.io
+*   f37cf4b Merge branch 'master' of https://github.com/tripleo1/tripleo1.github.io
 |\  
 | * be31a64 asterisk install
 * | 58e097d Migration to Pelican
@@ -133,7 +133,7 @@ So resulting alias may be: `alias gitgraph="git log --graph --oneline --all --de
 * 72ede8b ncat/nc variant
 * 0dc9d79 TOR hidden service
 * f7b9d3f GUI apps in LXD on Fedora
-*   63bd83c Merge branch 'master' of https://github.com/iaroki/iaroki.github.io
+*   63bd83c Merge branch 'master' of https://github.com/tripleo1/tripleo1.github.io
 |\  
 | * 43f1a47 added Volumes
 | * 39b8cc9 added HTTP server info
@@ -146,7 +146,7 @@ So resulting alias may be: `alias gitgraph="git log --graph --oneline --all --de
 * cdc85f5 added markdown references
 * c30b24a main layout
 * f524e91 listed
-*   743c833 Merge branch 'master' of https://github.com/iaroki/iaroki.github.io
+*   743c833 Merge branch 'master' of https://github.com/tripleo1/tripleo1.github.io
 |\  
 | * 4e163a8 Set theme jekyll-theme-tactile
 * | e03bb51 md

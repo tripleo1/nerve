@@ -16,14 +16,14 @@ Start some services:
 - Gitea container:
 
 ```bash
-docker run -it --rm --name gitea -l traefik.frontend.rule=Host:gitea.iaroki.io -l traefik.port=3000 gitea/gitea
+docker run -it --rm --name gitea -l traefik.frontend.rule=Host:gitea.tripleo1.io -l traefik.port=3000 gitea/gitea
 ```
 
 - Blog container:
 
 ```bash
-docker run -it --rm --name blog -l traefik.frontend.rule=Host:blog.iaroki.io blog
+docker run -it --rm --name blog -l traefik.frontend.rule=Host:blog.tripleo1.io blog
 ```
 
-Now Gitea will be available at `gitea.iaroki.io` and blog at `blog.iaroki.io`.
+Now Gitea will be available at `gitea.tripleo1.io` and blog at `blog.tripleo1.io`.
 

@@ -27,7 +27,7 @@ FROM debian:jessie
 
 Example:
 ```
-MAINTAINER iaroki
+MAINTAINER tripleo1
 ```
 
 **RUN**
@@ -75,7 +75,7 @@ ENV HOME=/home/user
 
 Example:
 ```
-USER iaroki
+USER tripleo1
 ```
 
 **WORKDIR**

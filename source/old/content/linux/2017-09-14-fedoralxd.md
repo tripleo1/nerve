@@ -20,7 +20,7 @@ Now time to install LXD:
 
 In order to run lxc tools our user need to be in a `lxd` group, so add it:
 ```
-[root@fedora ~]# usermod -aG lxd iaroki
+[root@fedora ~]# usermod -aG lxd tripleo1
 ```
 
 Set sub{u,g}id's range for containeraized `root` user:
@@ -40,10 +40,10 @@ Finally run LXD initialization:
 [root@fedora ~]# lxd init
 ```
 
-And now as a normal user (`iaroki` in my case) start container:
+And now as a normal user (`tripleo1` in my case) start container:
 ```
-[iaroki@fedora ~]$ lxc launch images:debian/stretch mydebian
-[iaroki@fedora ~]$ lxc exec mydebian bash
+[tripleo1@fedora ~]$ lxc launch images:debian/stretch mydebian
+[tripleo1@fedora ~]$ lxc exec mydebian bash
 root@mydebian:~#
 ```
 
