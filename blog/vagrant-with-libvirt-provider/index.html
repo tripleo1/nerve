@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="chrome=1">
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="referrer" content="no-referrer">
+<meta name="author" content="iaroki">
+<meta name="description" content="To make it work you need to install vagrant and vagrant-libvirt plugin and run with vagrant up --provider=libvirt. But in my case it was stuck on message Determining domain IP address.... The actual problem was not in the networking but with qemu-kvm in which I get kernel panic related to cpu.
+Solution is to set in the config parameter cpu_mode=host-passthrough.
+Here is my example Vagrantfile:
+Vagrant.configure(&quot;2&quot;) do |config| config.vm.box = &quot;centos/7&quot; config.">
+
+<meta property="og:title" content="Vagrant with libvirt provider" />
+<meta property="og:description" content="To make it work you need to install vagrant and vagrant-libvirt plugin and run with vagrant up --provider=libvirt. But in my case it was stuck on message Determining domain IP address.... The actual problem was not in the networking but with qemu-kvm in which I get kernel panic related to cpu.
+Solution is to set in the config parameter cpu_mode=host-passthrough.
+Here is my example Vagrantfile:
+Vagrant.configure(&quot;2&quot;) do |config| config.vm.box = &quot;centos/7&quot; config." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://iaroki.github.io/blog/vagrant-with-libvirt-provider/" />
+
+
+
+<meta property="article:published_time" content="2018-11-21T14:24:45&#43;00:00"/>
+
+<meta property="article:modified_time" content="2018-11-21T14:24:45&#43;00:00"/>
+
+
+
+
+
+
+
+
+
+
+
+
+<title>
+
+
+     Vagrant with libvirt provider 
+
+</title>
+<link rel="canonical" href="https://iaroki.github.io/blog/vagrant-with-libvirt-provider/">
+
+
+
+
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/styles/default.min.css">
+
+
+
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Ubuntu+Mono:400,400i,700,700i|Raleway:500">
+
+
+
+    
+    <link rel="stylesheet" href="https://iaroki.github.io/css/reset.css?t=2018-11-21%2015%3a01%3a50.577016126%20%2b0000%20UTC%20m%3d%2b0.414359471">
+    <link rel="stylesheet" href="https://iaroki.github.io/css/pygments.css?t=2018-11-21%2015%3a01%3a50.577016126%20%2b0000%20UTC%20m%3d%2b0.414359471">
+    <link rel="stylesheet" href="https://iaroki.github.io/css/main.css?t=2018-11-21%2015%3a01%3a50.577016126%20%2b0000%20UTC%20m%3d%2b0.414359471">
+    
+        <link rel="stylesheet" href="https://iaroki.github.io/css/override.css?t=2018-11-21%2015%3a01%3a50.577016126%20%2b0000%20UTC%20m%3d%2b0.414359471">
+    
+
+
+
+
+<link rel="shortcut icon"
+
+    href="https://iaroki.github.io/img/zen.ico"
+
+>
+
+
+
+
+
+
+
+
+</head>
+
+
+<body lang="en">
+
+<section class="header">
+    <div class="container">
+        <div class="content">
+            
+                
+                
+                
+                
+                
+                    
+                
+                    
+                
+                
+                <a href="https://iaroki.github.io/"><img class="avatar" src="https://iaroki.github.io/img/zen.png" srcset="https://iaroki.github.io/img/zen.png 1x"></a>
+            
+            <a href="https://iaroki.github.io/"><div class="name">iaroki</div></a>
+            
+            <nav>
+                <ul>
+                    
+                        <li class="nav-blog"><a href="https://iaroki.github.io/blog/"><span>Blog</span></a></li>
+                    
+                        <li class="nav-about"><a href="https://iaroki.github.io/about/"><span>About</span></a></li>
+                    
+                        <li class="nav-code"><a href="https://iaroki.github.io/code/"><span>Code</span></a></li>
+                    
+                        <li class="nav-links"><a href="https://iaroki.github.io/links/"><span>Links</span></a></li>
+                    
+                </ul>
+            </nav>
+        </div>
+    </div>
+</section>
+
+<section class="icons">
+    <div class="container">
+        <div class="content">
+        
+            <a href="//github.com/iaroki" target="_blank" rel="noopener"><img class="icon" src="https://iaroki.github.io/img/github.svg" alt="github" /></a>
+        
+
+        
+            <a href="//gitlab.com/iaroki" target="_blank" rel="noopener"><img class="icon" src="https://iaroki.github.io/img/gitlab.svg" alt="gitlab" /></a>
+        
+
+        
+            <a href="//twitter.com/_iaroki" target="_blank" rel="noopener"><img class="icon" src="https://iaroki.github.io/img/twitter.svg" alt="twitter" /></a>
+        
+
+	
+
+        
+
+        
+            <a href="//mastodon.social/@iaroki" target="_blank" rel="noopener"><img class="icon" src="https://iaroki.github.io/img/mastodon.svg" alt="mastodon" /></a>
+        
+
+        
+            <a href="//linkedin.com/in/iaroki" target="_blank" rel="noopener"><img class="icon" src="https://iaroki.github.io/img/linkedin.svg" alt="linkedin" /></a>
+        
+
+        
+
+        
+            <a href="//instagram.com/homelessstreetcat" target="_blank" rel="noopener"><img class="icon" src="https://iaroki.github.io/img/instagram.svg" alt="instagram" /></a>
+        
+
+        
+            <a href="//500px.com/iaroki" target="_blank" rel="noopener"><img class="icon" src="https://iaroki.github.io/img/500px.svg" alt="500px" /></a>
+        
+
+        
+
+        
+            <a href="mailto:iaroki@protonmail.com"><img class="icon" src="https://iaroki.github.io/img/email.svg" alt="email" /></a>
+        
+
+        
+
+        
+        </div>
+    </div>
+</section>
+
+
+<section class="main post non-narrow zero-top-spacing">
+    <div class="container">
+        <div class="content">
+            <div class="front-matter">
+                <div class="title-container">
+                    <div class="page-heading">
+
+    Vagrant with libvirt provider
+
+</div>
+
+                    <div class="initials"><a href="https://iaroki.github.io"></a></div>
+                </div>
+                <div class="meta">
+                    
+                    <div class="date" title='Wed Nov 21 2018 14:24:45 UTC'>Nov 21, 2018</div>
+                    
+                    
+		    <div class="reading-time"><div class="middot"></div>One minute read</div>
+                    
+                </div>
+            </div>
+            <div class="markdown">
+                <p>To make it work you need to install <code>vagrant</code> and <code>vagrant-libvirt</code> plugin and run with <code>vagrant up --provider=libvirt</code>.
+But in my case it was stuck on message <code>Determining domain IP address...</code>.
+The actual problem was not in the networking but with qemu-kvm in which I get kernel panic related to cpu.</p>
+
+<p>Solution is to set in the config parameter <code>cpu_mode=host-passthrough</code>.</p>
+
+<p>Here is my example <code>Vagrantfile</code>:</p>
+
+<pre><code>Vagrant.configure(&quot;2&quot;) do |config|
+  config.vm.box = &quot;centos/7&quot;
+  config.vm.hostname = &quot;homeserver&quot;
+  # config.vm.box_check_update = false
+  # config.vm.network &quot;forwarded_port&quot;, guest: 80, host: 8080
+  # config.vm.network &quot;forwarded_port&quot;, guest: 80, host: 8080, host_ip: &quot;127.0.0.1&quot;
+  # config.vm.network &quot;private_network&quot;, ip: &quot;192.168.33.10&quot;
+  # config.vm.network &quot;public_network&quot;
+  # config.vm.synced_folder &quot;../data&quot;, &quot;/vagrant_data&quot;
+  config.vm.provider :libvirt do |libvirt|
+    libvirt.cpu_mode=&quot;host-passthrough&quot;
+    libvirt.cpus = 1
+    libvirt.memory = 512
+    libvirt.nested = true
+  end
+  config.vm.provision &quot;docker&quot;
+end
+</code></pre>
+
+<p>Now everything works!</p>
+
+                <br>
+                
+                <p class="back-to-posts"><a href="https://iaroki.github.io/blog">Back to posts</a></p>
+            </div>
+            <br>
+            <div class="disqus">
+                
+            </div>
+            
+        </div>
+    </div>
+</section>
+
+
+
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/highlight.min.js"></script>
+  
+
+  <script type="text/javascript">
+    hljs.initHighlightingOnLoad();
+  </script>
+
+
+
+
+
+</body>
+</html>
+

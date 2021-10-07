@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tor on iaroki&#39;s blog</title>
+    <link>https://iaroki.github.io/tags/tor/</link>
+    <description>Recent content in Tor on iaroki&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-US</language>
+    <lastBuildDate>Fri, 16 Jun 2017 11:46:07 +0300</lastBuildDate>
+    
+	<atom:link href="https://iaroki.github.io/tags/tor/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Tor hidden service</title>
+      <link>https://iaroki.github.io/blog/tor-hidden-service/</link>
+      <pubDate>Fri, 16 Jun 2017 11:46:07 +0300</pubDate>
+      
+      <guid>https://iaroki.github.io/blog/tor-hidden-service/</guid>
+      <description>As for Fedora install tor package, nginx web service and SSH server for remote control:
+[root@hiddensrv ~]# dnf install tor nginx openssh-server  Now change defaultSSH port and disable root login:
+[root@hiddensrv ~]# vim /etc/ssh/sshd_config # If you want to change the port on a SELinux system, you have to tell # SELinux about this change. # semanage port -a -t ssh_port_t -p tcp #PORTNUMBER # Port 2222 #AddressFamily any #ListenAddress 0.</description>
+    </item>
+    
+  </channel>
+</rss>

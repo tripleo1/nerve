@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Curl on iaroki&#39;s blog</title>
+    <link>https://iaroki.github.io/tags/curl/</link>
+    <description>Recent content in Curl on iaroki&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-US</language>
+    <lastBuildDate>Sun, 01 Feb 2015 12:18:07 +0300</lastBuildDate>
+    
+	<atom:link href="https://iaroki.github.io/tags/curl/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Curl IP address</title>
+      <link>https://iaroki.github.io/blog/curl-ip-address/</link>
+      <pubDate>Sun, 01 Feb 2015 12:18:07 +0300</pubDate>
+      
+      <guid>https://iaroki.github.io/blog/curl-ip-address/</guid>
+      <description>If you need to get your IP address for some script, there is solution:
+curl &amp;quot;ifconfig.me&amp;quot;  </description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="chrome=1">
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="referrer" content="no-referrer">
+<meta name="author" content="iaroki">
+<meta name="description" content="After live cd is loaded you need to setup network connection. For ethernet follow the next steps:
+ip link set eth0 up #set interface up ip addr add 10.69.0.100/24 broadcast 10.69.0.255 dev eth0 #set ip address ip route add default via 10.69.0.1 #set gateway  Setting gateway in the example above may fail. If so, you can try next commands:
+ip route add 10.69.0.1 dev eth0 ip route add default via 10.">
+
+<meta property="og:title" content="Archlinux on LUKS" />
+<meta property="og:description" content="After live cd is loaded you need to setup network connection. For ethernet follow the next steps:
+ip link set eth0 up #set interface up ip addr add 10.69.0.100/24 broadcast 10.69.0.255 dev eth0 #set ip address ip route add default via 10.69.0.1 #set gateway  Setting gateway in the example above may fail. If so, you can try next commands:
+ip route add 10.69.0.1 dev eth0 ip route add default via 10." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://iaroki.github.io/blog/archlinux-on-luks/" />
+
+
+
+<meta property="article:published_time" content="2017-03-16T12:20:55&#43;03:00"/>
+
+<meta property="article:modified_time" content="2017-03-16T12:20:55&#43;03:00"/>
+
+
+
+
+
+
+
+
+
+
+
+
+<title>
+
+
+     Archlinux on LUKS 
+
+</title>
+<link rel="canonical" href="https://iaroki.github.io/blog/archlinux-on-luks/">
+
+
+
+
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/styles/default.min.css">
+
+
+
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Ubuntu+Mono:400,400i,700,700i|Raleway:500">
+
+
+
+    
+    <link rel="stylesheet" href="https://iaroki.github.io/css/reset.css?t=2018-11-21%2015%3a01%3a50.635089506%20%2b0000%20UTC%20m%3d%2b0.472432890">
+    <link rel="stylesheet" href="https://iaroki.github.io/css/pygments.css?t=2018-11-21%2015%3a01%3a50.635089506%20%2b0000%20UTC%20m%3d%2b0.472432890">
+    <link rel="stylesheet" href="https://iaroki.github.io/css/main.css?t=2018-11-21%2015%3a01%3a50.635089506%20%2b0000%20UTC%20m%3d%2b0.472432890">
+    
+        <link rel="stylesheet" href="https://iaroki.github.io/css/override.css?t=2018-11-21%2015%3a01%3a50.635089506%20%2b0000%20UTC%20m%3d%2b0.472432890">
+    
+
+
+
+
+<link rel="shortcut icon"
+
+    href="https://iaroki.github.io/img/zen.ico"
+
+>
+
+
+
+
+
+
+
+
+</head>
+
+
+<body lang="en">
+
+<section class="header">
+    <div class="container">
+        <div class="content">
+            
+                
+                
+                
+                
+                
+                    
+                
+                    
+                
+                
+                <a href="https://iaroki.github.io/"><img class="avatar" src="https://iaroki.github.io/img/zen.png" srcset="https://iaroki.github.io/img/zen.png 1x"></a>
+            
+            <a href="https://iaroki.github.io/"><div class="name">iaroki</div></a>
+            
+            <nav>
+                <ul>
+                    
+                        <li class="nav-blog"><a href="https://iaroki.github.io/blog/"><span>Blog</span></a></li>
+                    
+                        <li class="nav-about"><a href="https://iaroki.github.io/about/"><span>About</span></a></li>
+                    
+                        <li class="nav-code"><a href="https://iaroki.github.io/code/"><span>Code</span></a></li>
+                    
+                        <li class="nav-links"><a href="https://iaroki.github.io/links/"><span>Links</span></a></li>
+                    
+                </ul>
+            </nav>
+        </div>
+    </div>
+</section>
+
+<section class="icons">
+    <div class="container">
+        <div class="content">
+        
+            <a href="//github.com/iaroki" target="_blank" rel="noopener"><img class="icon" src="https://iaroki.github.io/img/github.svg" alt="github" /></a>
+        
+
+        
+            <a href="//gitlab.com/iaroki" target="_blank" rel="noopener"><img class="icon" src="https://iaroki.github.io/img/gitlab.svg" alt="gitlab" /></a>
+        
+
+        
+            <a href="//twitter.com/_iaroki" target="_blank" rel="noopener"><img class="icon" src="https://iaroki.github.io/img/twitter.svg" alt="twitter" /></a>
+        
+
+	
+
+        
+
+        
+            <a href="//mastodon.social/@iaroki" target="_blank" rel="noopener"><img class="icon" src="https://iaroki.github.io/img/mastodon.svg" alt="mastodon" /></a>
+        
+
+        
+            <a href="//linkedin.com/in/iaroki" target="_blank" rel="noopener"><img class="icon" src="https://iaroki.github.io/img/linkedin.svg" alt="linkedin" /></a>
+        
+
+        
+
+        
+            <a href="//instagram.com/homelessstreetcat" target="_blank" rel="noopener"><img class="icon" src="https://iaroki.github.io/img/instagram.svg" alt="instagram" /></a>
+        
+
+        
+            <a href="//500px.com/iaroki" target="_blank" rel="noopener"><img class="icon" src="https://iaroki.github.io/img/500px.svg" alt="500px" /></a>
+        
+
+        
+
+        
+            <a href="mailto:iaroki@protonmail.com"><img class="icon" src="https://iaroki.github.io/img/email.svg" alt="email" /></a>
+        
+
+        
+
+        
+        </div>
+    </div>
+</section>
+
+
+<section class="main post non-narrow zero-top-spacing">
+    <div class="container">
+        <div class="content">
+            <div class="front-matter">
+                <div class="title-container">
+                    <div class="page-heading">
+
+    Archlinux on LUKS
+
+</div>
+
+                    <div class="initials"><a href="https://iaroki.github.io"></a></div>
+                </div>
+                <div class="meta">
+                    
+                    <div class="date" title='Thu Mar 16 2017 12:20:55 &#43;0300'>Mar 16, 2017</div>
+                    
+                    
+		    <div class="reading-time"><div class="middot"></div>3 minutes read</div>
+                    
+                </div>
+            </div>
+            <div class="markdown">
+                <p>After live cd is loaded you need to setup network connection.
+For ethernet follow the next steps:</p>
+
+<pre><code class="language-bash">ip link set eth0 up #set interface up
+ip addr add 10.69.0.100/24 broadcast 10.69.0.255 dev eth0 #set ip address
+ip route add default via 10.69.0.1 #set gateway
+</code></pre>
+
+<p>Setting gateway in the example above may fail. If so, you can try next commands:</p>
+
+<pre><code class="language-bash">ip route add 10.69.0.1 dev eth0
+ip route add default via 10.69.0.1 dev eth0
+</code></pre>
+
+<p>It is good to set right time now:</p>
+
+<pre><code class="language-bash">timedatectl set-ntp true
+</code></pre>
+
+<p>Next step is to prepare our filesystems. We will be using LVM on LUKS.
+For <code>/boot</code> i am using partition on my USB flash drive <code>/dev/sdb1</code> formatted to <code>ext2</code>.
+Encrypted partition with LUKS is <code>/dev/sda1</code>, you may choose whatever you want.</p>
+
+<p>So lets create LUKS encrypted partition:</p>
+
+<pre><code class="language-bash">cryptsetup -v --cipher aes-xts-plain64 --key-size 512 --hash sha512 luksFormat /dev/sda1
+</code></pre>
+
+<p>You need to enter secure password in prompt, so choose wisely. Now open our partition:</p>
+
+<pre><code class="language-bash">cryptsetup luksOpen /dev/sda1 lvm
+</code></pre>
+
+<p>We opened encrypted partition <code>/dev/sda1</code> as <code>lvm</code> name and it is now available at <code>/dev/mapper/lvm</code>.
+To create LVM follow the next steps:</p>
+
+<pre><code class="language-bash">pvcreate /dev/mapper/lvm #create physical volume
+vgcreate ArchVol /dev/mapper/lvm #create volume group named ArchVol
+lvcreate -L 4G ArchVol -n swap #in ArchVol create 4GB partition named swap
+lvcreate -l 100%FREE ArchVol -n root #in ArchVol create partition named root filled all remaining space
+</code></pre>
+
+<p>After this time to format our new logical partitions:
+* <em>root</em> available at <code>/dev/mapper/ArchVol-root</code>
+* <em>swap</em> available at <code>/dev/mapper/ArchVol-swap</code>
+* <em>boot</em> is my USB flash drive at <code>/dev/sdb1</code></p>
+
+<pre><code class="language-bash">mkfs.ext4 /dev/mapper/ArchVol-root
+mkswap /dev/mapper/ArchVol-swap
+mkfs.ext2 /dev/sdb1
+</code></pre>
+
+<p>Mount aour filesystems and activate swap:</p>
+
+<pre><code class="language-bash">mount /dev/mapper/ArchVol-root /mnt
+mkdir /mnt/boot
+mount /dev/sdb1 /mnt/boot
+swapon /dev/mapper/ArchVol-swap
+</code></pre>
+
+<p>Okay,  now <strong>exact</strong> Arch installation:</p>
+
+<pre><code class="language-bash">pacstrap /mnt base
+</code></pre>
+
+<p>This bootstraps base system. To generate our <code>/etc/fstab</code> accordingly to mountpoints:</p>
+
+<pre><code class="language-bash">genfstab -U /mnt &gt;&gt; /mnt/etc/fstab
+</code></pre>
+
+<p>Now lets chroot to our system:</p>
+
+<pre><code class="language-bash">arch-chroot /mnt
+</code></pre>
+
+<p>Inside we need to set proper timezone and time:</p>
+
+<pre><code class="language-bash">ln -s /usr/share/zoneinfo/Europe/London /etc/localtime
+hwclock --systohc
+</code></pre>
+
+<p>To setup locales just select and generate them:</p>
+
+<pre><code class="language-bash">nano /etc/locale.gen
+locale-gen
+/etc/locale.conf LANG=en_US.UTF-8
+</code></pre>
+
+<p>Fill the hostname:</p>
+
+<pre><code class="language-bash">nano /etc/hostname
+nano /etc/hosts
+</code></pre>
+
+<p>Arch Linux has many available ways to configure network. So i am using <code>systemd-networkd</code>.
+For wired ethernet connection create the next config <code>/etc/systemd/network/wired.network</code>:</p>
+
+<pre><code class="language-ini">[Match]
+Name = eth0
+
+[Network]
+Address = 10.69.0.100/24
+Gateway = 10.69.0.1
+DNS = 8.8.8.8
+</code></pre>
+
+<p>We are almost done. The few things which are left is generating <code>initramfs image</code> and installing bootloader.
+Our <code>initramfs image</code> must be configured with extra features such as <code>lvm</code> and <code>encrypt</code>.
+Edit configuration file <code>/etc/mkinitcpio.conf</code>:</p>
+
+<pre><code class="language-ini">HOOKS=&quot;...  encrypt  lvm2  ...  filesystems  ...&quot;
+MODULES=&quot;i915&quot;  #if you use intel graphics
+</code></pre>
+
+<p>Generate <code>initramfs</code>:
+<code>mkinitcpio -p linux</code></p>
+
+<p>Set <code>root</code> password:
+<code>passwd root</code></p>
+
+<p>Install and configure bootloader:</p>
+
+<pre><code class="language-bash">pacman -S grub
+</code></pre>
+
+<p>Next you need to add your encrypted partition UUID to <code>grub</code> config. You can get it by running next command:</p>
+
+<pre><code class="language-bash">blkid /dev/sda1
+
+# example output
+/dev/sda1: UUID=&quot;cddd0a60-8281-4a09-8cce-1c5cb8849f62&quot; TYPE=&quot;crypto_LUKS&quot; PARTUUID=&quot;61979b00-998a-409d-aeb1-08e50f45023c&quot;
+</code></pre>
+
+<p>Note the <strong>UUID</strong> part. Add it to <code>/etc/default/grub</code>:</p>
+
+<pre><code>GRUB_CMDLINE_LINUX_DEFAULT=&quot;cryptdevice=UUID=cddd0a60-8281-4a09-8cce-1c5cb8849f62:lvm&quot;
+</code></pre>
+
+<p>Install bootloader to MBR of our USB flash drive and generate config:</p>
+
+<pre><code class="language-bash">grub-install --target=i386-pc /dev/sdb1
+grub-mkconfig -o /boot/grub/grub.cfg
+</code></pre>
+
+<p>At this point we have everything done. Time to unmount our partitions and reboot.</p>
+
+<pre><code class="language-bash">exit
+umount /mnt/boot
+umount /mnt
+swapoff /dev/mapper/ArchVol-swap
+reboot
+</code></pre>
+
+<p>Congratulations! Enjoy your fresh Arch Linux system on encrypted partition and boot USB flash drive as a key!</p>
+
+<hr />
+
+                <br>
+                
+                  <div class="tags">
+                    <strong>Tags:</strong>
+                  
+                    <a href="https://iaroki.github.io/tags/linux">linux</a>
+                  
+                    <a href="https://iaroki.github.io/tags/lvm">lvm</a>
+                  
+                    <a href="https://iaroki.github.io/tags/luks">luks</a>
+                  
+                  </div>
+                  <br />
+                
+                <p class="back-to-posts"><a href="https://iaroki.github.io/blog">Back to posts</a></p>
+            </div>
+            <br>
+            <div class="disqus">
+                
+            </div>
+            
+        </div>
+    </div>
+</section>
+
+
+
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/highlight.min.js"></script>
+  
+
+  <script type="text/javascript">
+    hljs.initHighlightingOnLoad();
+  </script>
+
+
+
+
+
+</body>
+</html>
+

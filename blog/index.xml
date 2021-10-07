@@ -1,0 +1,349 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Blog on iaroki&#39;s blog</title>
+    <link>https://iaroki.github.io/blog/</link>
+    <description>Recent content in Blog on iaroki&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-US</language>
+    <lastBuildDate>Wed, 21 Nov 2018 14:57:10 +0000</lastBuildDate>
+    
+	<atom:link href="https://iaroki.github.io/blog/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Running Docker containers with systemd</title>
+      <link>https://iaroki.github.io/blog/running-docker-containers-with-systemd/</link>
+      <pubDate>Wed, 21 Nov 2018 14:57:10 +0000</pubDate>
+      
+      <guid>https://iaroki.github.io/blog/running-docker-containers-with-systemd/</guid>
+      <description>To run Docker container on system start-up with systemd we need to create unit file. For example /etc/systemd/system/docker-nginx.service:
+[Unit] Description=nginx (Docker) # start this unit only after docker has started After=docker.service Requires=docker.service [Service] TimeoutStartSec=0 Restart=always # The following lines start with &#39;-&#39; because they are allowed to fail without # causing startup to fail. # # Kill the old instance, if it&#39;s still running for some reason ExecStartPre=-/usr/bin/docker kill nginx # Remove the old instance, if it stuck around ExecStartPre=-/usr/bin/docker rm nginx # Pull the latest version of the container; NOTE you should be careful to # pull a tagged version, that way you won&#39;t accidentially pull a major-version # upgrade and break your service!</description>
+    </item>
+    
+    <item>
+      <title>Vagrant with libvirt provider</title>
+      <link>https://iaroki.github.io/blog/vagrant-with-libvirt-provider/</link>
+      <pubDate>Wed, 21 Nov 2018 14:24:45 +0000</pubDate>
+      
+      <guid>https://iaroki.github.io/blog/vagrant-with-libvirt-provider/</guid>
+      <description>To make it work you need to install vagrant and vagrant-libvirt plugin and run with vagrant up --provider=libvirt. But in my case it was stuck on message Determining domain IP address.... The actual problem was not in the networking but with qemu-kvm in which I get kernel panic related to cpu.
+Solution is to set in the config parameter cpu_mode=host-passthrough.
+Here is my example Vagrantfile:
+Vagrant.configure(&amp;quot;2&amp;quot;) do |config| config.vm.box = &amp;quot;centos/7&amp;quot; config.</description>
+    </item>
+    
+    <item>
+      <title>GPG2 Keys cheatsheet</title>
+      <link>https://iaroki.github.io/blog/gpg2-keys-cheatsheet/</link>
+      <pubDate>Tue, 20 Nov 2018 14:35:26 +0000</pubDate>
+      
+      <guid>https://iaroki.github.io/blog/gpg2-keys-cheatsheet/</guid>
+      <description> Creating GPG Key gpg2 --full-gen-key  Export private key gpg2 --export-secret-keys --armor jqdoe@example.com &amp;gt; jqdoe-privkey.asc  Export public key gpg2 --export --armor jqdoe@example.com &amp;gt; jqdoe-pubkey.asc  Export trustdb gpg2 --export-ownertrust &amp;gt; otrust.txt  Import trustdb gpg2 --import-ownertrust &amp;lt; otrust.txt  Update trustdb gpg2 --update-trustdb  Import GPG keys gpg2 --import &amp;lt; keys.asc  </description>
+    </item>
+    
+    <item>
+      <title>Centos 7 home router</title>
+      <link>https://iaroki.github.io/blog/centos-7-home-router/</link>
+      <pubDate>Tue, 30 Oct 2018 12:01:52 +0000</pubDate>
+      
+      <guid>https://iaroki.github.io/blog/centos-7-home-router/</guid>
+      <description>In this project I build home router based on a Centos 7. To my server connected two NICs: enp0s3 and enp0s8. * enp0s3 - will be WAN * enp0s8 - will be LAN
+First of all we need to enable IP forwarding:
+sysctl -w net.ipv4.ip_forward=1  Then tweak Firewalld rules:
+firewall-cmd --set-default-zone=external firewall-cmd --permanent --zone=internal --add-interface=enp0s8 firewall-cmd --permanent --zone=internal --add-service=dhcp firewall-cmd --permanent --zone=internal --add-service=dns firewall-cmd --direct --add-rule ipv4 nat POSTROUTING 0 -o eth_ext -j MASQUERADE firewall-cmd --direct --add-rule ipv4 filter FORWARD 0 -i eth_int -o eth_ext -j ACCEPT firewall-cmd --direct --add-rule ipv4 filter FORWARD 0 -i eth_ext -o eth_int -m state --state RELATED,ESTABLISHED -j ACCEPT  Install DHCP:</description>
+    </item>
+    
+    <item>
+      <title>Using Traefik with Docker</title>
+      <link>https://iaroki.github.io/blog/using-traefik-with-docker/</link>
+      <pubDate>Fri, 26 Oct 2018 13:20:25 +0000</pubDate>
+      
+      <guid>https://iaroki.github.io/blog/using-traefik-with-docker/</guid>
+      <description>Start Traefik:
+~ &amp;gt;&amp;gt;&amp;gt; docker run -it --rm --name traefik -p 80:80 -p 8080:8080 -v /var/run/docker.sock:/var/run/docker.sock traefik --api --docker  Start some services:
+ Gitea container:  docker run -it --rm --name gitea -l traefik.frontend.rule=Host:gitea.iaroki.io -l traefik.port=3000 gitea/gitea   Blog container:  docker run -it --rm --name blog -l traefik.frontend.rule=Host:blog.iaroki.io blog  Now Gitea will be available at gitea.iaroki.io and blog at blog.iaroki.io.</description>
+    </item>
+    
+    <item>
+      <title>Systemd-Nspawn</title>
+      <link>https://iaroki.github.io/blog/systemd-nspawn/</link>
+      <pubDate>Mon, 22 Oct 2018 14:13:30 +0000</pubDate>
+      
+      <guid>https://iaroki.github.io/blog/systemd-nspawn/</guid>
+      <description>Setup bridge Download netns tool:
+wget https://github.com/genuinetools/netns/releases/download/v0.5.2/netns-linux-amd64  Create bridge:
+sudo netns create --iplink eth0 --bridge br0 --ip 10.10.10.1/24  Enable IP Forwarding:
+sudo sysctl -w net.ipv4.ip_forward=1  To delete bridge:
+sudo netns rm --bridge br0  Create container rootfs For Fedora:
+sudo dnf -y --releasever=28 --installroot=/home/iaroki/workstation --disablerepo=&#39;*&#39; --enablerepo=fedora --enablerepo=updates install systemd passwd dnf fedora-release vim git tmux iproute iputils  Set root password:
+sudo chroot workstation passwd exit  Be sure to disable selinux:</description>
+    </item>
+    
+    <item>
+      <title>Fedora Atomic testdrive</title>
+      <link>https://iaroki.github.io/blog/fedora-atomic-testdrive/</link>
+      <pubDate>Wed, 17 Oct 2018 13:41:46 +0000</pubDate>
+      
+      <guid>https://iaroki.github.io/blog/fedora-atomic-testdrive/</guid>
+      <description> Fedora minimal setup Console utils  tmux (preinstalled) vim git wget tree htop  Xorg utils  xorg-x11-server-Xorg xorg-x11-server-utils xorg-x11-drv-ati xorg-x11-drv-vesa xorg-x11-drv-libinput xorg-x11-utils xorg-x11-xinit liberation-fonts-common liberation-mono-fonts network-manager-applet dmenu feh  </description>
+    </item>
+    
+    <item>
+      <title>Voidlinux LXD image</title>
+      <link>https://iaroki.github.io/blog/voidlinux-lxd-image/</link>
+      <pubDate>Thu, 11 Oct 2018 09:34:49 +0000</pubDate>
+      
+      <guid>https://iaroki.github.io/blog/voidlinux-lxd-image/</guid>
+      <description>Create image To make it work you need to bootstrap rootfs with void, write simple metadata file and add all this into a compressed tarball. So then you should import it to LXD.
+Create void rootfs like this:
+IMAGE=&amp;quot;rootfs&amp;quot; sudo mkdir -v ${IMAGE} sudo xbps-install -y -r ${PWD}/${IMAGE} --repository=http://repo.voidlinux.eu/current -S base-voidstrap sudo rm -rf ${PWD}/${IMAGE}/usr/share/doc ${PWD}/${IMAGE}/usr/share/man ${PWD}/${IMAGE}/var/cache/xbps  Then create metadata.yaml with similiar content:
+architecture: x86_64 creation_date: 1532507327 properties: description: Void Linux glibc 64bit os: Void Linux release: rolling  Add all this to compressed tarball: tar cJf voidlinux-lxd-image.</description>
+    </item>
+    
+    <item>
+      <title>LXD container with second network interface</title>
+      <link>https://iaroki.github.io/blog/lxd-container-with-second-network-interface/</link>
+      <pubDate>Thu, 20 Sep 2018 07:58:56 +0000</pubDate>
+      
+      <guid>https://iaroki.github.io/blog/lxd-container-with-second-network-interface/</guid>
+      <description> Adding secondary NIC to LXD container Create container in stopped state:
+lxc init images:alpine/edge server  Then add NIC:
+lxc config device add server eth1 nic nictype=bridged parent=docker0  Start container and login inside:
+lxc start server lxc exec server sh  You will see that yo have now two network interfaces. Set an IP address to it:
+ip link set eth1 up ip addr add 172.17.0.200/24 broadcast 172.17.0.255 dev eth1  </description>
+    </item>
+    
+    <item>
+      <title>CentOS 7 kickstart installation</title>
+      <link>https://iaroki.github.io/blog/centos-7-kickstart-installation/</link>
+      <pubDate>Thu, 07 Jun 2018 12:55:02 +0300</pubDate>
+      
+      <guid>https://iaroki.github.io/blog/centos-7-kickstart-installation/</guid>
+      <description>I have generated kickstart file located on my pc and to make it available over local network I just start python server:
+[iaroki@workstation ~]$ python -m http.server Serving HTTP on 0.0.0.0 port 8000 (http://0.0.0.0:8000/) ...  Now my kickstart config located at http://10.69.0.202:8000/ks.cfg.
+On another pc or vm I load installation media and in main menu hit Esc. To tell installer where ks.cfg is I must declare it and as it available on network I must assign IP address too:</description>
+    </item>
+    
+    <item>
+      <title>Enable graphical login in CentOS 7</title>
+      <link>https://iaroki.github.io/blog/enable-graphical-login-in-centos-7/</link>
+      <pubDate>Mon, 22 Jan 2018 12:53:25 +0300</pubDate>
+      
+      <guid>https://iaroki.github.io/blog/enable-graphical-login-in-centos-7/</guid>
+      <description>To start graphic login you need to enable two systemd services:
+$ sudo systemctl enable gdm.service $ sudo systemctl set-default graphical.target  Then reboot and you will see GDM login manager. If you want disable it, then run:
+$ sudo systemctl disable gdm.service $ sudo systemctl set-default multi-user.target  Now reboot.</description>
+    </item>
+    
+    <item>
+      <title>Tmux detach with systemd</title>
+      <link>https://iaroki.github.io/blog/tmux-detach-with-systemd/</link>
+      <pubDate>Fri, 19 Jan 2018 12:51:02 +0300</pubDate>
+      
+      <guid>https://iaroki.github.io/blog/tmux-detach-with-systemd/</guid>
+      <description>With systemd version 230+ detachind and logout from remote machine will kill tmux session.
+Systemd config First solution is to disable killing user processes systemwide. Edit /etc/systemd/logind.conf and set
+KillUserProcesses=no  Then restart systemd-logind.service:
+# systemctl restart systemd-logind  Tmux as a service Second solution is running tmux as a service. Just add RemainAfterExit=yes option to /etc/systemd/system/tmux@.service:
+[Unit] Description=tmux default session (detached) Documentation=man:tmux(1) [Service] Type=oneshot RemainAfterExit=yes ExecStart=/usr/bin/tmux new-session -d -s %I ExecStop=/usr/bin/tmux kill-server KillMode=none [Install] WantedBy=multiplexer.</description>
+    </item>
+    
+    <item>
+      <title>Convert m4a to ogg with ffmpeg</title>
+      <link>https://iaroki.github.io/blog/convert-m4a-to-ogg-with-ffmpeg/</link>
+      <pubDate>Tue, 05 Dec 2017 12:49:08 +0300</pubDate>
+      
+      <guid>https://iaroki.github.io/blog/convert-m4a-to-ogg-with-ffmpeg/</guid>
+      <description>Recently i downloaded some lectures from youtube in m4a format. My hardware portable player doesn&amp;rsquo;t support it so I converted files like this:
+ffmpeg -i file.m4a -acodec libvorbis -aq 4 -vn -ac 2 -map_metadata 0 file.ogg  Complete script is:
+#!/bin/bash # Author: Simon Legner &amp;lt;Simon.Legner@gmail.com&amp;gt; convert () { in=&amp;quot;$1&amp;quot; out=&amp;quot;${in%.m4a}.ogg&amp;quot; ffmpeg -i &amp;quot;$in&amp;quot; \ -acodec libvorbis -aq 4 -vn -ac 2 \ -map_metadata 0 \ &amp;quot;$out&amp;quot; } if [[ $# == 0 ]]; then echo Converts m4a files to Ogg Vorbis using ffmpeg.</description>
+    </item>
+    
+    <item>
+      <title>Nginx load balancing</title>
+      <link>https://iaroki.github.io/blog/nginx-load-balancing/</link>
+      <pubDate>Sat, 04 Nov 2017 12:46:36 +0300</pubDate>
+      
+      <guid>https://iaroki.github.io/blog/nginx-load-balancing/</guid>
+      <description>Load balancing is a very useful technique to distribute the incoming network traffic across a number servers. With this technique you can reduce the resource usage, lower the response time and avoid server overload.
+Nginx Load Balancing is one of the most efficient options available to achieve full application redundancy, and it is relatively easy and quick to setup. We will configure Nginx load balancing using the Round robin mechanism.</description>
+    </item>
+    
+    <item>
+      <title>Jenkins installation on CentOS 7</title>
+      <link>https://iaroki.github.io/blog/jenkins-installation-on-centos-7/</link>
+      <pubDate>Fri, 03 Nov 2017 12:44:34 +0300</pubDate>
+      
+      <guid>https://iaroki.github.io/blog/jenkins-installation-on-centos-7/</guid>
+      <description>In this article we will install and configure Jenkins with Nginx as a reverse proxy on a CentOS 7.
+Jenkins is a leading open source automation server built with Java that monitors executions of repeated jobs, such as building a software project or jobs run by cron. With Jenkins, organizations can accelerate the software development process through automation. It manages and controls development life-cycle processes of all kinds, including build, document, test, package, stage, deployment, static analysis and many more.</description>
+    </item>
+    
+    <item>
+      <title>Iptables setup</title>
+      <link>https://iaroki.github.io/blog/iptables-setup/</link>
+      <pubDate>Thu, 02 Nov 2017 12:42:51 +0300</pubDate>
+      
+      <guid>https://iaroki.github.io/blog/iptables-setup/</guid>
+      <description>With iptables, several different packet matching tables are defined and each table can contain a number of built-in chains as well as some chains defined by the user. The chains are actually lists of rules that match set of packets and each rule specifies what to do with the matched packet.
+The default table is the filter table and it contains the built-in chains INPUT, FORWARD, and OUTPUT. The INPUT chain is used for packets destined to local sockets, the FORWARD chain is used for packets being routed through the box while the OUTPUT chain is used for locally-generated packets.</description>
+    </item>
+    
+    <item>
+      <title>FirewallD in Centos 7</title>
+      <link>https://iaroki.github.io/blog/firewalld-in-centos-7/</link>
+      <pubDate>Wed, 01 Nov 2017 12:41:20 +0300</pubDate>
+      
+      <guid>https://iaroki.github.io/blog/firewalld-in-centos-7/</guid>
+      <description>FirewallD is a firewall management tool available by default on CentOS 7 servers. Basically, it is a wrapper around iptables and it comes with graphical configuration tool firewall-config and command line tool firewall-cmd. With the iptables service, every change requires flushing of the old rules and reading the new rules from the /etc/sysconfig/iptables file, while with firewalld only differences are applied.
+FirewallD zones FirewallD uses services and zones instead of iptables rules and chains.</description>
+    </item>
+    
+    <item>
+      <title>DNS explanation</title>
+      <link>https://iaroki.github.io/blog/dns-explanation/</link>
+      <pubDate>Wed, 01 Nov 2017 10:49:22 +0300</pubDate>
+      
+      <guid>https://iaroki.github.io/blog/dns-explanation/</guid>
+      <description>What is DNS? DNS is an acronym of Domain Name System and it’s widely used in different mediums. As the name suggests, DNS is a naming system that gives a name to any computer or service connected to a network. DNS is utterly important and everyone should use it. Without it, we’d have to visit websites through their IP addresses, rather than their domain. So, for example, if you wanted to visit our website through it’s IP address, you’d have to go to 209.</description>
+    </item>
+    
+    <item>
+      <title>Git log customizsation</title>
+      <link>https://iaroki.github.io/blog/git-log-customizsation/</link>
+      <pubDate>Mon, 30 Oct 2017 12:39:27 +0300</pubDate>
+      
+      <guid>https://iaroki.github.io/blog/git-log-customizsation/</guid>
+      <description>git log show you history, but it looks not so pretty:
+commit 244bf1ff360f6e4db6ce01829670306d9e0fa004 (HEAD -&amp;gt; master) Author: hostmorke &amp;lt;hostmorke@hostmorke.io&amp;gt; Date: Mon Oct 30 17:13:33 2017 +0200 Vagrant post commit 383de7b4e31c53e8ea008c9bd87e6bfa5f012677 (origin/master) Author: hostmorke &amp;lt;hostmorke@hostmorke.io&amp;gt; Date: Mon Oct 30 16:12:08 2017 +0200 new theme commit 0d2111b692b208c4f8106abe49bd53695b5eb851 Author: iaroki &amp;lt;iaroki@protonmail.com&amp;gt; Date: Fri Oct 27 21:02:32 2017 +0300 lxc backup commit 39f24f17d76e47f68f1d7cb64753159b084d2625 Author: hostmorke &amp;lt;hostmorke@hostmorke.io&amp;gt; Date: Fri Oct 27 19:17:45 2017 +0300 lxc shared folder  It has a lot of waste information, so you can use option --oneline to show only commit id and comment:</description>
+    </item>
+    
+    <item>
+      <title>Vagrant Tips</title>
+      <link>https://iaroki.github.io/blog/vagrant-tips/</link>
+      <pubDate>Mon, 30 Oct 2017 12:37:21 +0300</pubDate>
+      
+      <guid>https://iaroki.github.io/blog/vagrant-tips/</guid>
+      <description>Some useful tips to work with Vagrant:
+ Memory and CPU control:  Add vb.memory option to Vagrantfile to set desired memory capacity:
+[...] config.vm.provider &amp;quot;virtualbox&amp;quot; do |vb| vb.memory = &amp;quot;1024&amp;quot; end [...]  Add vb.cpus option to set CPU&amp;rsquo;s:
+[...] config.vm.provider &amp;quot;virtualbox&amp;quot; do |vb| vb.memory = &amp;quot;1024 vb.cpus = &amp;quot;2&amp;quot; end [...]   Show GUI:  To show GUI for machine:
+[...] config.vm.provider &amp;quot;virtualbox&amp;quot; do |vb| # Display the VirtualBox GUI when booting the machine vb.</description>
+    </item>
+    
+    <item>
+      <title>Installation Asterisk 13 on Ubuntu 16.04</title>
+      <link>https://iaroki.github.io/blog/installation-asterisk-13-on-ubuntu-16.04/</link>
+      <pubDate>Wed, 25 Oct 2017 12:35:22 +0300</pubDate>
+      
+      <guid>https://iaroki.github.io/blog/installation-asterisk-13-on-ubuntu-16.04/</guid>
+      <description>1) First thing to do is update our system:
+root@asterisk:~# apt update root@asterisk:~# apt upgrade root@asterisk:~# reboot  2) Download sources:
+root@asterisk:~# cd /usr/src root@asterisk:/usr/src# wget https://downloads.asterisk.org/pub/telephony/asterisk/asterisk-14-current.tar.gz root@asterisk:/usr/src# wget https://downloads.asterisk.org/pub/telephony/libpri/libpri-current.tar.gz root@asterisk:/usr/src# wget https://downloads.asterisk.org/pub/telephony/dahdi-linux-complete/dahdi-linux-complete-current.tar.gz  3) Install build tools:
+root@asterisk:/usr/src# apt install build-essential wget libssl-dev libncurses5-dev libnewt-dev libxml2-dev linux-headers-$(uname -r) libsqlite3-dev uuid-dev libjansson-dev  4) Extract the files from the tarballs:
+root@asterisk:/usr/src# tar xvf asterisk-13-current.tar.gz root@asterisk:/usr/src# tar xvf libpri-current.tar.gz root@asterisk:/usr/src# tar xvf dahdi-linux-complete-current.</description>
+    </item>
+    
+    <item>
+      <title>Creating systemd Unit file</title>
+      <link>https://iaroki.github.io/blog/creating-systemd-unit-file/</link>
+      <pubDate>Thu, 21 Sep 2017 12:30:07 +0300</pubDate>
+      
+      <guid>https://iaroki.github.io/blog/creating-systemd-unit-file/</guid>
+      <description>Create a unit file in the /etc/systemd/system/ directory and make sure it has correct file permissions. Execute as root:
+# touch /etc/systemd/system/name.service # chmod 664 /etc/systemd/system/name.service  Replace name with a name of the service to be created. Note that file does not need to be executable.
+Open the name.service file created in the previous step, and add the service configuration options. The following is an example unit configuration for a network-related service:</description>
+    </item>
+    
+    <item>
+      <title>Running GUI applications in LXD on Fedora 26</title>
+      <link>https://iaroki.github.io/blog/running-gui-applications-in-lxd-on-fedora-26/</link>
+      <pubDate>Wed, 20 Sep 2017 12:28:27 +0300</pubDate>
+      
+      <guid>https://iaroki.github.io/blog/running-gui-applications-in-lxd-on-fedora-26/</guid>
+      <description>Create container:
+[iaroki@fedora ~]$ lxc launch images:debian/stretch chrome  Install needed tools:
+[iaroki@fedora ~]$ lxc exec chrome bash root@chrome:~# adduser iaroki root@chrome:~# apt update root@chrome:~# apt install x11-apps mesa-utils alsa-utils  Map UID and GID ramges:
+[iaroki@fedora ~]$ echo &amp;quot;root:1000:1&amp;quot; | sudo tee -a /etc/subuid /etc/subgid  Set UID/GUID ranges for container:
+[iaroki@fedora ~]$ lxc config set chrome raw.idmap &amp;quot;both $UID 1000&amp;quot; [iaroki@fedora ~]$ lxc restart chrome  Mount X11 socket and .</description>
+    </item>
+    
+    <item>
+      <title>Tor hidden service</title>
+      <link>https://iaroki.github.io/blog/tor-hidden-service/</link>
+      <pubDate>Fri, 16 Jun 2017 11:46:07 +0300</pubDate>
+      
+      <guid>https://iaroki.github.io/blog/tor-hidden-service/</guid>
+      <description>As for Fedora install tor package, nginx web service and SSH server for remote control:
+[root@hiddensrv ~]# dnf install tor nginx openssh-server  Now change defaultSSH port and disable root login:
+[root@hiddensrv ~]# vim /etc/ssh/sshd_config # If you want to change the port on a SELinux system, you have to tell # SELinux about this change. # semanage port -a -t ssh_port_t -p tcp #PORTNUMBER # Port 2222 #AddressFamily any #ListenAddress 0.</description>
+    </item>
+    
+    <item>
+      <title>Simple way to quickly setup HTTP server</title>
+      <link>https://iaroki.github.io/blog/simple-way-to-quickly-setup-http-server/</link>
+      <pubDate>Thu, 08 Jun 2017 12:57:22 +0300</pubDate>
+      
+      <guid>https://iaroki.github.io/blog/simple-way-to-quickly-setup-http-server/</guid>
+      <description> Python 2 python2 -m SimpleHTTPServer  Python 3 python3 -m http.server  </description>
+    </item>
+    
+    <item>
+      <title>Tmux cheatsheet</title>
+      <link>https://iaroki.github.io/blog/tmux-cheatsheet/</link>
+      <pubDate>Thu, 08 Jun 2017 12:26:29 +0300</pubDate>
+      
+      <guid>https://iaroki.github.io/blog/tmux-cheatsheet/</guid>
+      <description>Meta key for tmux is Ctl+b!
+Panes To split pane horisontal press Ctrl+b and &amp;quot;. To split pane vertical press Ctrl+b and %. Navigate through panes with Ctrl+b and direction; Where direction is one of the arrow keys. Cycle through the panes with Ctrl+b and o. Hitting Ctrl+b and q will show you numbered label on top of each pane. To zoom pane press Ctrl+b and z.
+Windows To create new window press Ctrl+b and c.</description>
+    </item>
+    
+    <item>
+      <title>Linux I/O redirection</title>
+      <link>https://iaroki.github.io/blog/linux-i/o-redirection/</link>
+      <pubDate>Wed, 22 Mar 2017 12:24:33 +0300</pubDate>
+      
+      <guid>https://iaroki.github.io/blog/linux-i/o-redirection/</guid>
+      <description>Name Number Description     stdin 0 Connected to the keyboard, most programs read input from this file   stdout 1 Attached to the screen, and all programs send their results to this file   stderr 2 Programs send status/error messages to this file which is also attached to the screen    Redirect standard output as in the example below:
+$ ls -l &amp;gt; ls.</description>
+    </item>
+    
+    <item>
+      <title>Passwordless SSH key-based authentication</title>
+      <link>https://iaroki.github.io/blog/passwordless-ssh-key-based-authentication/</link>
+      <pubDate>Mon, 20 Mar 2017 12:22:43 +0300</pubDate>
+      
+      <guid>https://iaroki.github.io/blog/passwordless-ssh-key-based-authentication/</guid>
+      <description>To generate public/private pair of keys enter:
+ssh-keygen -b 4096 -t rsa -C &amp;quot;username@email&amp;quot;  Next step is to copy key to the remote server:
+ssh-copy-id -i .ssh/id_rsa.pub user01@server2.example.com  On remote server is adviceable to edit /etc/ssh/sshd_config:
+PasswordAuthentication no PubkeyAuthentication yes PermitRootLogin no  Restart the sshd service:
+systemctl restart sshd  And try to login:
+ssh server2.example.com  Done!</description>
+    </item>
+    
+    <item>
+      <title>Archlinux on LUKS</title>
+      <link>https://iaroki.github.io/blog/archlinux-on-luks/</link>
+      <pubDate>Thu, 16 Mar 2017 12:20:55 +0300</pubDate>
+      
+      <guid>https://iaroki.github.io/blog/archlinux-on-luks/</guid>
+      <description>After live cd is loaded you need to setup network connection. For ethernet follow the next steps:
+ip link set eth0 up #set interface up ip addr add 10.69.0.100/24 broadcast 10.69.0.255 dev eth0 #set ip address ip route add default via 10.69.0.1 #set gateway  Setting gateway in the example above may fail. If so, you can try next commands:
+ip route add 10.69.0.1 dev eth0 ip route add default via 10.</description>
+    </item>
+    
+    <item>
+      <title>Curl IP address</title>
+      <link>https://iaroki.github.io/blog/curl-ip-address/</link>
+      <pubDate>Sun, 01 Feb 2015 12:18:07 +0300</pubDate>
+      
+      <guid>https://iaroki.github.io/blog/curl-ip-address/</guid>
+      <description>If you need to get your IP address for some script, there is solution:
+curl &amp;quot;ifconfig.me&amp;quot;  </description>
+    </item>
+    
+  </channel>
+</rss>

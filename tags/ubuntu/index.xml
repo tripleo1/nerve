@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Ubuntu on iaroki&#39;s blog</title>
+    <link>https://iaroki.github.io/tags/ubuntu/</link>
+    <description>Recent content in Ubuntu on iaroki&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-US</language>
+    <lastBuildDate>Wed, 25 Oct 2017 12:35:22 +0300</lastBuildDate>
+    
+	<atom:link href="https://iaroki.github.io/tags/ubuntu/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Installation Asterisk 13 on Ubuntu 16.04</title>
+      <link>https://iaroki.github.io/blog/installation-asterisk-13-on-ubuntu-16.04/</link>
+      <pubDate>Wed, 25 Oct 2017 12:35:22 +0300</pubDate>
+      
+      <guid>https://iaroki.github.io/blog/installation-asterisk-13-on-ubuntu-16.04/</guid>
+      <description>1) First thing to do is update our system:
+root@asterisk:~# apt update root@asterisk:~# apt upgrade root@asterisk:~# reboot  2) Download sources:
+root@asterisk:~# cd /usr/src root@asterisk:/usr/src# wget https://downloads.asterisk.org/pub/telephony/asterisk/asterisk-14-current.tar.gz root@asterisk:/usr/src# wget https://downloads.asterisk.org/pub/telephony/libpri/libpri-current.tar.gz root@asterisk:/usr/src# wget https://downloads.asterisk.org/pub/telephony/dahdi-linux-complete/dahdi-linux-complete-current.tar.gz  3) Install build tools:
+root@asterisk:/usr/src# apt install build-essential wget libssl-dev libncurses5-dev libnewt-dev libxml2-dev linux-headers-$(uname -r) libsqlite3-dev uuid-dev libjansson-dev  4) Extract the files from the tarballs:
+root@asterisk:/usr/src# tar xvf asterisk-13-current.tar.gz root@asterisk:/usr/src# tar xvf libpri-current.tar.gz root@asterisk:/usr/src# tar xvf dahdi-linux-complete-current.</description>
+    </item>
+    
+  </channel>
+</rss>

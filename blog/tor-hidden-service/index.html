@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="chrome=1">
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="referrer" content="no-referrer">
+<meta name="author" content="iaroki">
+<meta name="description" content="As for Fedora install tor package, nginx web service and SSH server for remote control:
+[root@hiddensrv ~]# dnf install tor nginx openssh-server  Now change defaultSSH port and disable root login:
+[root@hiddensrv ~]# vim /etc/ssh/sshd_config # If you want to change the port on a SELinux system, you have to tell # SELinux about this change. # semanage port -a -t ssh_port_t -p tcp #PORTNUMBER # Port 2222 #AddressFamily any #ListenAddress 0.">
+
+<meta property="og:title" content="Tor hidden service" />
+<meta property="og:description" content="As for Fedora install tor package, nginx web service and SSH server for remote control:
+[root@hiddensrv ~]# dnf install tor nginx openssh-server  Now change defaultSSH port and disable root login:
+[root@hiddensrv ~]# vim /etc/ssh/sshd_config # If you want to change the port on a SELinux system, you have to tell # SELinux about this change. # semanage port -a -t ssh_port_t -p tcp #PORTNUMBER # Port 2222 #AddressFamily any #ListenAddress 0." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://iaroki.github.io/blog/tor-hidden-service/" />
+
+
+
+<meta property="article:published_time" content="2017-06-16T11:46:07&#43;03:00"/>
+
+<meta property="article:modified_time" content="2017-06-16T11:46:07&#43;03:00"/>
+
+
+
+
+
+
+
+
+
+
+
+
+<title>
+
+
+     Tor hidden service 
+
+</title>
+<link rel="canonical" href="https://iaroki.github.io/blog/tor-hidden-service/">
+
+
+
+
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/styles/default.min.css">
+
+
+
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Ubuntu+Mono:400,400i,700,700i|Raleway:500">
+
+
+
+    
+    <link rel="stylesheet" href="https://iaroki.github.io/css/reset.css?t=2018-11-21%2015%3a01%3a50.621396069%20%2b0000%20UTC%20m%3d%2b0.458739441">
+    <link rel="stylesheet" href="https://iaroki.github.io/css/pygments.css?t=2018-11-21%2015%3a01%3a50.621396069%20%2b0000%20UTC%20m%3d%2b0.458739441">
+    <link rel="stylesheet" href="https://iaroki.github.io/css/main.css?t=2018-11-21%2015%3a01%3a50.621396069%20%2b0000%20UTC%20m%3d%2b0.458739441">
+    
+        <link rel="stylesheet" href="https://iaroki.github.io/css/override.css?t=2018-11-21%2015%3a01%3a50.621396069%20%2b0000%20UTC%20m%3d%2b0.458739441">
+    
+
+
+
+
+<link rel="shortcut icon"
+
+    href="https://iaroki.github.io/img/zen.ico"
+
+>
+
+
+
+
+
+
+
+
+</head>
+
+
+<body lang="en">
+
+<section class="header">
+    <div class="container">
+        <div class="content">
+            
+                
+                
+                
+                
+                
+                    
+                
+                    
+                
+                
+                <a href="https://iaroki.github.io/"><img class="avatar" src="https://iaroki.github.io/img/zen.png" srcset="https://iaroki.github.io/img/zen.png 1x"></a>
+            
+            <a href="https://iaroki.github.io/"><div class="name">iaroki</div></a>
+            
+            <nav>
+                <ul>
+                    
+                        <li class="nav-blog"><a href="https://iaroki.github.io/blog/"><span>Blog</span></a></li>
+                    
+                        <li class="nav-about"><a href="https://iaroki.github.io/about/"><span>About</span></a></li>
+                    
+                        <li class="nav-code"><a href="https://iaroki.github.io/code/"><span>Code</span></a></li>
+                    
+                        <li class="nav-links"><a href="https://iaroki.github.io/links/"><span>Links</span></a></li>
+                    
+                </ul>
+            </nav>
+        </div>
+    </div>
+</section>
+
+<section class="icons">
+    <div class="container">
+        <div class="content">
+        
+            <a href="//github.com/iaroki" target="_blank" rel="noopener"><img class="icon" src="https://iaroki.github.io/img/github.svg" alt="github" /></a>
+        
+
+        
+            <a href="//gitlab.com/iaroki" target="_blank" rel="noopener"><img class="icon" src="https://iaroki.github.io/img/gitlab.svg" alt="gitlab" /></a>
+        
+
+        
+            <a href="//twitter.com/_iaroki" target="_blank" rel="noopener"><img class="icon" src="https://iaroki.github.io/img/twitter.svg" alt="twitter" /></a>
+        
+
+	
+
+        
+
+        
+            <a href="//mastodon.social/@iaroki" target="_blank" rel="noopener"><img class="icon" src="https://iaroki.github.io/img/mastodon.svg" alt="mastodon" /></a>
+        
+
+        
+            <a href="//linkedin.com/in/iaroki" target="_blank" rel="noopener"><img class="icon" src="https://iaroki.github.io/img/linkedin.svg" alt="linkedin" /></a>
+        
+
+        
+
+        
+            <a href="//instagram.com/homelessstreetcat" target="_blank" rel="noopener"><img class="icon" src="https://iaroki.github.io/img/instagram.svg" alt="instagram" /></a>
+        
+
+        
+            <a href="//500px.com/iaroki" target="_blank" rel="noopener"><img class="icon" src="https://iaroki.github.io/img/500px.svg" alt="500px" /></a>
+        
+
+        
+
+        
+            <a href="mailto:iaroki@protonmail.com"><img class="icon" src="https://iaroki.github.io/img/email.svg" alt="email" /></a>
+        
+
+        
+
+        
+        </div>
+    </div>
+</section>
+
+
+<section class="main post non-narrow zero-top-spacing">
+    <div class="container">
+        <div class="content">
+            <div class="front-matter">
+                <div class="title-container">
+                    <div class="page-heading">
+
+    Tor hidden service
+
+</div>
+
+                    <div class="initials"><a href="https://iaroki.github.io"></a></div>
+                </div>
+                <div class="meta">
+                    
+                    <div class="date" title='Fri Jun 16 2017 11:46:07 &#43;0300'>Jun 16, 2017</div>
+                    
+                    
+		    <div class="reading-time"><div class="middot"></div>2 minutes read</div>
+                    
+                </div>
+            </div>
+            <div class="markdown">
+                <p>As for Fedora install <code>tor</code> package, <code>nginx</code> web service and SSH server for remote control:</p>
+
+<pre><code>[root@hiddensrv ~]# dnf install tor nginx openssh-server
+</code></pre>
+
+<p>Now change defaultSSH port and disable root login:</p>
+
+<pre><code>[root@hiddensrv ~]# vim /etc/ssh/sshd_config
+
+# If you want to change the port on a SELinux system, you have to tell
+# SELinux about this change.
+# semanage port -a -t ssh_port_t -p tcp #PORTNUMBER
+#
+Port 2222
+#AddressFamily any
+#ListenAddress 0.0.0.0
+#ListenAddress ::
+
+# Authentication:
+
+#LoginGraceTime 2m
+PermitRootLogin no
+#StrictModes yes
+#MaxAuthTries 6
+#MaxSessions 10
+</code></pre>
+
+<p>Enable and start SSH service:</p>
+
+<pre><code>[root@hiddensrv ~]# systemctl enable sshd
+[root@hiddensrv ~]# systemctl start sshd
+</code></pre>
+
+<p>Edit TOR configuration file to uncomment next strings:</p>
+
+<pre><code>[root@hiddensrv ~]# vim /etc/tor/torrc
+
+############### This section is just for location-hidden services ###
+
+## Once you have configured a hidden service, you can look at the
+## contents of the file &quot;.../hidden_service/hostname&quot; for the address
+## to tell people.
+##
+## HiddenServicePort x y:z says to redirect requests on port x to the
+## address y:z.
+
+HiddenServiceDir /var/lib/tor/hidden_service/
+HiddenServicePort 80 127.0.0.1:80
+HiddenServicePort 2222 127.0.0.1:2222
+</code></pre>
+
+<p>Enable and start TOR and NGINX services:</p>
+
+<pre><code>[root@hiddensrv ~]# systemctl enable nginx
+[root@hiddensrv ~]# systemctl start nginx
+[root@hiddensrv ~]# systemctl enable tor
+[root@hiddensrv ~]# systemctl start tor
+</code></pre>
+
+<p>Now you can check generated hostname of your service to access:</p>
+
+<pre><code>[root@hiddensrv ~]# cat /var/lib/tor/hidden_service/hostname
+v63z5ihn6uxx3kwf.onion
+</code></pre>
+
+<p>There you can see default NGINX index page.
+But to access SSH you need to add settings on yor laptop:</p>
+
+<pre><code>user@laptop:~$ vim ~/.ssh/config
+
+host hidden
+    hostname v63z5ihn6uxx3kwf.onion
+    port 2222
+    user prouser
+    proxyCommand ncat --proxy 127.0.0.1:9050 --proxy-type socks5 %h %p
+</code></pre>
+
+<p>If you encounter problems with <code>ncat</code> command you can try <code>nc -xlocalhost:9150 -X5 %h %p</code>.</p>
+
+<p>Try to access:</p>
+
+<pre><code>user@laptop:~$ ssh hidden
+hidden's password:
+prouser@hiddensrv:~$
+</code></pre>
+
+<hr />
+
+                <br>
+                
+                  <div class="tags">
+                    <strong>Tags:</strong>
+                  
+                    <a href="https://iaroki.github.io/tags/linux">linux</a>
+                  
+                    <a href="https://iaroki.github.io/tags/tor">tor</a>
+                  
+                  </div>
+                  <br />
+                
+                <p class="back-to-posts"><a href="https://iaroki.github.io/blog">Back to posts</a></p>
+            </div>
+            <br>
+            <div class="disqus">
+                
+            </div>
+            
+        </div>
+    </div>
+</section>
+
+
+
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/highlight.min.js"></script>
+  
+
+  <script type="text/javascript">
+    hljs.initHighlightingOnLoad();
+  </script>
+
+
+
+
+
+</body>
+</html>
+

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>iaroki blog - asterisk</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">iaroki blog </a></h1>
+                <nav><ul>
+                    <li><a href="/pages/links.html">Links</a></li>
+                    <li><a href="/pages/tasks.html">Tasks</a></li>
+                    <li><a href="/category/docker.html">Docker</a></li>
+                    <li><a href="/category/git.html">Git</a></li>
+                    <li><a href="/category/linux.html">Linux</a></li>
+                    <li><a href="/category/markdown.html">Markdown</a></li>
+                    <li><a href="/category/other.html">Other</a></li>
+                    <li><a href="/category/python.html">Python</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+
+            <aside id="featured" class="body">
+                <article>
+                    <h1 class="entry-title"><a href="/installation-asterisk-13-on-ubuntu-1604.html">Installation Asterisk 13 on Ubuntu 16.04</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2017-10-25T17:38:00+03:00">
+                Published: Wed 25 October 2017
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/iaroki.html">iaroki</a>
+        </address>
+<p>In <a href="/category/linux.html">Linux</a>.</p>
+<p>tags: <a href="/tag/linux.html">linux</a> <a href="/tag/asterisk.html">asterisk</a> </p>
+</footer><!-- /.post-info --><p>1) First thing to do is update our system:</p>
+<div class="highlight"><pre><span></span>root@asterisk:~# apt update
+root@asterisk:~# apt upgrade
+root@asterisk:~# reboot
+</pre></div>
+
+
+<p>2) Download sources:</p>
+<div class="highlight"><pre><span></span>root@asterisk:~# cd /usr/src
+root@asterisk:/usr/src# wget https://downloads.asterisk.org/pub/telephony/asterisk/asterisk-14-current.tar.gz
+root@asterisk:/usr/src# wget https://downloads.asterisk.org/pub/telephony/libpri/libpri-current.tar.gz
+root@asterisk:/usr/src# wget https://downloads.asterisk.org/pub/telephony/dahdi-linux-complete/dahdi-linux-complete-current.tar.gz
+</pre></div>
+
+
+<p>3) Install build tools:</p>
+<div class="highlight"><pre><span></span>root@asterisk:/usr/src# apt install build-essential wget libssl-dev libncurses5-dev libnewt-dev  libxml2-dev linux-headers-$(uname -r) libsqlite3-dev uuid-dev libjansson-dev
+</pre></div>
+
+
+<p>4) Extract the files from the tarballs:</p>
+<div class="highlight"><pre><span></span>root@asterisk:/usr/src# tar xvf asterisk-13-current.tar.gz
+root@asterisk:/usr/src# tar xvf libpri-current.tar.gz
+root@asterisk:/usr/src# tar xvf dahdi-linux-complete-current.tar.gz
+</pre></div>
+
+
+<p>5) Install <strong>DAHDI</strong>:</p>
+<div class="highlight"><pre><span></span>root@asterisk:/usr/src/dahdi-linux-complete-2.11.1+2.11.1# 
+root@asterisk:/usr/src/dahdi-linux-complete-2.11.1+2.11.1# make
+root@asterisk:/usr/src/dahdi-linux-complete-2.11.1+2.11.1# make install
+root@asterisk:/usr/src/dahdi-linux-complete-2.11.1+2.11.1# make config
+</pre></div>
+
+
+<p>6) Install <strong>libpri</strong>:</p>
+<div class="highlight"><pre><span></span>root@asterisk:/usr/src# cd libpri-1.6.0/
+root@asterisk:/usr/src/libpri-1.6.0# make
+root@asterisk:/usr/src/libpri-1.6.0# make install
+</pre></div>
+
+
+<p>7) Install <strong>Asterisk</strong>:</p>
+<div class="highlight"><pre><span></span>root@asterisk:/usr/src# cd asterisk-13.17.2/
+root@asterisk:/usr/src/asterisk-13.17.2# ./configure
+root@asterisk:/usr/src/asterisk-13.17.2# make menuselect 
+root@asterisk:/usr/src/asterisk-13.17.2# make
+root@asterisk:/usr/src/asterisk-13.17.2# make install
+root@asterisk:/usr/src/asterisk-13.17.2# make samples
+root@asterisk:/usr/src/asterisk-13.17.2# make config
+</pre></div>
+
+
+<p>8) Start <strong>DAHDI</strong> and <strong>Asterisk</strong>:</p>
+<div class="highlight"><pre><span></span>root@asterisk:/usr/src/asterisk-13.17.2# systemctl start asterisk
+</pre></div>
+
+
+<p>9) Check results:</p>
+<div class="highlight"><pre><span></span>root@asterisk:/usr/src/asterisk-13.17.2# asterisk -rvvv
+Asterisk 13.17.2, Copyright (C) 1999 - 2014, Digium, Inc. and others.
+Created by Mark Spencer &lt;markster@digium.com&gt;
+Asterisk comes with ABSOLUTELY NO WARRANTY; type &#39;core show warranty&#39; for details.
+This is free software, with components licensed under the GNU General Public
+License version 2 and other licenses; you are welcome to redistribute it under
+certain conditions. Type &#39;core show license&#39; for details.
+=========================================================================
+Connected to Asterisk 13.17.2 currently running on asterisk (pid = 7007)
+asterisk*CLI&gt; dahdi show version
+DAHDI Version: 2.6.1 Echo Canceller: HWEC
+asterisk*CLI&gt; pri show version
+libpri version: 1.6.0
+asterisk*CLI&gt; 
+</pre></div>                </article>
+            </aside><!-- /#featured -->
+        <section id="extras" class="body">
+                <div class="blogroll">
+                        <h2>links</h2>
+                        <ul>
+                            <li><a href="http://getpelican.com/">Pelican</a></li>
+                            <li><a href="http://python.org/">Python.org</a></li>
+                            <li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
+                        </ul>
+                </div><!-- /.blogroll -->
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+
+                            <li><a href="https://github.com/iaroki">Github</a></li>
+                            <li><a href="https://facebook.com/johnnymnemonic">Facebook</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+    <script type="text/javascript">
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-112838187-1', 'auto');
+    ga('send', 'pageview');
+    </script>
+</body>
+</html>

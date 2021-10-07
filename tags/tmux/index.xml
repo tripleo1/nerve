@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tmux on iaroki&#39;s blog</title>
+    <link>https://iaroki.github.io/tags/tmux/</link>
+    <description>Recent content in Tmux on iaroki&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-US</language>
+    <lastBuildDate>Fri, 19 Jan 2018 12:51:02 +0300</lastBuildDate>
+    
+	<atom:link href="https://iaroki.github.io/tags/tmux/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Tmux detach with systemd</title>
+      <link>https://iaroki.github.io/blog/tmux-detach-with-systemd/</link>
+      <pubDate>Fri, 19 Jan 2018 12:51:02 +0300</pubDate>
+      
+      <guid>https://iaroki.github.io/blog/tmux-detach-with-systemd/</guid>
+      <description>With systemd version 230+ detachind and logout from remote machine will kill tmux session.
+Systemd config First solution is to disable killing user processes systemwide. Edit /etc/systemd/logind.conf and set
+KillUserProcesses=no  Then restart systemd-logind.service:
+# systemctl restart systemd-logind  Tmux as a service Second solution is running tmux as a service. Just add RemainAfterExit=yes option to /etc/systemd/system/tmux@.service:
+[Unit] Description=tmux default session (detached) Documentation=man:tmux(1) [Service] Type=oneshot RemainAfterExit=yes ExecStart=/usr/bin/tmux new-session -d -s %I ExecStop=/usr/bin/tmux kill-server KillMode=none [Install] WantedBy=multiplexer.</description>
+    </item>
+    
+    <item>
+      <title>Tmux cheatsheet</title>
+      <link>https://iaroki.github.io/blog/tmux-cheatsheet/</link>
+      <pubDate>Thu, 08 Jun 2017 12:26:29 +0300</pubDate>
+      
+      <guid>https://iaroki.github.io/blog/tmux-cheatsheet/</guid>
+      <description>Meta key for tmux is Ctl+b!
+Panes To split pane horisontal press Ctrl+b and &amp;quot;. To split pane vertical press Ctrl+b and %. Navigate through panes with Ctrl+b and direction; Where direction is one of the arrow keys. Cycle through the panes with Ctrl+b and o. Hitting Ctrl+b and q will show you numbered label on top of each pane. To zoom pane press Ctrl+b and z.
+Windows To create new window press Ctrl+b and c.</description>
+    </item>
+    
+  </channel>
+</rss>

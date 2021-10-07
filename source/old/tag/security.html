@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>iaroki blog - security</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">iaroki blog </a></h1>
+                <nav><ul>
+                    <li><a href="/pages/links.html">Links</a></li>
+                    <li><a href="/pages/tasks.html">Tasks</a></li>
+                    <li><a href="/category/docker.html">Docker</a></li>
+                    <li><a href="/category/git.html">Git</a></li>
+                    <li><a href="/category/linux.html">Linux</a></li>
+                    <li><a href="/category/markdown.html">Markdown</a></li>
+                    <li><a href="/category/other.html">Other</a></li>
+                    <li><a href="/category/python.html">Python</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+
+            <aside id="featured" class="body">
+                <article>
+                    <h1 class="entry-title"><a href="/gpg-quick-start.html">GPG Quick Start</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2016-10-25T00:00:00+03:00">
+                Published: Tue 25 October 2016
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/iaroki.html">iaroki</a>
+        </address>
+<p>In <a href="/category/linux.html">Linux</a>.</p>
+<p>tags: <a href="/tag/encryption.html">encryption</a> <a href="/tag/gpg.html">gpg</a> <a href="/tag/linux.html">linux</a> <a href="/tag/security.html">security</a> </p>
+</footer><!-- /.post-info --><p>A quick HOWTO for getting started with GnuPG.</p>
+<h2>Your Key</h2>
+<p>Private and public keys are at the heart of gpg’s encryption and decryption processes. The best first step is to create a key pair for yourself.</p>
+<p>Generate a private key.</p>
+<div class="highlight"><pre><span></span>gpg --gen-key
+</pre></div>
+
+
+<p>You’ll have to answer a bunch of questions:</p>
+<p>What kind and size of key you want; the defaults are probably good enough.</p>
+<p>How long the key should be valid. You can safely choose a non-expiring key for your own use. If you plan to use a key for public signing, you might want to consider a yearly expiration.</p>
+<p>Your real name and e-mail address; these are necessary for identifying your key in a larger set of keys.</p>
+<p>A comment for your key, perhaps to distinquish a key used for special tasks like signing software releases. The comment can be empty.</p>
+<p>A passphrase. Whatever you do, don’t forget it! Your key, and all your encrypted files, will be useless if you do.</p>
+<h2>Keyserver Registration</h2>
+<p>You might also want to register your key with public keyservers so that others can retrieve your key without having to contact you directly.</p>
+<p>First up, you need to identify your key’s ID or fingerprint. The former is easier to use, the latter a bit more secure.</p>
+<p>In the example below,</p>
+<ul>
+<li>the ID is 8F54CA35; it’s on the line marked pub;</li>
+<li>the fingerprint is 00E5 2D6D 91C0 20D0 F596 2CC5 1E36 9C62 8F54 CA35.</li>
+</ul>
+<div class="highlight"><pre><span></span>[~]$ gpg --fingerprint heinlein
+pub   1024D/8F54CA35 2000-11-10
+      Key fingerprint = 00E5 2D6D 91C0 20D0 F596  2CC5 1E36 9C62 8F54 CA35
+uid                  Paul Heinlein &lt;heinlein@madboa.com&gt;
+uid                  [jpeg image of size 3853]
+uid                  Paul Heinlein (Galois, Inc.) &lt;heinlein@galois.com&gt;
+sub   1024g/6088B91E 2000-11-10
+</pre></div>
+
+
+<p>To send them, you’ll need to locate a public key server. MIT’s is well known, but there are others.</p>
+<div class="highlight"><pre><span></span># using ID (GnuPG versions 1 and 2)
+gpg --keyserver pgp.mit.edu --send-keys &#39;8F54CA35&#39;
+# using fingerprint (GnuPG version 2 and higher)
+gpg --keyserver pgp.mit.edu \
+    --send-keys &#39;00E5 2D6D 91C0 20D0 F596  2CC5 1E36 9C62 8F54 CA35&#39;
+</pre></div>
+
+
+<h2>ASCII Version</h2>
+<p>You may also want to generate an ASCII version of your public key for distribution by e-mail or posting on a web site.</p>
+<div class="highlight"><pre><span></span>gpg --armor --output pubkey.txt --export &#39;Your Name&#39;
+</pre></div>
+
+
+<h2>Encrypting a file for personal use</h2>
+<p>Encrypting files for your personal use is quite easy.</p>
+<p>Encrypt a file called <code>foo.txt</code>. The argument to the <code>--recipient</code> option should be the all or part of the name you used when generating your private key.</p>
+<div class="highlight"><pre><span></span># the long version
+gpg --encrypt --recipient &#39;Your Name&#39; foo.txt
+
+# using terse options
+gpg -e -r Name foo.txt
+</pre></div>
+
+
+<p>The encrypted version of the file will by default be named <code>foo.txt.gpg</code>. You can modify that behavior using the <code>--output</code> (<code>-o</code>) option.</p>
+<p>Decrypt the encrypted file. You’ll be asked to provide the passphrase you used when generating your private key. If you don’t use the --output option, the contents of the encrypted file will be sent to standard output.</p>
+<div class="highlight"><pre><span></span>gpg --output foo.txt --decrypt foo.txt.gpg
+</pre></div>
+
+
+<h2>Encrypting a file for someone else</h2>
+<p>The really cool thing about GnuPG is that you can safely encrypt files for others using publicly available keys.</p>
+<p>Import your friend’s key, which you might have received via e-mail or on a floppy. If the file is named key.asc, then just use the --import option to add it to your keyring:</p>
+<div class="highlight"><pre><span></span><span class="n">gpg</span> <span class="o">--</span><span class="kn">import</span> <span class="nn">key.asc</span>
+</pre></div>
+
+
+<p>That’s it! You can verify the import using the <code>--list-keys</code> option.</p>
+<p>Alternatively, you might be able to find your friend’s key on a public keyserver. Here’s what a session looks like when someone searches for my key.</p>
+<div class="highlight"><pre><span></span>[~]$ gpg --keyserver pool.sks-keyservers.net --search-keys &#39;paul heinlein&#39;
+gpg: searching for &quot;paul heinlein&quot; from hkp server pool.sks-keyservers.net
+(1)  Paul Heinlein &lt;heinlein@madboa.com&gt;
+       1024 bit RSA key 8F54CA35, created: 2014-06-16 (revoked)
+(2)  Paul Heinlein &lt;heinlein@ohsu.edu&gt;
+     Paul Heinlein &lt;heinlein@madboa.com&gt;
+     Paul Heinlein &lt;heinlein@cse.ogi.edu&gt;
+     Paul Heinlein (Galois, Inc.) &lt;heinlein@galois.com&gt;
+       1024 bit DSA key 8F54CA35, created: 2000-11-10
+Keys 1-2 of 2 for &quot;paul heinlein&quot;.  Enter number(s), N)ext, or Q)uit &gt; Q
+[~]$
+</pre></div>
+
+
+<p>A few notes on this:</p>
+<ul>
+<li>The first result (marked “revoked”) was the result of a failed test I conducted. You can ignore it.</li>
+<li>My key has several e-mail addresses attached to it. That’s perfectly normal.</li>
+<li>In the example above, I chose the Q)uit option. Had I pressed 1 or 2, that key would have been downloaded and added to my local keyring.</li>
+</ul>
+<p>Once you’ve got the other person’s public key, encrypt a file using it.</p>
+<div class="highlight"><pre><span></span>gpg --encrypt --recipient &#39;myfriend@his.isp.net&#39; foo.txt
+</pre></div>
+
+
+<p>You’ll end up with a file called <code>foo.txt.gpg</code> that you can send as an e-mail attachment or make available for downloading via ftp or the web.
+Decrypting a file from someone else</p>
+<p>If someone sends you an encrypted file, the file has typically been encrypted using your public key. Decrypting it is no different than decrypting a file you’ve encrypted for your own use.</p>
+<div class="highlight"><pre><span></span>gpg --output foo.txt --decrypt foo.txt.gpg
+</pre></div>
+
+
+<h2>Detached Signatures</h2>
+<p>GnuPG can come in handy when you want to be assured that the file you’ve just downloaded is the one its creator wants you to have. The OpenVPN developers, for instance, release GnuPG signatures for all their downloads.</p>
+<p>To verify a file using its detached signature, you must first have imported the signer’s public key. Assume we’ve downloaded <code>crucial.tar.gz</code> and the developers have also released a signature file, <code>crucial.tar.gz.asc</code>. Once you’re confident that you have the developers’ public key in your local keyring, then the verification step is easy:</p>
+<div class="highlight"><pre><span></span>gpg --verify crucial.tar.gz.asc crucial.tar.gz
+</pre></div>
+
+
+<p>Creating a detached signature is similarly easy. The following example will create a signature for <code>your-file.zip</code> called <code>your-file.zip.asc</code>.</p>
+<div class="highlight"><pre><span></span>gpg --armor --detach-sign your-file.zip
+</pre></div>
+
+
+<p>People who have imported your public key into their keyrings can then verify that their version of your file is identical to theirs.</p>
+<h2>Basic Key Management</h2>
+<p>After a while, you will probably have several keys in your ring. It’s easy to list them all:</p>
+<div class="highlight"><pre><span></span>gpg --list-keys
+</pre></div>
+
+
+<p>Should you lose trust in or contact with a person with a key in your ring, you’ll want to delete it:</p>
+<div class="highlight"><pre><span></span>gpg --delete-key &#39;myfriend@his.isp.com&#39;
+</pre></div>                </article>
+            </aside><!-- /#featured -->
+        <section id="extras" class="body">
+                <div class="blogroll">
+                        <h2>links</h2>
+                        <ul>
+                            <li><a href="http://getpelican.com/">Pelican</a></li>
+                            <li><a href="http://python.org/">Python.org</a></li>
+                            <li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
+                        </ul>
+                </div><!-- /.blogroll -->
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+
+                            <li><a href="https://github.com/iaroki">Github</a></li>
+                            <li><a href="https://facebook.com/johnnymnemonic">Facebook</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+    <script type="text/javascript">
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-112838187-1', 'auto');
+    ga('send', 'pageview');
+    </script>
+</body>
+</html>

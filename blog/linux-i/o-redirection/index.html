@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="chrome=1">
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="referrer" content="no-referrer">
+<meta name="author" content="iaroki">
+<meta name="description" content="Name Number Description     stdin 0 Connected to the keyboard, most programs read input from this file   stdout 1 Attached to the screen, and all programs send their results to this file   stderr 2 Programs send status/error messages to this file which is also attached to the screen    Redirect standard output as in the example below:
+$ ls -l &gt; ls.">
+
+<meta property="og:title" content="Linux I/O redirection" />
+<meta property="og:description" content="Name Number Description     stdin 0 Connected to the keyboard, most programs read input from this file   stdout 1 Attached to the screen, and all programs send their results to this file   stderr 2 Programs send status/error messages to this file which is also attached to the screen    Redirect standard output as in the example below:
+$ ls -l &gt; ls." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://iaroki.github.io/blog/linux-i/o-redirection/" />
+
+
+
+<meta property="article:published_time" content="2017-03-22T12:24:33&#43;03:00"/>
+
+<meta property="article:modified_time" content="2017-03-22T12:24:33&#43;03:00"/>
+
+
+
+
+
+
+
+
+
+
+
+
+<title>
+
+
+     Linux I/O redirection 
+
+</title>
+<link rel="canonical" href="https://iaroki.github.io/blog/linux-i/o-redirection/">
+
+
+
+
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/styles/default.min.css">
+
+
+
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Ubuntu+Mono:400,400i,700,700i|Raleway:500">
+
+
+
+    
+    <link rel="stylesheet" href="https://iaroki.github.io/css/reset.css?t=2018-11-21%2015%3a01%3a50.626623024%20%2b0000%20UTC%20m%3d%2b0.463966365">
+    <link rel="stylesheet" href="https://iaroki.github.io/css/pygments.css?t=2018-11-21%2015%3a01%3a50.626623024%20%2b0000%20UTC%20m%3d%2b0.463966365">
+    <link rel="stylesheet" href="https://iaroki.github.io/css/main.css?t=2018-11-21%2015%3a01%3a50.626623024%20%2b0000%20UTC%20m%3d%2b0.463966365">
+    
+        <link rel="stylesheet" href="https://iaroki.github.io/css/override.css?t=2018-11-21%2015%3a01%3a50.626623024%20%2b0000%20UTC%20m%3d%2b0.463966365">
+    
+
+
+
+
+<link rel="shortcut icon"
+
+    href="https://iaroki.github.io/img/zen.ico"
+
+>
+
+
+
+
+
+
+
+
+</head>
+
+
+<body lang="en">
+
+<section class="header">
+    <div class="container">
+        <div class="content">
+            
+                
+                
+                
+                
+                
+                    
+                
+                    
+                
+                
+                <a href="https://iaroki.github.io/"><img class="avatar" src="https://iaroki.github.io/img/zen.png" srcset="https://iaroki.github.io/img/zen.png 1x"></a>
+            
+            <a href="https://iaroki.github.io/"><div class="name">iaroki</div></a>
+            
+            <nav>
+                <ul>
+                    
+                        <li class="nav-blog"><a href="https://iaroki.github.io/blog/"><span>Blog</span></a></li>
+                    
+                        <li class="nav-about"><a href="https://iaroki.github.io/about/"><span>About</span></a></li>
+                    
+                        <li class="nav-code"><a href="https://iaroki.github.io/code/"><span>Code</span></a></li>
+                    
+                        <li class="nav-links"><a href="https://iaroki.github.io/links/"><span>Links</span></a></li>
+                    
+                </ul>
+            </nav>
+        </div>
+    </div>
+</section>
+
+<section class="icons">
+    <div class="container">
+        <div class="content">
+        
+            <a href="//github.com/iaroki" target="_blank" rel="noopener"><img class="icon" src="https://iaroki.github.io/img/github.svg" alt="github" /></a>
+        
+
+        
+            <a href="//gitlab.com/iaroki" target="_blank" rel="noopener"><img class="icon" src="https://iaroki.github.io/img/gitlab.svg" alt="gitlab" /></a>
+        
+
+        
+            <a href="//twitter.com/_iaroki" target="_blank" rel="noopener"><img class="icon" src="https://iaroki.github.io/img/twitter.svg" alt="twitter" /></a>
+        
+
+	
+
+        
+
+        
+            <a href="//mastodon.social/@iaroki" target="_blank" rel="noopener"><img class="icon" src="https://iaroki.github.io/img/mastodon.svg" alt="mastodon" /></a>
+        
+
+        
+            <a href="//linkedin.com/in/iaroki" target="_blank" rel="noopener"><img class="icon" src="https://iaroki.github.io/img/linkedin.svg" alt="linkedin" /></a>
+        
+
+        
+
+        
+            <a href="//instagram.com/homelessstreetcat" target="_blank" rel="noopener"><img class="icon" src="https://iaroki.github.io/img/instagram.svg" alt="instagram" /></a>
+        
+
+        
+            <a href="//500px.com/iaroki" target="_blank" rel="noopener"><img class="icon" src="https://iaroki.github.io/img/500px.svg" alt="500px" /></a>
+        
+
+        
+
+        
+            <a href="mailto:iaroki@protonmail.com"><img class="icon" src="https://iaroki.github.io/img/email.svg" alt="email" /></a>
+        
+
+        
+
+        
+        </div>
+    </div>
+</section>
+
+
+<section class="main post non-narrow zero-top-spacing">
+    <div class="container">
+        <div class="content">
+            <div class="front-matter">
+                <div class="title-container">
+                    <div class="page-heading">
+
+    Linux I/O redirection
+
+</div>
+
+                    <div class="initials"><a href="https://iaroki.github.io"></a></div>
+                </div>
+                <div class="meta">
+                    
+                    <div class="date" title='Wed Mar 22 2017 12:24:33 &#43;0300'>Mar 22, 2017</div>
+                    
+                    
+		    <div class="reading-time"><div class="middot"></div>2 minutes read</div>
+                    
+                </div>
+            </div>
+            <div class="markdown">
+                <table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Number</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>stdin</td>
+<td>0</td>
+<td>Connected to the keyboard, most programs read input from this file</td>
+</tr>
+
+<tr>
+<td>stdout</td>
+<td>1</td>
+<td>Attached to the screen, and all programs send their results to this file</td>
+</tr>
+
+<tr>
+<td>stderr</td>
+<td>2</td>
+<td>Programs send status/error messages to this file which is also attached to the screen</td>
+</tr>
+</tbody>
+</table>
+
+<p>Redirect standard output as in the example below:</p>
+
+<pre><code class="language-bash">$ ls -l &gt; ls.log
+</code></pre>
+
+<p>To append the output of a command, use the <code>“&gt;&gt;”</code>operator.</p>
+
+<pre><code class="language-bash">$ ls -l &gt;&gt; ls.log
+</code></pre>
+
+<p>Using the file descriptor number, the output redirect command above is the same as:</p>
+
+<pre><code class="language-bash">$ ls -l 1&gt; ls.log
+</code></pre>
+
+<p>You can redirect the standard error to a file as below:</p>
+
+<pre><code class="language-bash">$ ls -l /root/ 2&gt;ls-error.log
+$ cat ls-error.log
+</code></pre>
+
+<p>It is also possible to capture all the output of a command (both standard output and standard error) into a single file. This can be done in two possible ways by specifying the file descriptor numbers:</p>
+
+<ol>
+<li><p>The first is a relatively old method which works as follows:</p>
+
+<pre><code class="language-bash">$ ls -l /root/ &gt;ls-error.log 2&gt;&amp;1
+</code></pre>
+
+<p>The command above means the shell will first send the output of the ls command to the file ls-error.log (using &gt;ls-error.log), and then writes all error messages to the file descriptor 2 (standard output) which has been redirected to the file ls-error.log (using 2&gt;&amp;1). Implying that standard error is also sent to the same file as standard output.</p></li>
+
+<li><p>The second and direct method is:</p></li>
+</ol>
+
+<pre><code class="language-bash">$ ls -l /root/ &amp;&gt;ls-error.log
+</code></pre>
+
+<hr />
+
+                <br>
+                
+                  <div class="tags">
+                    <strong>Tags:</strong>
+                  
+                    <a href="https://iaroki.github.io/tags/linux">linux</a>
+                  
+                  </div>
+                  <br />
+                
+                <p class="back-to-posts"><a href="https://iaroki.github.io/blog">Back to posts</a></p>
+            </div>
+            <br>
+            <div class="disqus">
+                
+            </div>
+            
+        </div>
+    </div>
+</section>
+
+
+
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/highlight.min.js"></script>
+  
+
+  <script type="text/javascript">
+    hljs.initHighlightingOnLoad();
+  </script>
+
+
+
+
+
+</body>
+</html>
+

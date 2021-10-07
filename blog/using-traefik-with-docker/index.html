@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="chrome=1">
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="referrer" content="no-referrer">
+<meta name="author" content="iaroki">
+<meta name="description" content="Start Traefik:
+~ &gt;&gt;&gt; docker run -it --rm --name traefik -p 80:80 -p 8080:8080 -v /var/run/docker.sock:/var/run/docker.sock traefik --api --docker  Start some services:
+ Gitea container:  docker run -it --rm --name gitea -l traefik.frontend.rule=Host:gitea.iaroki.io -l traefik.port=3000 gitea/gitea   Blog container:  docker run -it --rm --name blog -l traefik.frontend.rule=Host:blog.iaroki.io blog  Now Gitea will be available at gitea.iaroki.io and blog at blog.iaroki.io.">
+
+<meta property="og:title" content="Using Traefik with Docker" />
+<meta property="og:description" content="Start Traefik:
+~ &gt;&gt;&gt; docker run -it --rm --name traefik -p 80:80 -p 8080:8080 -v /var/run/docker.sock:/var/run/docker.sock traefik --api --docker  Start some services:
+ Gitea container:  docker run -it --rm --name gitea -l traefik.frontend.rule=Host:gitea.iaroki.io -l traefik.port=3000 gitea/gitea   Blog container:  docker run -it --rm --name blog -l traefik.frontend.rule=Host:blog.iaroki.io blog  Now Gitea will be available at gitea.iaroki.io and blog at blog.iaroki.io." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://iaroki.github.io/blog/using-traefik-with-docker/" />
+
+
+
+<meta property="article:published_time" content="2018-10-26T13:20:25&#43;00:00"/>
+
+<meta property="article:modified_time" content="2018-10-26T13:20:25&#43;00:00"/>
+
+
+
+
+
+
+
+
+
+
+
+
+<title>
+
+
+     Using Traefik with Docker 
+
+</title>
+<link rel="canonical" href="https://iaroki.github.io/blog/using-traefik-with-docker/">
+
+
+
+
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/styles/default.min.css">
+
+
+
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Ubuntu+Mono:400,400i,700,700i|Raleway:500">
+
+
+
+    
+    <link rel="stylesheet" href="https://iaroki.github.io/css/reset.css?t=2018-11-21%2015%3a01%3a50.574270695%20%2b0000%20UTC%20m%3d%2b0.411614031">
+    <link rel="stylesheet" href="https://iaroki.github.io/css/pygments.css?t=2018-11-21%2015%3a01%3a50.574270695%20%2b0000%20UTC%20m%3d%2b0.411614031">
+    <link rel="stylesheet" href="https://iaroki.github.io/css/main.css?t=2018-11-21%2015%3a01%3a50.574270695%20%2b0000%20UTC%20m%3d%2b0.411614031">
+    
+        <link rel="stylesheet" href="https://iaroki.github.io/css/override.css?t=2018-11-21%2015%3a01%3a50.574270695%20%2b0000%20UTC%20m%3d%2b0.411614031">
+    
+
+
+
+
+<link rel="shortcut icon"
+
+    href="https://iaroki.github.io/img/zen.ico"
+
+>
+
+
+
+
+
+
+
+
+</head>
+
+
+<body lang="en">
+
+<section class="header">
+    <div class="container">
+        <div class="content">
+            
+                
+                
+                
+                
+                
+                    
+                
+                    
+                
+                
+                <a href="https://iaroki.github.io/"><img class="avatar" src="https://iaroki.github.io/img/zen.png" srcset="https://iaroki.github.io/img/zen.png 1x"></a>
+            
+            <a href="https://iaroki.github.io/"><div class="name">iaroki</div></a>
+            
+            <nav>
+                <ul>
+                    
+                        <li class="nav-blog"><a href="https://iaroki.github.io/blog/"><span>Blog</span></a></li>
+                    
+                        <li class="nav-about"><a href="https://iaroki.github.io/about/"><span>About</span></a></li>
+                    
+                        <li class="nav-code"><a href="https://iaroki.github.io/code/"><span>Code</span></a></li>
+                    
+                        <li class="nav-links"><a href="https://iaroki.github.io/links/"><span>Links</span></a></li>
+                    
+                </ul>
+            </nav>
+        </div>
+    </div>
+</section>
+
+<section class="icons">
+    <div class="container">
+        <div class="content">
+        
+            <a href="//github.com/iaroki" target="_blank" rel="noopener"><img class="icon" src="https://iaroki.github.io/img/github.svg" alt="github" /></a>
+        
+
+        
+            <a href="//gitlab.com/iaroki" target="_blank" rel="noopener"><img class="icon" src="https://iaroki.github.io/img/gitlab.svg" alt="gitlab" /></a>
+        
+
+        
+            <a href="//twitter.com/_iaroki" target="_blank" rel="noopener"><img class="icon" src="https://iaroki.github.io/img/twitter.svg" alt="twitter" /></a>
+        
+
+	
+
+        
+
+        
+            <a href="//mastodon.social/@iaroki" target="_blank" rel="noopener"><img class="icon" src="https://iaroki.github.io/img/mastodon.svg" alt="mastodon" /></a>
+        
+
+        
+            <a href="//linkedin.com/in/iaroki" target="_blank" rel="noopener"><img class="icon" src="https://iaroki.github.io/img/linkedin.svg" alt="linkedin" /></a>
+        
+
+        
+
+        
+            <a href="//instagram.com/homelessstreetcat" target="_blank" rel="noopener"><img class="icon" src="https://iaroki.github.io/img/instagram.svg" alt="instagram" /></a>
+        
+
+        
+            <a href="//500px.com/iaroki" target="_blank" rel="noopener"><img class="icon" src="https://iaroki.github.io/img/500px.svg" alt="500px" /></a>
+        
+
+        
+
+        
+            <a href="mailto:iaroki@protonmail.com"><img class="icon" src="https://iaroki.github.io/img/email.svg" alt="email" /></a>
+        
+
+        
+
+        
+        </div>
+    </div>
+</section>
+
+
+<section class="main post non-narrow zero-top-spacing">
+    <div class="container">
+        <div class="content">
+            <div class="front-matter">
+                <div class="title-container">
+                    <div class="page-heading">
+
+    Using Traefik with Docker
+
+</div>
+
+                    <div class="initials"><a href="https://iaroki.github.io"></a></div>
+                </div>
+                <div class="meta">
+                    
+                    <div class="date" title='Fri Oct 26 2018 13:20:25 UTC'>Oct 26, 2018</div>
+                    
+                    
+		    <div class="reading-time"><div class="middot"></div>One minute read</div>
+                    
+                </div>
+            </div>
+            <div class="markdown">
+                <p>Start Traefik:</p>
+
+<pre><code class="language-bash">~  &gt;&gt;&gt; docker run -it --rm --name traefik -p 80:80 -p 8080:8080 -v /var/run/docker.sock:/var/run/docker.sock traefik --api --docker
+</code></pre>
+
+<p>Start some services:</p>
+
+<ul>
+<li>Gitea container:</li>
+</ul>
+
+<pre><code class="language-bash">docker run -it --rm --name gitea -l traefik.frontend.rule=Host:gitea.iaroki.io -l traefik.port=3000 gitea/gitea
+</code></pre>
+
+<ul>
+<li>Blog container:</li>
+</ul>
+
+<pre><code class="language-bash">docker run -it --rm --name blog -l traefik.frontend.rule=Host:blog.iaroki.io blog
+</code></pre>
+
+<p>Now Gitea will be available at <code>gitea.iaroki.io</code> and blog at <code>blog.iaroki.io</code>.</p>
+
+                <br>
+                
+                  <div class="tags">
+                    <strong>Tags:</strong>
+                  
+                    <a href="https://iaroki.github.io/tags/linux">linux</a>
+                  
+                    <a href="https://iaroki.github.io/tags/docker">docker</a>
+                  
+                    <a href="https://iaroki.github.io/tags/traefik">traefik</a>
+                  
+                    <a href="https://iaroki.github.io/tags/containers">containers</a>
+                  
+                  </div>
+                  <br />
+                
+                <p class="back-to-posts"><a href="https://iaroki.github.io/blog">Back to posts</a></p>
+            </div>
+            <br>
+            <div class="disqus">
+                
+            </div>
+            
+        </div>
+    </div>
+</section>
+
+
+
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/highlight.min.js"></script>
+  
+
+  <script type="text/javascript">
+    hljs.initHighlightingOnLoad();
+  </script>
+
+
+
+
+
+</body>
+</html>
+

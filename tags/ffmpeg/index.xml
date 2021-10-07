@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Ffmpeg on iaroki&#39;s blog</title>
+    <link>https://iaroki.github.io/tags/ffmpeg/</link>
+    <description>Recent content in Ffmpeg on iaroki&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-US</language>
+    <lastBuildDate>Tue, 05 Dec 2017 12:49:08 +0300</lastBuildDate>
+    
+	<atom:link href="https://iaroki.github.io/tags/ffmpeg/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Convert m4a to ogg with ffmpeg</title>
+      <link>https://iaroki.github.io/blog/convert-m4a-to-ogg-with-ffmpeg/</link>
+      <pubDate>Tue, 05 Dec 2017 12:49:08 +0300</pubDate>
+      
+      <guid>https://iaroki.github.io/blog/convert-m4a-to-ogg-with-ffmpeg/</guid>
+      <description>Recently i downloaded some lectures from youtube in m4a format. My hardware portable player doesn&amp;rsquo;t support it so I converted files like this:
+ffmpeg -i file.m4a -acodec libvorbis -aq 4 -vn -ac 2 -map_metadata 0 file.ogg  Complete script is:
+#!/bin/bash # Author: Simon Legner &amp;lt;Simon.Legner@gmail.com&amp;gt; convert () { in=&amp;quot;$1&amp;quot; out=&amp;quot;${in%.m4a}.ogg&amp;quot; ffmpeg -i &amp;quot;$in&amp;quot; \ -acodec libvorbis -aq 4 -vn -ac 2 \ -map_metadata 0 \ &amp;quot;$out&amp;quot; } if [[ $# == 0 ]]; then echo Converts m4a files to Ogg Vorbis using ffmpeg.</description>
+    </item>
+    
+  </channel>
+</rss>

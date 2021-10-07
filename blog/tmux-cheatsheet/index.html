@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="chrome=1">
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="referrer" content="no-referrer">
+<meta name="author" content="iaroki">
+<meta name="description" content="Meta key for tmux is Ctl&#43;b!
+Panes To split pane horisontal press Ctrl&#43;b and &quot;. To split pane vertical press Ctrl&#43;b and %. Navigate through panes with Ctrl&#43;b and direction; Where direction is one of the arrow keys. Cycle through the panes with Ctrl&#43;b and o. Hitting Ctrl&#43;b and q will show you numbered label on top of each pane. To zoom pane press Ctrl&#43;b and z.
+Windows To create new window press Ctrl&#43;b and c.">
+
+<meta property="og:title" content="Tmux cheatsheet" />
+<meta property="og:description" content="Meta key for tmux is Ctl&#43;b!
+Panes To split pane horisontal press Ctrl&#43;b and &quot;. To split pane vertical press Ctrl&#43;b and %. Navigate through panes with Ctrl&#43;b and direction; Where direction is one of the arrow keys. Cycle through the panes with Ctrl&#43;b and o. Hitting Ctrl&#43;b and q will show you numbered label on top of each pane. To zoom pane press Ctrl&#43;b and z.
+Windows To create new window press Ctrl&#43;b and c." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://iaroki.github.io/blog/tmux-cheatsheet/" />
+
+
+
+<meta property="article:published_time" content="2017-06-08T12:26:29&#43;03:00"/>
+
+<meta property="article:modified_time" content="2017-06-08T12:26:29&#43;03:00"/>
+
+
+
+
+
+
+
+
+
+
+
+
+<title>
+
+
+     Tmux cheatsheet 
+
+</title>
+<link rel="canonical" href="https://iaroki.github.io/blog/tmux-cheatsheet/">
+
+
+
+
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/styles/default.min.css">
+
+
+
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Ubuntu+Mono:400,400i,700,700i|Raleway:500">
+
+
+
+    
+    <link rel="stylesheet" href="https://iaroki.github.io/css/reset.css?t=2018-11-21%2015%3a01%3a50.629597761%20%2b0000%20UTC%20m%3d%2b0.466941114">
+    <link rel="stylesheet" href="https://iaroki.github.io/css/pygments.css?t=2018-11-21%2015%3a01%3a50.629597761%20%2b0000%20UTC%20m%3d%2b0.466941114">
+    <link rel="stylesheet" href="https://iaroki.github.io/css/main.css?t=2018-11-21%2015%3a01%3a50.629597761%20%2b0000%20UTC%20m%3d%2b0.466941114">
+    
+        <link rel="stylesheet" href="https://iaroki.github.io/css/override.css?t=2018-11-21%2015%3a01%3a50.629597761%20%2b0000%20UTC%20m%3d%2b0.466941114">
+    
+
+
+
+
+<link rel="shortcut icon"
+
+    href="https://iaroki.github.io/img/zen.ico"
+
+>
+
+
+
+
+
+
+
+
+</head>
+
+
+<body lang="en">
+
+<section class="header">
+    <div class="container">
+        <div class="content">
+            
+                
+                
+                
+                
+                
+                    
+                
+                    
+                
+                
+                <a href="https://iaroki.github.io/"><img class="avatar" src="https://iaroki.github.io/img/zen.png" srcset="https://iaroki.github.io/img/zen.png 1x"></a>
+            
+            <a href="https://iaroki.github.io/"><div class="name">iaroki</div></a>
+            
+            <nav>
+                <ul>
+                    
+                        <li class="nav-blog"><a href="https://iaroki.github.io/blog/"><span>Blog</span></a></li>
+                    
+                        <li class="nav-about"><a href="https://iaroki.github.io/about/"><span>About</span></a></li>
+                    
+                        <li class="nav-code"><a href="https://iaroki.github.io/code/"><span>Code</span></a></li>
+                    
+                        <li class="nav-links"><a href="https://iaroki.github.io/links/"><span>Links</span></a></li>
+                    
+                </ul>
+            </nav>
+        </div>
+    </div>
+</section>
+
+<section class="icons">
+    <div class="container">
+        <div class="content">
+        
+            <a href="//github.com/iaroki" target="_blank" rel="noopener"><img class="icon" src="https://iaroki.github.io/img/github.svg" alt="github" /></a>
+        
+
+        
+            <a href="//gitlab.com/iaroki" target="_blank" rel="noopener"><img class="icon" src="https://iaroki.github.io/img/gitlab.svg" alt="gitlab" /></a>
+        
+
+        
+            <a href="//twitter.com/_iaroki" target="_blank" rel="noopener"><img class="icon" src="https://iaroki.github.io/img/twitter.svg" alt="twitter" /></a>
+        
+
+	
+
+        
+
+        
+            <a href="//mastodon.social/@iaroki" target="_blank" rel="noopener"><img class="icon" src="https://iaroki.github.io/img/mastodon.svg" alt="mastodon" /></a>
+        
+
+        
+            <a href="//linkedin.com/in/iaroki" target="_blank" rel="noopener"><img class="icon" src="https://iaroki.github.io/img/linkedin.svg" alt="linkedin" /></a>
+        
+
+        
+
+        
+            <a href="//instagram.com/homelessstreetcat" target="_blank" rel="noopener"><img class="icon" src="https://iaroki.github.io/img/instagram.svg" alt="instagram" /></a>
+        
+
+        
+            <a href="//500px.com/iaroki" target="_blank" rel="noopener"><img class="icon" src="https://iaroki.github.io/img/500px.svg" alt="500px" /></a>
+        
+
+        
+
+        
+            <a href="mailto:iaroki@protonmail.com"><img class="icon" src="https://iaroki.github.io/img/email.svg" alt="email" /></a>
+        
+
+        
+
+        
+        </div>
+    </div>
+</section>
+
+
+<section class="main post non-narrow zero-top-spacing">
+    <div class="container">
+        <div class="content">
+            <div class="front-matter">
+                <div class="title-container">
+                    <div class="page-heading">
+
+    Tmux cheatsheet
+
+</div>
+
+                    <div class="initials"><a href="https://iaroki.github.io"></a></div>
+                </div>
+                <div class="meta">
+                    
+                    <div class="date" title='Thu Jun 8 2017 12:26:29 &#43;0300'>Jun 8, 2017</div>
+                    
+                    
+		    <div class="reading-time"><div class="middot"></div>One minute read</div>
+                    
+                </div>
+            </div>
+            <div class="markdown">
+                
+
+<p>Meta key for tmux is <code>Ctl+b</code>!</p>
+
+<h3 id="panes">Panes</h3>
+
+<p>To split pane horisontal press <code>Ctrl+b</code> and <code>&quot;</code>.
+To split pane vertical press <code>Ctrl+b</code> and <code>%</code>.
+Navigate through panes with <code>Ctrl+b</code> and <code>direction</code>; Where <code>direction</code> is one of the arrow keys.
+Cycle through the panes with <code>Ctrl+b</code> and <code>o</code>.
+Hitting <code>Ctrl+b</code> and <code>q</code> will show you numbered label on top of each pane.
+To zoom pane press <code>Ctrl+b</code> and <code>z</code>.</p>
+
+<h3 id="windows">Windows</h3>
+
+<p>To create new window press <code>Ctrl+b</code> and <code>c</code>.
+To switch between windows press <code>Ctrl+b</code> and <code>#</code>; Where <code>#</code> number of window.
+Rename window with <code>Ctrl+b</code> and <code>,</code>.</p>
+
+<h3 id="sessions">Sessions</h3>
+
+<p>List available sessions in terminal with <code>tmux ls</code>.
+To attach to session write <code>tmux a &lt;session name&gt;</code>.
+To detach from running session press <code>Ctrl+b</code> and <code>d</code>.
+Rename current session with <code>Ctrl+b</code> and <code>$</code>.</p>
+
+<h3 id="scrolling-buffer">Scrolling buffer</h3>
+
+<p>To scroll just hit <code>Ctrl+b</code> and <code>[</code>. Navigate with arrow keys or page keys.</p>
+
+<p>Yet another cool shortcut is <code>Ctrl+b</code> and <code>t</code> which print clock.</p>
+
+<hr />
+
+                <br>
+                
+                  <div class="tags">
+                    <strong>Tags:</strong>
+                  
+                    <a href="https://iaroki.github.io/tags/linux">linux</a>
+                  
+                    <a href="https://iaroki.github.io/tags/tmux">tmux</a>
+                  
+                  </div>
+                  <br />
+                
+                <p class="back-to-posts"><a href="https://iaroki.github.io/blog">Back to posts</a></p>
+            </div>
+            <br>
+            <div class="disqus">
+                
+            </div>
+            
+        </div>
+    </div>
+</section>
+
+
+
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/highlight.min.js"></script>
+  
+
+  <script type="text/javascript">
+    hljs.initHighlightingOnLoad();
+  </script>
+
+
+
+
+
+</body>
+</html>
+

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Iptables on iaroki&#39;s blog</title>
+    <link>https://iaroki.github.io/tags/iptables/</link>
+    <description>Recent content in Iptables on iaroki&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-US</language>
+    <lastBuildDate>Thu, 02 Nov 2017 12:42:51 +0300</lastBuildDate>
+    
+	<atom:link href="https://iaroki.github.io/tags/iptables/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Iptables setup</title>
+      <link>https://iaroki.github.io/blog/iptables-setup/</link>
+      <pubDate>Thu, 02 Nov 2017 12:42:51 +0300</pubDate>
+      
+      <guid>https://iaroki.github.io/blog/iptables-setup/</guid>
+      <description>With iptables, several different packet matching tables are defined and each table can contain a number of built-in chains as well as some chains defined by the user. The chains are actually lists of rules that match set of packets and each rule specifies what to do with the matched packet.
+The default table is the filter table and it contains the built-in chains INPUT, FORWARD, and OUTPUT. The INPUT chain is used for packets destined to local sockets, the FORWARD chain is used for packets being routed through the box while the OUTPUT chain is used for locally-generated packets.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Git on iaroki&#39;s blog</title>
+    <link>https://iaroki.github.io/tags/git/</link>
+    <description>Recent content in Git on iaroki&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-US</language>
+    <lastBuildDate>Mon, 30 Oct 2017 12:39:27 +0300</lastBuildDate>
+    
+	<atom:link href="https://iaroki.github.io/tags/git/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Git log customizsation</title>
+      <link>https://iaroki.github.io/blog/git-log-customizsation/</link>
+      <pubDate>Mon, 30 Oct 2017 12:39:27 +0300</pubDate>
+      
+      <guid>https://iaroki.github.io/blog/git-log-customizsation/</guid>
+      <description>git log show you history, but it looks not so pretty:
+commit 244bf1ff360f6e4db6ce01829670306d9e0fa004 (HEAD -&amp;gt; master) Author: hostmorke &amp;lt;hostmorke@hostmorke.io&amp;gt; Date: Mon Oct 30 17:13:33 2017 +0200 Vagrant post commit 383de7b4e31c53e8ea008c9bd87e6bfa5f012677 (origin/master) Author: hostmorke &amp;lt;hostmorke@hostmorke.io&amp;gt; Date: Mon Oct 30 16:12:08 2017 +0200 new theme commit 0d2111b692b208c4f8106abe49bd53695b5eb851 Author: iaroki &amp;lt;iaroki@protonmail.com&amp;gt; Date: Fri Oct 27 21:02:32 2017 +0300 lxc backup commit 39f24f17d76e47f68f1d7cb64753159b084d2625 Author: hostmorke &amp;lt;hostmorke@hostmorke.io&amp;gt; Date: Fri Oct 27 19:17:45 2017 +0300 lxc shared folder  It has a lot of waste information, so you can use option --oneline to show only commit id and comment:</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,158 @@
+---
+title: "Git log customizsation"
+date: 2017-10-30T12:39:27+03:00
+tags: ["linux", "git"]
+---
+
+`git log` show you history, but it looks not so pretty:
+
+```
+commit 244bf1ff360f6e4db6ce01829670306d9e0fa004 (HEAD -> master)
+Author: hostmorke <hostmorke@hostmorke.io>
+Date:   Mon Oct 30 17:13:33 2017 +0200
+
+    Vagrant post
+
+commit 383de7b4e31c53e8ea008c9bd87e6bfa5f012677 (origin/master)
+Author: hostmorke <hostmorke@hostmorke.io>
+Date:   Mon Oct 30 16:12:08 2017 +0200
+
+    new theme
+
+commit 0d2111b692b208c4f8106abe49bd53695b5eb851
+Author: iaroki <iaroki@protonmail.com>
+Date:   Fri Oct 27 21:02:32 2017 +0300
+
+    lxc backup
+
+commit 39f24f17d76e47f68f1d7cb64753159b084d2625
+Author: hostmorke <hostmorke@hostmorke.io>
+Date:   Fri Oct 27 19:17:45 2017 +0300
+
+    lxc shared folder
+```
+
+It has a lot of waste information, so you can use option `--oneline` to show only commit *id* and *comment*:
+
+```
+244bf1f (HEAD -> master) Vagrant post
+383de7b (origin/master) new theme
+0d2111b lxc backup
+39f24f1 lxc shared folder
+ae4e3c9 lxc bridge
+9afcaa3 curl ip
+29d2493 wheezy script
+81ab5a1 old pages cleanup
+3171059 add Python page
+368bfe7 add Git page
+f5d9f12 add Markdown pages
+31af2b9 add docker pages
+743aa12 cleaning up
+f37cf4b Merge branch 'master' of https://github.com/iaroki/iaroki.github.io
+58e097d Migration to Pelican
+be31a64 asterisk install
+e49e96e systemd unit creation
+72ede8b ncat/nc variant
+0dc9d79 TOR hidden service
+f7b9d3f GUI apps in LXD on Fedora
+63bd83c Merge branch 'master' of https://github.com/iaroki/iaroki.github.io
+643da0b LXD on Fedora
+43f1a47 added Volumes
+39b8cc9 added HTTP server info
+20e922b tmux cheatsheet
+```
+
+To add visibility of merge point add `--graph`:
+
+```
+* 244bf1f (HEAD -> master) Vagrant post
+* 383de7b (origin/master) new theme
+* 0d2111b lxc backup
+* 39f24f1 lxc shared folder
+* ae4e3c9 lxc bridge
+* 9afcaa3 curl ip
+* 29d2493 wheezy script
+* 3171059 add Python page
+* 368bfe7 add Git page
+* f5d9f12 add Markdown pages
+* cea9209 date fix
+* 31af2b9 add docker pages
+* cb1e028 old page
+*   f37cf4b Merge branch 'master' of https://github.com/iaroki/iaroki.github.io
+|\  
+| * be31a64 asterisk install
+* | 58e097d Migration to Pelican
+|/  
+* e49e96e systemd unit creation
+* 72ede8b ncat/nc variant
+* 0dc9d79 TOR hidden service
+* f7b9d3f GUI apps in LXD on Fedora
+*   63bd83c Merge branch 'master' of https://github.com/iaroki/iaroki.github.io
+|\  
+| * 43f1a47 added Volumes
+| * 39b8cc9 added HTTP server info
+* | 643da0b LXD on Fedora
+|/  
+* 20e922b tmux cheatsheet
+* dc6163d fiex typos
+```
+
+To see all the branches in the history  add the `--all` flag:
+
+```
+git log --graph --oneline --all
+```
+
+To shown every branch in a different colour set the `--decorate` flag:
+
+```
+git log --graph --oneline --all --decorate
+```
+
+So resulting alias may be: `alias gitgraph="git log --graph --oneline --all --decorate"`:
+
+```
+* 244bf1f (HEAD -> master) Vagrant post
+* 383de7b (origin/master) new theme
+* 0d2111b lxc backup
+* 39f24f1 lxc shared folder
+* ae4e3c9 lxc bridge
+* 9afcaa3 curl ip
+* 29d2493 wheezy script
+* 3171059 add Python page
+* 368bfe7 add Git page
+* 31af2b9 add docker pages
+* 743aa12 cleaning up
+* cb1e028 old page
+*   f37cf4b Merge branch 'master' of https://github.com/iaroki/iaroki.github.io
+|\  
+| * be31a64 asterisk install
+* | 58e097d Migration to Pelican
+|/  
+* e49e96e systemd unit creation
+* 72ede8b ncat/nc variant
+* 0dc9d79 TOR hidden service
+* f7b9d3f GUI apps in LXD on Fedora
+*   63bd83c Merge branch 'master' of https://github.com/iaroki/iaroki.github.io
+|\  
+| * 43f1a47 added Volumes
+| * 39b8cc9 added HTTP server info
+* | 643da0b LXD on Fedora
+|/  
+* 20e922b tmux cheatsheet
+* dc6163d fiex typos
+* 9714257 Flask docs link
+* fa3d929 electron info
+* cdc85f5 added markdown references
+* c30b24a main layout
+* f524e91 listed
+*   743c833 Merge branch 'master' of https://github.com/iaroki/iaroki.github.io
+|\  
+| * 4e163a8 Set theme jekyll-theme-tactile
+* | e03bb51 md
+|/  
+* 976f05e README added
+* 25e12ed the beginning
+```
+
+---

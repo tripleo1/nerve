@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="chrome=1">
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="referrer" content="no-referrer">
+<meta name="author" content="iaroki">
+<meta name="description" content="Load balancing is a very useful technique to distribute the incoming network traffic across a number servers. With this technique you can reduce the resource usage, lower the response time and avoid server overload.
+Nginx Load Balancing is one of the most efficient options available to achieve full application redundancy, and it is relatively easy and quick to setup. We will configure Nginx load balancing using the Round robin mechanism.">
+
+<meta property="og:title" content="Nginx load balancing" />
+<meta property="og:description" content="Load balancing is a very useful technique to distribute the incoming network traffic across a number servers. With this technique you can reduce the resource usage, lower the response time and avoid server overload.
+Nginx Load Balancing is one of the most efficient options available to achieve full application redundancy, and it is relatively easy and quick to setup. We will configure Nginx load balancing using the Round robin mechanism." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://iaroki.github.io/blog/nginx-load-balancing/" />
+
+
+
+<meta property="article:published_time" content="2017-11-04T12:46:36&#43;03:00"/>
+
+<meta property="article:modified_time" content="2017-11-04T12:46:36&#43;03:00"/>
+
+
+
+
+
+
+
+
+
+
+
+
+<title>
+
+
+     Nginx load balancing 
+
+</title>
+<link rel="canonical" href="https://iaroki.github.io/blog/nginx-load-balancing/">
+
+
+
+
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/styles/default.min.css">
+
+
+
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Ubuntu+Mono:400,400i,700,700i|Raleway:500">
+
+
+
+    
+    <link rel="stylesheet" href="https://iaroki.github.io/css/reset.css?t=2018-11-21%2015%3a01%3a50.594334248%20%2b0000%20UTC%20m%3d%2b0.431677675">
+    <link rel="stylesheet" href="https://iaroki.github.io/css/pygments.css?t=2018-11-21%2015%3a01%3a50.594334248%20%2b0000%20UTC%20m%3d%2b0.431677675">
+    <link rel="stylesheet" href="https://iaroki.github.io/css/main.css?t=2018-11-21%2015%3a01%3a50.594334248%20%2b0000%20UTC%20m%3d%2b0.431677675">
+    
+        <link rel="stylesheet" href="https://iaroki.github.io/css/override.css?t=2018-11-21%2015%3a01%3a50.594334248%20%2b0000%20UTC%20m%3d%2b0.431677675">
+    
+
+
+
+
+<link rel="shortcut icon"
+
+    href="https://iaroki.github.io/img/zen.ico"
+
+>
+
+
+
+
+
+
+
+
+</head>
+
+
+<body lang="en">
+
+<section class="header">
+    <div class="container">
+        <div class="content">
+            
+                
+                
+                
+                
+                
+                    
+                
+                    
+                
+                
+                <a href="https://iaroki.github.io/"><img class="avatar" src="https://iaroki.github.io/img/zen.png" srcset="https://iaroki.github.io/img/zen.png 1x"></a>
+            
+            <a href="https://iaroki.github.io/"><div class="name">iaroki</div></a>
+            
+            <nav>
+                <ul>
+                    
+                        <li class="nav-blog"><a href="https://iaroki.github.io/blog/"><span>Blog</span></a></li>
+                    
+                        <li class="nav-about"><a href="https://iaroki.github.io/about/"><span>About</span></a></li>
+                    
+                        <li class="nav-code"><a href="https://iaroki.github.io/code/"><span>Code</span></a></li>
+                    
+                        <li class="nav-links"><a href="https://iaroki.github.io/links/"><span>Links</span></a></li>
+                    
+                </ul>
+            </nav>
+        </div>
+    </div>
+</section>
+
+<section class="icons">
+    <div class="container">
+        <div class="content">
+        
+            <a href="//github.com/iaroki" target="_blank" rel="noopener"><img class="icon" src="https://iaroki.github.io/img/github.svg" alt="github" /></a>
+        
+
+        
+            <a href="//gitlab.com/iaroki" target="_blank" rel="noopener"><img class="icon" src="https://iaroki.github.io/img/gitlab.svg" alt="gitlab" /></a>
+        
+
+        
+            <a href="//twitter.com/_iaroki" target="_blank" rel="noopener"><img class="icon" src="https://iaroki.github.io/img/twitter.svg" alt="twitter" /></a>
+        
+
+	
+
+        
+
+        
+            <a href="//mastodon.social/@iaroki" target="_blank" rel="noopener"><img class="icon" src="https://iaroki.github.io/img/mastodon.svg" alt="mastodon" /></a>
+        
+
+        
+            <a href="//linkedin.com/in/iaroki" target="_blank" rel="noopener"><img class="icon" src="https://iaroki.github.io/img/linkedin.svg" alt="linkedin" /></a>
+        
+
+        
+
+        
+            <a href="//instagram.com/homelessstreetcat" target="_blank" rel="noopener"><img class="icon" src="https://iaroki.github.io/img/instagram.svg" alt="instagram" /></a>
+        
+
+        
+            <a href="//500px.com/iaroki" target="_blank" rel="noopener"><img class="icon" src="https://iaroki.github.io/img/500px.svg" alt="500px" /></a>
+        
+
+        
+
+        
+            <a href="mailto:iaroki@protonmail.com"><img class="icon" src="https://iaroki.github.io/img/email.svg" alt="email" /></a>
+        
+
+        
+
+        
+        </div>
+    </div>
+</section>
+
+
+<section class="main post non-narrow zero-top-spacing">
+    <div class="container">
+        <div class="content">
+            <div class="front-matter">
+                <div class="title-container">
+                    <div class="page-heading">
+
+    Nginx load balancing
+
+</div>
+
+                    <div class="initials"><a href="https://iaroki.github.io"></a></div>
+                </div>
+                <div class="meta">
+                    
+                    <div class="date" title='Sat Nov 4 2017 12:46:36 &#43;0300'>Nov 4, 2017</div>
+                    
+                    
+		    <div class="reading-time"><div class="middot"></div>3 minutes read</div>
+                    
+                </div>
+            </div>
+            <div class="markdown">
+                
+
+<p>Load balancing is a very useful technique to distribute the incoming network traffic across a number servers. With this technique you can reduce the resource usage, lower the response time and avoid server overload.</p>
+
+<p>Nginx Load Balancing is one of the most efficient options available to achieve full application redundancy, and it is relatively easy and quick to setup. We will configure Nginx load balancing using the Round robin mechanism. This way it will forward all requests to the corresponding server included in the Nginx configuration.</p>
+
+<p>Let’s start with the installation and configuration.</p>
+
+<p>Login to your server as user root</p>
+
+<pre><code>ssh root@IP_Address
+</code></pre>
+
+<p>and make sure that all packages installed on it are up to date</p>
+
+<pre><code>apt-get update &amp;&amp; apt-get upgrade
+</code></pre>
+
+<p>We need Nginx web server installed. Run the following command to install Nginx</p>
+
+<pre><code>apt-get install nginx
+</code></pre>
+
+<p>Once it is installed, check if the web server is running</p>
+
+<pre><code>service nginx status
+
+● nginx.service - A high performance web server and a reverse proxy server
+Loaded: loaded (/lib/systemd/system/nginx.service; enabled; vendor preset: enabled)
+Active: active (running)
+</code></pre>
+
+<p>Now, open your website’s Nginx configuration file with your favorite text editor</p>
+
+<pre><code>vim /etc/nginx/sites-available/yourdomain.com.conf
+</code></pre>
+
+<p>and append the load balancing configuration at the top of the file</p>
+
+<pre><code>upstream loadbalancer {
+server vps1.yourdomain.com;
+server vps2.yourdomain.com;
+server vps3.yourdomain.com;
+}
+</code></pre>
+
+<p>You should have Nginx installed and listening on port 80 on all servers listed above.</p>
+
+<p>Within the same configuration file yourdomain.com.conf we need to add the upstream module in the virtualhost configuration</p>
+
+<pre><code>server {
+location / {
+proxy_pass http://loadbalancer;
+}
+}
+</code></pre>
+
+<p>Save the file and restart Nginx for the changes to take effect.</p>
+
+<pre><code>service nginx restart
+</code></pre>
+
+<p>This configuration will equally distribute all incoming traffic across the three servers (vps1.yourdomain.com, vps2.yourdomain.com, vps3.yourdomain.com). Nginx can be also configured to distribute the traffic more efficiently. It comes with balancing options such as weight balancing, max fails and IP hash balancing.</p>
+
+<h2 id="weight-balancing">Weight Balancing</h2>
+
+<p>We can use this option to specify the proportion of the traffic distributed to each of the servers we listed in the upstream.</p>
+
+<p>For example:</p>
+
+<pre><code>upstream loadbalancer {
+server vps1.yourdomain.com weight=1;
+server vps2.yourdomain.com weight=2;
+server vps3.yourdomain.com weight=5;
+}
+</code></pre>
+
+<p>In this example, vps2.yourdomain.com will receive twice as much traffic compared to vps2.yourdomain.com, and vps3.yourdomain.com will receive five times more traffic than vps1.yourdomain.com.</p>
+
+<h2 id="max-fails">Max Fails</h2>
+
+<p>If you use the default Nginx settings, it will send data to the servers even if they are down. We can use the Max fails option to prevent such cases.</p>
+
+<pre><code>upstream loadbalancer {
+server vps1.yourdomain.com max_fails=4  fail_timeout=20s;
+server vps2.yourdomain.com weight=2;
+server vps3.yourdomain.com weight=4;
+}
+</code></pre>
+
+<p>In the example above, Nginx will attempt to connect to vps1.yourdomain.com and if it is not responding for more than 20 seconds it will make another attempt. After four attempts vps1.yourdomain.com will be considered as down.</p>
+
+<h2 id="ip-hash-balancing">IP Hash Balancing</h2>
+
+<p>With this method, the visitors will be always sent to the same server. So, if a visitor received the content of vps1.yourdomain.com, it will be always transferred to that server unless the servers are down or inaccessible.</p>
+
+<pre><code>upstream loadbalancer {
+ip_hash;
+server vps1.yourdomain.com;
+server vps2.yourdomain.com;
+server vps3.yourdomain.com down;
+}
+</code></pre>
+
+<p>In this example, vps3.yourdomain.com is known to be inaccessible, and it is marked as down.</p>
+
+<hr />
+
+                <br>
+                
+                  <div class="tags">
+                    <strong>Tags:</strong>
+                  
+                    <a href="https://iaroki.github.io/tags/linux">linux</a>
+                  
+                    <a href="https://iaroki.github.io/tags/nginx">nginx</a>
+                  
+                  </div>
+                  <br />
+                
+                <p class="back-to-posts"><a href="https://iaroki.github.io/blog">Back to posts</a></p>
+            </div>
+            <br>
+            <div class="disqus">
+                
+            </div>
+            
+        </div>
+    </div>
+</section>
+
+
+
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/highlight.min.js"></script>
+  
+
+  <script type="text/javascript">
+    hljs.initHighlightingOnLoad();
+  </script>
+
+
+
+
+
+</body>
+</html>
+

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Rhel on iaroki&#39;s blog</title>
+    <link>https://iaroki.github.io/tags/rhel/</link>
+    <description>Recent content in Rhel on iaroki&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-US</language>
+    <lastBuildDate>Thu, 07 Jun 2018 12:55:02 +0300</lastBuildDate>
+    
+	<atom:link href="https://iaroki.github.io/tags/rhel/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>CentOS 7 kickstart installation</title>
+      <link>https://iaroki.github.io/blog/centos-7-kickstart-installation/</link>
+      <pubDate>Thu, 07 Jun 2018 12:55:02 +0300</pubDate>
+      
+      <guid>https://iaroki.github.io/blog/centos-7-kickstart-installation/</guid>
+      <description>I have generated kickstart file located on my pc and to make it available over local network I just start python server:
+[iaroki@workstation ~]$ python -m http.server Serving HTTP on 0.0.0.0 port 8000 (http://0.0.0.0:8000/) ...  Now my kickstart config located at http://10.69.0.202:8000/ks.cfg.
+On another pc or vm I load installation media and in main menu hit Esc. To tell installer where ks.cfg is I must declare it and as it available on network I must assign IP address too:</description>
+    </item>
+    
+  </channel>
+</rss>

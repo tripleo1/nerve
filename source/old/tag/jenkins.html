@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>iaroki blog - jenkins</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">iaroki blog </a></h1>
+                <nav><ul>
+                    <li><a href="/pages/links.html">Links</a></li>
+                    <li><a href="/pages/tasks.html">Tasks</a></li>
+                    <li><a href="/category/docker.html">Docker</a></li>
+                    <li><a href="/category/git.html">Git</a></li>
+                    <li><a href="/category/linux.html">Linux</a></li>
+                    <li><a href="/category/markdown.html">Markdown</a></li>
+                    <li><a href="/category/other.html">Other</a></li>
+                    <li><a href="/category/python.html">Python</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+
+            <aside id="featured" class="body">
+                <article>
+                    <h1 class="entry-title"><a href="/installing-jenkins-on-centos-7.html">Installing Jenkins on Centos 7</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2017-01-11T13:58:00+02:00">
+                Published: Wed 11 January 2017
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/iaroki.html">iaroki</a>
+        </address>
+<p>In <a href="/category/linux.html">Linux</a>.</p>
+<p>tags: <a href="/tag/linux.html">linux</a> <a href="/tag/jenkins.html">jenkins</a> <a href="/tag/centos.html">centos</a> <a href="/tag/nginx.html">nginx</a> </p>
+</footer><!-- /.post-info --><p>In this article we will install and configure Jenkins with Nginx as a reverse proxy on a CentOS 7.</p>
+<p>Jenkins is a leading open source automation server built with Java that monitors executions of repeated jobs, such as building a software project or jobs run by cron. With Jenkins, organizations can accelerate the software development process through automation. It manages and controls development life-cycle processes of all kinds, including build, document, test, package, stage, deployment, static analysis and many more.</p>
+<p>Builds can be started by various means, including being triggered by commit in a version control system, scheduling via a cron-like mechanism, building when other builds have completed, and by requesting a specific build URL.</p>
+<h2>REQUIREMENTS</h2>
+<p>Log in to your server via SSH:</p>
+<div class="highlight"><pre><span></span># ssh root@server_ip
+</pre></div>
+
+
+<p>Before starting, enter the below command to check whether you have the proper version of CentOS installed on your machine:</p>
+<div class="highlight"><pre><span></span># cat /etc/redhat-release
+</pre></div>
+
+
+<p>It should give you the underneath output:</p>
+<div class="highlight"><pre><span></span>CentOS Linux release 7.2.1511 (Core)
+</pre></div>
+
+
+<h2>UPDATE THE SYSTEM</h2>
+<p>Make sure your server is fully up to date:</p>
+<div class="highlight"><pre><span></span># yum update
+</pre></div>
+
+
+<h2>INSTALL JAVA AND NGINX</h2>
+<p>Your next step is to install Nginx along some needed dependencies and the vim text editor so you can edit some config files. Of course, you can use your favorite text editor.</p>
+<p>Install the <code>epel</code> repository for CentOS 7 and then install Nginx, vim etc… Use the below commands to do that:</p>
+<div class="highlight"><pre><span></span># yum install epel-release
+# yum install nginx wget vim
+</pre></div>
+
+
+<p>Start Nginx and enable it to start on boot:</p>
+<div class="highlight"><pre><span></span># systemctl start nginx
+# systemctl enable nginx
+</pre></div>
+
+
+<p>Now create a host directive for the domain from which you will access Jenkins. Open a file, let’s say called ‘your_domain.conf’ in the ‘/etc/nginx/conf.d/’ directory:</p>
+<div class="highlight"><pre><span></span># vim /etc/nginx/conf.d/your_domain.conf
+</pre></div>
+
+
+<p>Paste the following:</p>
+<div class="highlight"><pre><span></span><span class="nt">upstream</span> <span class="nt">jenkins</span> <span class="p">{</span>
+    <span class="err">server</span> <span class="err">127.0.0.1:8080</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nt">server</span> <span class="p">{</span>
+    <span class="err">listen</span>      <span class="err">80</span> <span class="err">default</span><span class="p">;</span>
+    <span class="err">server_name</span> <span class="err">your_jenkins_site.com</span><span class="p">;</span>
+
+    <span class="err">access_log</span>  <span class="err">/var/log/nginx/jenkins.access.log</span><span class="p">;</span>
+    <span class="err">error_log</span>   <span class="err">/var/log/nginx/jenkins.error.log</span><span class="p">;</span>
+
+    <span class="err">proxy_buffers</span> <span class="err">16</span> <span class="err">64k</span><span class="p">;</span>
+    <span class="err">proxy_buffer_size</span> <span class="err">128k</span><span class="p">;</span>
+
+    <span class="err">location</span> <span class="err">/</span> <span class="err">{</span>
+        <span class="err">proxy_pass</span>  <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">jenkins</span><span class="p">;</span>
+        <span class="err">proxy_next_upstream</span> <span class="err">error</span> <span class="err">timeout</span> <span class="err">invalid_header</span> <span class="err">http_500</span> <span class="err">http_502</span> <span class="err">http_503</span> <span class="err">http_504</span><span class="p">;</span>
+        <span class="err">proxy_redirect</span> <span class="err">off</span><span class="p">;</span>
+
+        <span class="err">proxy_set_header</span>    <span class="err">Host</span>            <span class="err">$host</span><span class="p">;</span>
+        <span class="err">proxy_set_header</span>    <span class="err">X-Real-IP</span>       <span class="err">$remote_addr</span><span class="p">;</span>
+        <span class="err">proxy_set_header</span>    <span class="err">X-Forwarded-For</span> <span class="err">$proxy_add_x_forwarded_for</span><span class="p">;</span>
+        <span class="err">proxy_set_header</span>    <span class="err">X-Forwarded-Proto</span> <span class="err">https</span><span class="p">;</span>
+    <span class="p">}</span>
+
+<span class="err">}</span>
+</pre></div>
+
+
+<p>Replace the <code>your_jenkins_site.com</code> value with your own domain, save and close the file.</p>
+<p>Test if the Nginx configuration is OK:</p>
+<div class="highlight"><pre><span></span># nginx -t
+</pre></div>
+
+
+<p>If everything is OK, restart Nginx for the changes to take effect:</p>
+<div class="highlight"><pre><span></span># service nginx restart
+</pre></div>
+
+
+<p>Since Jenkins is built with Java, let’s install it with the yum package manager:</p>
+<div class="highlight"><pre><span></span># yum install java
+</pre></div>
+
+
+<p>You can check the installed Java version:</p>
+<div class="highlight"><pre><span></span># java -version
+
+openjdk version &quot;1.8.0_71&quot;
+OpenJDK Runtime Environment (build 1.8.0_71-b15)
+OpenJDK 64-Bit Server VM (build 25.71-b15, mixed mode)
+</pre></div>
+
+
+<h2>INSTALL JENKINS</h2>
+<p>Download the Jenkins repo and install Jenkins with the following commands:</p>
+<div class="highlight"><pre><span></span><span class="c1"># wget -O /etc/yum.repos.d/jenkins.repo http://pkg.jenkins-ci.org/redhat-stable/jenkins.repo</span>
+<span class="c1"># rpm --import https://jenkins-ci.org/redhat/jenkins-ci.org.key</span>
+<span class="c1"># yum install jenkins</span>
+</pre></div>
+
+
+<p>Start the Jenkins server and enable it to start on boot with:</p>
+<div class="highlight"><pre><span></span># service jenkins start
+# systemctl enable jenkins
+</pre></div>
+
+
+<p>Congratulations, you have successfully installed Jenkins on your CentOS 7. You can now open your favorite web browser and access Jenkins using the domain you configured in the Nginx conf file.</p>
+<p>However, the installation is insecure and allows anyone on the network to launch processes on your behalf. Therefore enable authentication to discourage misuse. Go to <strong>Manage Jenkins</strong> (in the left menu).</p>
+<p>Click <code>Setup Security</code> on the page loaded. Enable security by checking the box next to <code>Enable security</code>.</p>
+<p>Configure Jenkins to use it’s own user database and disable sign ups:</p>
+<p>Navigate to Matrix-based security under Authorization and check the box next to it. Then make sure that Anonymous has only the Read right under the View group to prevent Jenkins from crashing.</p>
+<p>Click save at the bottom of the page. After that, you’ll see a sign up form.</p>
+<p>Enter a username, password, name and email. Use a lower case username to avoid confusion because Jenkins is assuming a lower case username will be used. After signing up, you will be the administrator of this fresh Jenkins install.</p>
+<p>Once everything is up and running, it is up to you to create and schedule your first job, install plugins etc…</p>                </article>
+            </aside><!-- /#featured -->
+        <section id="extras" class="body">
+                <div class="blogroll">
+                        <h2>links</h2>
+                        <ul>
+                            <li><a href="http://getpelican.com/">Pelican</a></li>
+                            <li><a href="http://python.org/">Python.org</a></li>
+                            <li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
+                        </ul>
+                </div><!-- /.blogroll -->
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+
+                            <li><a href="https://github.com/iaroki">Github</a></li>
+                            <li><a href="https://facebook.com/johnnymnemonic">Facebook</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+    <script type="text/javascript">
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-112838187-1', 'auto');
+    ga('send', 'pageview');
+    </script>
+</body>
+</html>

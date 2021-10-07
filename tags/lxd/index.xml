@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Lxd on iaroki&#39;s blog</title>
+    <link>https://iaroki.github.io/tags/lxd/</link>
+    <description>Recent content in Lxd on iaroki&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-US</language>
+    <lastBuildDate>Thu, 11 Oct 2018 09:34:49 +0000</lastBuildDate>
+    
+	<atom:link href="https://iaroki.github.io/tags/lxd/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Voidlinux LXD image</title>
+      <link>https://iaroki.github.io/blog/voidlinux-lxd-image/</link>
+      <pubDate>Thu, 11 Oct 2018 09:34:49 +0000</pubDate>
+      
+      <guid>https://iaroki.github.io/blog/voidlinux-lxd-image/</guid>
+      <description>Create image To make it work you need to bootstrap rootfs with void, write simple metadata file and add all this into a compressed tarball. So then you should import it to LXD.
+Create void rootfs like this:
+IMAGE=&amp;quot;rootfs&amp;quot; sudo mkdir -v ${IMAGE} sudo xbps-install -y -r ${PWD}/${IMAGE} --repository=http://repo.voidlinux.eu/current -S base-voidstrap sudo rm -rf ${PWD}/${IMAGE}/usr/share/doc ${PWD}/${IMAGE}/usr/share/man ${PWD}/${IMAGE}/var/cache/xbps  Then create metadata.yaml with similiar content:
+architecture: x86_64 creation_date: 1532507327 properties: description: Void Linux glibc 64bit os: Void Linux release: rolling  Add all this to compressed tarball: tar cJf voidlinux-lxd-image.</description>
+    </item>
+    
+    <item>
+      <title>LXD container with second network interface</title>
+      <link>https://iaroki.github.io/blog/lxd-container-with-second-network-interface/</link>
+      <pubDate>Thu, 20 Sep 2018 07:58:56 +0000</pubDate>
+      
+      <guid>https://iaroki.github.io/blog/lxd-container-with-second-network-interface/</guid>
+      <description> Adding secondary NIC to LXD container Create container in stopped state:
+lxc init images:alpine/edge server  Then add NIC:
+lxc config device add server eth1 nic nictype=bridged parent=docker0  Start container and login inside:
+lxc start server lxc exec server sh  You will see that yo have now two network interfaces. Set an IP address to it:
+ip link set eth1 up ip addr add 172.17.0.200/24 broadcast 172.17.0.255 dev eth1  </description>
+    </item>
+    
+    <item>
+      <title>Running GUI applications in LXD on Fedora 26</title>
+      <link>https://iaroki.github.io/blog/running-gui-applications-in-lxd-on-fedora-26/</link>
+      <pubDate>Wed, 20 Sep 2017 12:28:27 +0300</pubDate>
+      
+      <guid>https://iaroki.github.io/blog/running-gui-applications-in-lxd-on-fedora-26/</guid>
+      <description>Create container:
+[iaroki@fedora ~]$ lxc launch images:debian/stretch chrome  Install needed tools:
+[iaroki@fedora ~]$ lxc exec chrome bash root@chrome:~# adduser iaroki root@chrome:~# apt update root@chrome:~# apt install x11-apps mesa-utils alsa-utils  Map UID and GID ramges:
+[iaroki@fedora ~]$ echo &amp;quot;root:1000:1&amp;quot; | sudo tee -a /etc/subuid /etc/subgid  Set UID/GUID ranges for container:
+[iaroki@fedora ~]$ lxc config set chrome raw.idmap &amp;quot;both $UID 1000&amp;quot; [iaroki@fedora ~]$ lxc restart chrome  Mount X11 socket and .</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Python on iaroki&#39;s blog</title>
+    <link>https://iaroki.github.io/tags/python/</link>
+    <description>Recent content in Python on iaroki&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-US</language>
+    <lastBuildDate>Thu, 08 Jun 2017 12:57:22 +0300</lastBuildDate>
+    
+	<atom:link href="https://iaroki.github.io/tags/python/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Simple way to quickly setup HTTP server</title>
+      <link>https://iaroki.github.io/blog/simple-way-to-quickly-setup-http-server/</link>
+      <pubDate>Thu, 08 Jun 2017 12:57:22 +0300</pubDate>
+      
+      <guid>https://iaroki.github.io/blog/simple-way-to-quickly-setup-http-server/</guid>
+      <description> Python 2 python2 -m SimpleHTTPServer  Python 3 python3 -m http.server  </description>
+    </item>
+    
+  </channel>
+</rss>

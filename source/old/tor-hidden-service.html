@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>Tor hidden service</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">iaroki blog </a></h1>
+                <nav><ul>
+                    <li><a href="/pages/links.html">Links</a></li>
+                    <li><a href="/pages/tasks.html">Tasks</a></li>
+                    <li><a href="/category/docker.html">Docker</a></li>
+                    <li><a href="/category/git.html">Git</a></li>
+                    <li class="active"><a href="/category/linux.html">Linux</a></li>
+                    <li><a href="/category/markdown.html">Markdown</a></li>
+                    <li><a href="/category/other.html">Other</a></li>
+                    <li><a href="/category/python.html">Python</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/tor-hidden-service.html" rel="bookmark"
+           title="Permalink to Tor hidden service">Tor hidden service</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2017-09-16T14:43:00+03:00">
+                Published: Sat 16 September 2017
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/iaroki.html">iaroki</a>
+        </address>
+<p>In <a href="/category/linux.html">Linux</a>.</p>
+<p>tags: <a href="/tag/linux.html">linux</a> <a href="/tag/fedora.html">fedora</a> <a href="/tag/ssh.html">ssh</a> <a href="/tag/tor.html">tor</a> <a href="/tag/nginx.html">nginx</a> </p>
+</footer><!-- /.post-info -->      <p>As for Fedora install <code>tor</code> package, <code>nginx</code> web service and SSH server for remote control:</p>
+<div class="highlight"><pre><span></span>[root@hiddensrv ~]# dnf install tor nginx openssh-server
+</pre></div>
+
+
+<p>Now change defaultSSH port and disable root login:</p>
+<div class="highlight"><pre><span></span>[root@hiddensrv ~]# vim /etc/ssh/sshd_config
+
+# If you want to change the port on a SELinux system, you have to tell
+# SELinux about this change.
+# semanage port -a -t ssh_port_t -p tcp #PORTNUMBER
+#
+Port 2222
+#AddressFamily any
+#ListenAddress 0.0.0.0
+#ListenAddress ::
+
+# Authentication:
+
+#LoginGraceTime 2m
+PermitRootLogin no
+#StrictModes yes
+#MaxAuthTries 6
+#MaxSessions 10
+</pre></div>
+
+
+<p>Enable and start SSH service:</p>
+<div class="highlight"><pre><span></span>[root@hiddensrv ~]# systemctl enable sshd
+[root@hiddensrv ~]# systemctl start sshd
+</pre></div>
+
+
+<p>Edit TOR configuration file to uncomment next strings:</p>
+<div class="highlight"><pre><span></span>[root@hiddensrv ~]# vim /etc/tor/torrc
+
+############### This section is just for location-hidden services ###
+
+## Once you have configured a hidden service, you can look at the
+## contents of the file &quot;.../hidden_service/hostname&quot; for the address
+## to tell people.
+##
+## HiddenServicePort x y:z says to redirect requests on port x to the
+## address y:z.
+
+HiddenServiceDir /var/lib/tor/hidden_service/
+HiddenServicePort 80 127.0.0.1:80
+HiddenServicePort 2222 127.0.0.1:2222
+</pre></div>
+
+
+<p>Enable and start TOR and NGINX services:</p>
+<div class="highlight"><pre><span></span>[root@hiddensrv ~]# systemctl enable nginx
+[root@hiddensrv ~]# systemctl start nginx
+[root@hiddensrv ~]# systemctl enable tor
+[root@hiddensrv ~]# systemctl start tor
+</pre></div>
+
+
+<p>Now you can check generated hostname of your service to access:</p>
+<div class="highlight"><pre><span></span>[root@hiddensrv ~]# cat /var/lib/tor/hidden_service/hostname
+v63z5ihn6uxx3kwf.onion
+</pre></div>
+
+
+<p>There you can see default NGINX index page.
+But to access SSH you need to add settings on yor laptop:</p>
+<div class="highlight"><pre><span></span>user@laptop:~$ vim ~/.ssh/config
+
+host hidden
+    hostname v63z5ihn6uxx3kwf.onion
+    port 2222
+    user prouser
+    proxyCommand ncat --proxy 127.0.0.1:9050 --proxy-type socks5 %h %p
+</pre></div>
+
+
+<p>If you encounter problems with <code>ncat</code> command you can try <code>nc -xlocalhost:9150 -X5 %h %p</code>.</p>
+<p>Try to access:</p>
+<div class="highlight"><pre><span></span>user@laptop:~$ ssh hidden
+hidden&#39;s password:
+prouser@hiddensrv:~$
+</pre></div>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="blogroll">
+                        <h2>links</h2>
+                        <ul>
+                            <li><a href="http://getpelican.com/">Pelican</a></li>
+                            <li><a href="http://python.org/">Python.org</a></li>
+                            <li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
+                        </ul>
+                </div><!-- /.blogroll -->
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+
+                            <li><a href="https://github.com/iaroki">Github</a></li>
+                            <li><a href="https://facebook.com/johnnymnemonic">Facebook</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+    <script type="text/javascript">
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-112838187-1', 'auto');
+    ga('send', 'pageview');
+    </script>
+</body>
+</html>

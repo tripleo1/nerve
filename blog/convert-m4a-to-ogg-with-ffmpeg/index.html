@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="chrome=1">
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="referrer" content="no-referrer">
+<meta name="author" content="iaroki">
+<meta name="description" content="Recently i downloaded some lectures from youtube in m4a format. My hardware portable player doesn&rsquo;t support it so I converted files like this:
+ffmpeg -i file.m4a -acodec libvorbis -aq 4 -vn -ac 2 -map_metadata 0 file.ogg  Complete script is:
+#!/bin/bash # Author: Simon Legner &lt;Simon.Legner@gmail.com&gt; convert () { in=&quot;$1&quot; out=&quot;${in%.m4a}.ogg&quot; ffmpeg -i &quot;$in&quot; \ -acodec libvorbis -aq 4 -vn -ac 2 \ -map_metadata 0 \ &quot;$out&quot; } if [[ $# == 0 ]]; then echo Converts m4a files to Ogg Vorbis using ffmpeg.">
+
+<meta property="og:title" content="Convert m4a to ogg with ffmpeg" />
+<meta property="og:description" content="Recently i downloaded some lectures from youtube in m4a format. My hardware portable player doesn&rsquo;t support it so I converted files like this:
+ffmpeg -i file.m4a -acodec libvorbis -aq 4 -vn -ac 2 -map_metadata 0 file.ogg  Complete script is:
+#!/bin/bash # Author: Simon Legner &lt;Simon.Legner@gmail.com&gt; convert () { in=&quot;$1&quot; out=&quot;${in%.m4a}.ogg&quot; ffmpeg -i &quot;$in&quot; \ -acodec libvorbis -aq 4 -vn -ac 2 \ -map_metadata 0 \ &quot;$out&quot; } if [[ $# == 0 ]]; then echo Converts m4a files to Ogg Vorbis using ffmpeg." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://iaroki.github.io/blog/convert-m4a-to-ogg-with-ffmpeg/" />
+
+
+
+<meta property="article:published_time" content="2017-12-05T12:49:08&#43;03:00"/>
+
+<meta property="article:modified_time" content="2017-12-05T12:49:08&#43;03:00"/>
+
+
+
+
+
+
+
+
+
+
+
+
+<title>
+
+
+     Convert m4a to ogg with ffmpeg 
+
+</title>
+<link rel="canonical" href="https://iaroki.github.io/blog/convert-m4a-to-ogg-with-ffmpeg/">
+
+
+
+
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/styles/default.min.css">
+
+
+
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Ubuntu+Mono:400,400i,700,700i|Raleway:500">
+
+
+
+    
+    <link rel="stylesheet" href="https://iaroki.github.io/css/reset.css?t=2018-11-21%2015%3a01%3a50.591128555%20%2b0000%20UTC%20m%3d%2b0.428471907">
+    <link rel="stylesheet" href="https://iaroki.github.io/css/pygments.css?t=2018-11-21%2015%3a01%3a50.591128555%20%2b0000%20UTC%20m%3d%2b0.428471907">
+    <link rel="stylesheet" href="https://iaroki.github.io/css/main.css?t=2018-11-21%2015%3a01%3a50.591128555%20%2b0000%20UTC%20m%3d%2b0.428471907">
+    
+        <link rel="stylesheet" href="https://iaroki.github.io/css/override.css?t=2018-11-21%2015%3a01%3a50.591128555%20%2b0000%20UTC%20m%3d%2b0.428471907">
+    
+
+
+
+
+<link rel="shortcut icon"
+
+    href="https://iaroki.github.io/img/zen.ico"
+
+>
+
+
+
+
+
+
+
+
+</head>
+
+
+<body lang="en">
+
+<section class="header">
+    <div class="container">
+        <div class="content">
+            
+                
+                
+                
+                
+                
+                    
+                
+                    
+                
+                
+                <a href="https://iaroki.github.io/"><img class="avatar" src="https://iaroki.github.io/img/zen.png" srcset="https://iaroki.github.io/img/zen.png 1x"></a>
+            
+            <a href="https://iaroki.github.io/"><div class="name">iaroki</div></a>
+            
+            <nav>
+                <ul>
+                    
+                        <li class="nav-blog"><a href="https://iaroki.github.io/blog/"><span>Blog</span></a></li>
+                    
+                        <li class="nav-about"><a href="https://iaroki.github.io/about/"><span>About</span></a></li>
+                    
+                        <li class="nav-code"><a href="https://iaroki.github.io/code/"><span>Code</span></a></li>
+                    
+                        <li class="nav-links"><a href="https://iaroki.github.io/links/"><span>Links</span></a></li>
+                    
+                </ul>
+            </nav>
+        </div>
+    </div>
+</section>
+
+<section class="icons">
+    <div class="container">
+        <div class="content">
+        
+            <a href="//github.com/iaroki" target="_blank" rel="noopener"><img class="icon" src="https://iaroki.github.io/img/github.svg" alt="github" /></a>
+        
+
+        
+            <a href="//gitlab.com/iaroki" target="_blank" rel="noopener"><img class="icon" src="https://iaroki.github.io/img/gitlab.svg" alt="gitlab" /></a>
+        
+
+        
+            <a href="//twitter.com/_iaroki" target="_blank" rel="noopener"><img class="icon" src="https://iaroki.github.io/img/twitter.svg" alt="twitter" /></a>
+        
+
+	
+
+        
+
+        
+            <a href="//mastodon.social/@iaroki" target="_blank" rel="noopener"><img class="icon" src="https://iaroki.github.io/img/mastodon.svg" alt="mastodon" /></a>
+        
+
+        
+            <a href="//linkedin.com/in/iaroki" target="_blank" rel="noopener"><img class="icon" src="https://iaroki.github.io/img/linkedin.svg" alt="linkedin" /></a>
+        
+
+        
+
+        
+            <a href="//instagram.com/homelessstreetcat" target="_blank" rel="noopener"><img class="icon" src="https://iaroki.github.io/img/instagram.svg" alt="instagram" /></a>
+        
+
+        
+            <a href="//500px.com/iaroki" target="_blank" rel="noopener"><img class="icon" src="https://iaroki.github.io/img/500px.svg" alt="500px" /></a>
+        
+
+        
+
+        
+            <a href="mailto:iaroki@protonmail.com"><img class="icon" src="https://iaroki.github.io/img/email.svg" alt="email" /></a>
+        
+
+        
+
+        
+        </div>
+    </div>
+</section>
+
+
+<section class="main post non-narrow zero-top-spacing">
+    <div class="container">
+        <div class="content">
+            <div class="front-matter">
+                <div class="title-container">
+                    <div class="page-heading">
+
+    Convert m4a to ogg with ffmpeg
+
+</div>
+
+                    <div class="initials"><a href="https://iaroki.github.io"></a></div>
+                </div>
+                <div class="meta">
+                    
+                    <div class="date" title='Tue Dec 5 2017 12:49:08 &#43;0300'>Dec 5, 2017</div>
+                    
+                    
+		    <div class="reading-time"><div class="middot"></div>One minute read</div>
+                    
+                </div>
+            </div>
+            <div class="markdown">
+                <p>Recently i downloaded some lectures from youtube in <code>m4a</code> format.
+My hardware portable player doesn&rsquo;t support it so I converted files like this:</p>
+
+<pre><code>ffmpeg -i file.m4a -acodec libvorbis -aq 4 -vn -ac 2 -map_metadata 0 file.ogg
+</code></pre>
+
+<p>Complete script is:</p>
+
+<pre><code class="language-bash">#!/bin/bash
+# Author: Simon Legner &lt;Simon.Legner@gmail.com&gt;
+
+convert () {
+  in=&quot;$1&quot;
+  out=&quot;${in%.m4a}.ogg&quot;
+  ffmpeg -i &quot;$in&quot; \
+    -acodec libvorbis -aq 4 -vn -ac 2 \
+    -map_metadata 0 \
+    &quot;$out&quot;
+}
+
+if [[ $# == 0 ]]; then
+  echo Converts m4a files to Ogg Vorbis using ffmpeg.
+  echo Usage: $0 file1.m4a file2.m4a ... fileN.m4a
+  echo ... produces file1.ogg file2.ogg ... fileN.ogg
+fi
+
+for i in &quot;$@&quot;; do
+  convert &quot;$i&quot;
+done
+</code></pre>
+
+<hr />
+
+                <br>
+                
+                  <div class="tags">
+                    <strong>Tags:</strong>
+                  
+                    <a href="https://iaroki.github.io/tags/linux">linux</a>
+                  
+                    <a href="https://iaroki.github.io/tags/ffmpeg">ffmpeg</a>
+                  
+                    <a href="https://iaroki.github.io/tags/m4a">m4a</a>
+                  
+                    <a href="https://iaroki.github.io/tags/ogg">ogg</a>
+                  
+                  </div>
+                  <br />
+                
+                <p class="back-to-posts"><a href="https://iaroki.github.io/blog">Back to posts</a></p>
+            </div>
+            <br>
+            <div class="disqus">
+                
+            </div>
+            
+        </div>
+    </div>
+</section>
+
+
+
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/highlight.min.js"></script>
+  
+
+  <script type="text/javascript">
+    hljs.initHighlightingOnLoad();
+  </script>
+
+
+
+
+
+</body>
+</html>
+

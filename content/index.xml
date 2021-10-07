@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Content on iaroki&#39;s blog</title>
+    <link>https://iaroki.github.io/content/</link>
+    <description>Recent content in Content on iaroki&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-US</language>
+    <lastBuildDate>Tue, 20 Nov 2018 14:35:26 +0000</lastBuildDate>
+    
+	<atom:link href="https://iaroki.github.io/content/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>GPG2 Keys cheatsheet</title>
+      <link>https://iaroki.github.io/content/blog/gpg2-keys/</link>
+      <pubDate>Tue, 20 Nov 2018 14:35:26 +0000</pubDate>
+      
+      <guid>https://iaroki.github.io/content/blog/gpg2-keys/</guid>
+      <description> Creating GPG Key gpg2 --full-gen-key  Export private key gpg2 --export-secret-keys --armor jqdoe@example.com &amp;gt; jqdoe-privkey.asc  Export public key gpg2 --export --armor jqdoe@example.com &amp;gt; jqdoe-pubkey.asc  Export trustdb gpg2 --export-ownertrust &amp;gt; otrust.txt  Import trustdb gpg2 --import-ownertrust &amp;lt; otrust.txt  Update trustdb gpg2 --update-trustdb  Import GPG keys gpg2 --import &amp;lt; keys.asc  </description>
+    </item>
+    
+  </channel>
+</rss>

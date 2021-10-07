@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="chrome=1">
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="referrer" content="no-referrer">
+<meta name="author" content="iaroki">
+<meta name="description" content="What is DNS? DNS is an acronym of Domain Name System and it’s widely used in different mediums. As the name suggests, DNS is a naming system that gives a name to any computer or service connected to a network. DNS is utterly important and everyone should use it. Without it, we’d have to visit websites through their IP addresses, rather than their domain. So, for example, if you wanted to visit our website through it’s IP address, you’d have to go to 209.">
+
+<meta property="og:title" content="DNS explanation" />
+<meta property="og:description" content="What is DNS? DNS is an acronym of Domain Name System and it’s widely used in different mediums. As the name suggests, DNS is a naming system that gives a name to any computer or service connected to a network. DNS is utterly important and everyone should use it. Without it, we’d have to visit websites through their IP addresses, rather than their domain. So, for example, if you wanted to visit our website through it’s IP address, you’d have to go to 209." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://iaroki.github.io/blog/dns-explanation/" />
+
+
+
+<meta property="article:published_time" content="2017-11-01T10:49:22&#43;03:00"/>
+
+<meta property="article:modified_time" content="2017-11-01T10:49:22&#43;03:00"/>
+
+
+
+
+
+
+
+
+
+
+
+
+<title>
+
+
+     DNS explanation 
+
+</title>
+<link rel="canonical" href="https://iaroki.github.io/blog/dns-explanation/">
+
+
+
+
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/styles/default.min.css">
+
+
+
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Ubuntu+Mono:400,400i,700,700i|Raleway:500">
+
+
+
+    
+    <link rel="stylesheet" href="https://iaroki.github.io/css/reset.css?t=2018-11-21%2015%3a01%3a50.60939531%20%2b0000%20UTC%20m%3d%2b0.446738666">
+    <link rel="stylesheet" href="https://iaroki.github.io/css/pygments.css?t=2018-11-21%2015%3a01%3a50.60939531%20%2b0000%20UTC%20m%3d%2b0.446738666">
+    <link rel="stylesheet" href="https://iaroki.github.io/css/main.css?t=2018-11-21%2015%3a01%3a50.60939531%20%2b0000%20UTC%20m%3d%2b0.446738666">
+    
+        <link rel="stylesheet" href="https://iaroki.github.io/css/override.css?t=2018-11-21%2015%3a01%3a50.60939531%20%2b0000%20UTC%20m%3d%2b0.446738666">
+    
+
+
+
+
+<link rel="shortcut icon"
+
+    href="https://iaroki.github.io/img/zen.ico"
+
+>
+
+
+
+
+
+
+
+
+</head>
+
+
+<body lang="en">
+
+<section class="header">
+    <div class="container">
+        <div class="content">
+            
+                
+                
+                
+                
+                
+                    
+                
+                    
+                
+                
+                <a href="https://iaroki.github.io/"><img class="avatar" src="https://iaroki.github.io/img/zen.png" srcset="https://iaroki.github.io/img/zen.png 1x"></a>
+            
+            <a href="https://iaroki.github.io/"><div class="name">iaroki</div></a>
+            
+            <nav>
+                <ul>
+                    
+                        <li class="nav-blog"><a href="https://iaroki.github.io/blog/"><span>Blog</span></a></li>
+                    
+                        <li class="nav-about"><a href="https://iaroki.github.io/about/"><span>About</span></a></li>
+                    
+                        <li class="nav-code"><a href="https://iaroki.github.io/code/"><span>Code</span></a></li>
+                    
+                        <li class="nav-links"><a href="https://iaroki.github.io/links/"><span>Links</span></a></li>
+                    
+                </ul>
+            </nav>
+        </div>
+    </div>
+</section>
+
+<section class="icons">
+    <div class="container">
+        <div class="content">
+        
+            <a href="//github.com/iaroki" target="_blank" rel="noopener"><img class="icon" src="https://iaroki.github.io/img/github.svg" alt="github" /></a>
+        
+
+        
+            <a href="//gitlab.com/iaroki" target="_blank" rel="noopener"><img class="icon" src="https://iaroki.github.io/img/gitlab.svg" alt="gitlab" /></a>
+        
+
+        
+            <a href="//twitter.com/_iaroki" target="_blank" rel="noopener"><img class="icon" src="https://iaroki.github.io/img/twitter.svg" alt="twitter" /></a>
+        
+
+	
+
+        
+
+        
+            <a href="//mastodon.social/@iaroki" target="_blank" rel="noopener"><img class="icon" src="https://iaroki.github.io/img/mastodon.svg" alt="mastodon" /></a>
+        
+
+        
+            <a href="//linkedin.com/in/iaroki" target="_blank" rel="noopener"><img class="icon" src="https://iaroki.github.io/img/linkedin.svg" alt="linkedin" /></a>
+        
+
+        
+
+        
+            <a href="//instagram.com/homelessstreetcat" target="_blank" rel="noopener"><img class="icon" src="https://iaroki.github.io/img/instagram.svg" alt="instagram" /></a>
+        
+
+        
+            <a href="//500px.com/iaroki" target="_blank" rel="noopener"><img class="icon" src="https://iaroki.github.io/img/500px.svg" alt="500px" /></a>
+        
+
+        
+
+        
+            <a href="mailto:iaroki@protonmail.com"><img class="icon" src="https://iaroki.github.io/img/email.svg" alt="email" /></a>
+        
+
+        
+
+        
+        </div>
+    </div>
+</section>
+
+
+<section class="main post non-narrow zero-top-spacing">
+    <div class="container">
+        <div class="content">
+            <div class="front-matter">
+                <div class="title-container">
+                    <div class="page-heading">
+
+    DNS explanation
+
+</div>
+
+                    <div class="initials"><a href="https://iaroki.github.io"></a></div>
+                </div>
+                <div class="meta">
+                    
+                    <div class="date" title='Wed Nov 1 2017 10:49:22 &#43;0300'>Nov 1, 2017</div>
+                    
+                    
+		    <div class="reading-time"><div class="middot"></div>6 minutes read</div>
+                    
+                </div>
+            </div>
+            <div class="markdown">
+                
+
+<h2 id="what-is-dns">What is DNS?</h2>
+
+<p>DNS is an acronym of Domain Name System and it’s widely used in different mediums. As the name suggests, DNS is a naming system that gives a name to any computer or service connected to a network. DNS is utterly important and everyone should use it. Without it, we’d have to visit websites through their IP addresses, rather than their domain. So, for example, if you wanted to visit our website through it’s IP address, you’d have to go to 209.135.140.30. But with DNS, you can go to rosehosting.com . It’s easier to remember and it’s more user-friendly. That’s why people consider DNS “the phone book of the Internet”. Nobody wants to remember an IP, but everyone can and does remember a domain name.</p>
+
+<h2 id="how-does-dns-work">How does DNS work?</h2>
+
+<p>There’s lots of stuff going on “behind the scenes” when you visit a website. There’s a communicating relationship between a few servers and your computer. These are the usual steps they take:</p>
+
+<ol>
+<li><p><strong>The user enters the website’s domain in the address bar</strong>
+The DNS translation process stars when a user types in a domain name/address in the URL bar of his web browser. With that, the user essentially requests the IP address of the domain and waits for a response.</p></li>
+
+<li><p><strong>The browser and OS check their local cache</strong>
+After a user requests information on a domain, the user’s OS and browser check their local cache for any information on that domain. If the domain is already in the cache, the browser returns a positive response, if not, the Resolver needs to be contacted.</p></li>
+
+<li><p><strong>The Resolver checks the local cache</strong>
+In most cases, the resolver is actually your ISP. First, the resolver checks to see if there’s any local data available. If not, he contacts the domain’s root server. What is a root server you ask?
+Well, a root server is a name server that covers the root zone of the Internet’s Domain Name System (DNS). It answers requests for records in the root DNS zone among other requests. For example if a request is received and asks what are the authoritative name servers for rosehosting.com it will return the authoritative name servers for the respective top-level domain (TLD). The root name servers are the first step in resolving human readable host names into IP addresses thus making them a critical part of the Internet infrastructure. There are thirteen root nameservers specified in the world. But don’t let this information scare you. It does not mean that there are only thirteen existing physical servers. They each have redundant equipment in place that provides reliable service even if failure of hardware or software occurs. Additionally, the root name servers operate in multiple geographical locations that use a routing technique called anycast addressing. Wikipedia’s definition for anycast addressing is: a network addressing and routing methodology in which datagrams from a single sender are routed to the topologically nearest node in a group of potential receivers, though it may be sent to several nodes, all identified by the same destination address.</p></li>
+
+<li><p><strong>The root server checks the local cache</strong>
+After a request is received for a domain, the domain’s root server checks the local cache for any information about the respective domain. If there is such, it responds with the IP, if not it points the resolver to the TLD server. The modus operandi of the root nameserver involves looking at the first part of the request, reading from right to left. So let’s use our website as an example again. In this case the root nameserver checks the request for rosehosting.com, sees that the TLD is com and forwards the query to the respective TLD nameservers.</p></li>
+
+<li><p><strong>The root server forwards the resolver to the TLD server</strong>
+The TLD nameservers review the next part of the request (rosehosting) and directs the inquiry to the nameservers responsible for rosehosting.com which are called authoritative DNS servers. These authoritative DNS servers contain all the information about RoseHosting.com stored in DNS records. There are many types of records with each carrying a different kind of information. For example, if we want to know the IP address for google.com we need to know the A record for the domain.</p></li>
+</ol>
+
+<p>Below is a list of some of the available DNS records which in general are mostly used:</p>
+
+<ul>
+<li><strong>A</strong> record – the address record which links a domain to the physical IP address of the server that will host the domain</li>
+<li><strong>CNAME</strong> record: the Canonical Name record points an alias name to another domain name. For example, www.rosehosting.com might link www.rosehosting.com to rosehosting.com where <strong>www</strong> is the actual CNAME.</li>
+<li><strong>MX</strong> record: mail exchange (MX) records serve to direct the domain’s email to the server that hosts the email user accounts. The MX record specifies the mail server responsible for accepting email messages on behalf of the recipient domain.</li>
+<li><strong>NS</strong> record: Name server records determine which servers are authoritative for a particular domain which means that the DNS servers set as authoritative for the domain will be responsible for communicating DNS information.</li>
+<li><strong>TXT</strong> record: this record provides text information with a host or other name about a server, network, data center etc… to sources outside your domain.</li>
+<li><strong>TTL</strong> record: TTL (Time To Live) is a value in a DNS record that specifies the maximum amount of time other DNS servers and applications should cache the record.</li>
+</ul>
+
+<p>With this short info on the DNS records out of our way, we can now continue with the article. Where were we? Ahh, yes.</p>
+
+<p>The resolver now retrieves the A record for rosehosting.com from the authoritative DNS servers. The record is now stored in it’s local cache so if anyone else requests to visit the RoseHosting website, the resolver or (as others call it) recursive server will already have the answer so it won’t have to go through the above explained lookup process again. Of course depending on the TTL record set for the domain, the recursive server will have to ask for a new copy of the record to make sure that the information is up to date.</p>
+
+<ol>
+<li><strong>Receiving the answer</strong>
+The resolver now has the A record for rosehosting.com and returns the info back to your computer. Your machine stores the record in the respective cache, reads the IP address from the record and then passes the information to your web browser. The browser opens a connection with the web server of rosehosting.com, receives and then displays our website on your screen.</li>
+</ol>
+
+<p>Even though this process seems like it’s time consuming, it only takes milliseconds to complete.</p>
+
+<p>Obviously, with this article we just covered the DNS basics, so you might want to check various articles on the Internet such as the <a href="https://en.wikipedia.org/wiki/Domain_Name_System">Wikipedia DNS page</a> or anything else you find.</p>
+
+                <br>
+                
+                  <div class="tags">
+                    <strong>Tags:</strong>
+                  
+                    <a href="https://iaroki.github.io/tags/linux">linux</a>
+                  
+                    <a href="https://iaroki.github.io/tags/dns">dns</a>
+                  
+                  </div>
+                  <br />
+                
+                <p class="back-to-posts"><a href="https://iaroki.github.io/blog">Back to posts</a></p>
+            </div>
+            <br>
+            <div class="disqus">
+                
+            </div>
+            
+        </div>
+    </div>
+</section>
+
+
+
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/highlight.min.js"></script>
+  
+
+  <script type="text/javascript">
+    hljs.initHighlightingOnLoad();
+  </script>
+
+
+
+
+
+</body>
+</html>
+

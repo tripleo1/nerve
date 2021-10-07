@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="chrome=1">
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="referrer" content="no-referrer">
+<meta name="author" content="iaroki">
+<meta name="description" content="With iptables, several different packet matching tables are defined and each table can contain a number of built-in chains as well as some chains defined by the user. The chains are actually lists of rules that match set of packets and each rule specifies what to do with the matched packet.
+The default table is the filter table and it contains the built-in chains INPUT, FORWARD, and OUTPUT. The INPUT chain is used for packets destined to local sockets, the FORWARD chain is used for packets being routed through the box while the OUTPUT chain is used for locally-generated packets.">
+
+<meta property="og:title" content="Iptables setup" />
+<meta property="og:description" content="With iptables, several different packet matching tables are defined and each table can contain a number of built-in chains as well as some chains defined by the user. The chains are actually lists of rules that match set of packets and each rule specifies what to do with the matched packet.
+The default table is the filter table and it contains the built-in chains INPUT, FORWARD, and OUTPUT. The INPUT chain is used for packets destined to local sockets, the FORWARD chain is used for packets being routed through the box while the OUTPUT chain is used for locally-generated packets." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://iaroki.github.io/blog/iptables-setup/" />
+
+
+
+<meta property="article:published_time" content="2017-11-02T12:42:51&#43;03:00"/>
+
+<meta property="article:modified_time" content="2017-11-02T12:42:51&#43;03:00"/>
+
+
+
+
+
+
+
+
+
+
+
+
+<title>
+
+
+     Iptables setup 
+
+</title>
+<link rel="canonical" href="https://iaroki.github.io/blog/iptables-setup/">
+
+
+
+
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/styles/default.min.css">
+
+
+
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Ubuntu+Mono:400,400i,700,700i|Raleway:500">
+
+
+
+    
+    <link rel="stylesheet" href="https://iaroki.github.io/css/reset.css?t=2018-11-21%2015%3a01%3a50.620620774%20%2b0000%20UTC%20m%3d%2b0.457964139">
+    <link rel="stylesheet" href="https://iaroki.github.io/css/pygments.css?t=2018-11-21%2015%3a01%3a50.620620774%20%2b0000%20UTC%20m%3d%2b0.457964139">
+    <link rel="stylesheet" href="https://iaroki.github.io/css/main.css?t=2018-11-21%2015%3a01%3a50.620620774%20%2b0000%20UTC%20m%3d%2b0.457964139">
+    
+        <link rel="stylesheet" href="https://iaroki.github.io/css/override.css?t=2018-11-21%2015%3a01%3a50.620620774%20%2b0000%20UTC%20m%3d%2b0.457964139">
+    
+
+
+
+
+<link rel="shortcut icon"
+
+    href="https://iaroki.github.io/img/zen.ico"
+
+>
+
+
+
+
+
+
+
+
+</head>
+
+
+<body lang="en">
+
+<section class="header">
+    <div class="container">
+        <div class="content">
+            
+                
+                
+                
+                
+                
+                    
+                
+                    
+                
+                
+                <a href="https://iaroki.github.io/"><img class="avatar" src="https://iaroki.github.io/img/zen.png" srcset="https://iaroki.github.io/img/zen.png 1x"></a>
+            
+            <a href="https://iaroki.github.io/"><div class="name">iaroki</div></a>
+            
+            <nav>
+                <ul>
+                    
+                        <li class="nav-blog"><a href="https://iaroki.github.io/blog/"><span>Blog</span></a></li>
+                    
+                        <li class="nav-about"><a href="https://iaroki.github.io/about/"><span>About</span></a></li>
+                    
+                        <li class="nav-code"><a href="https://iaroki.github.io/code/"><span>Code</span></a></li>
+                    
+                        <li class="nav-links"><a href="https://iaroki.github.io/links/"><span>Links</span></a></li>
+                    
+                </ul>
+            </nav>
+        </div>
+    </div>
+</section>
+
+<section class="icons">
+    <div class="container">
+        <div class="content">
+        
+            <a href="//github.com/iaroki" target="_blank" rel="noopener"><img class="icon" src="https://iaroki.github.io/img/github.svg" alt="github" /></a>
+        
+
+        
+            <a href="//gitlab.com/iaroki" target="_blank" rel="noopener"><img class="icon" src="https://iaroki.github.io/img/gitlab.svg" alt="gitlab" /></a>
+        
+
+        
+            <a href="//twitter.com/_iaroki" target="_blank" rel="noopener"><img class="icon" src="https://iaroki.github.io/img/twitter.svg" alt="twitter" /></a>
+        
+
+	
+
+        
+
+        
+            <a href="//mastodon.social/@iaroki" target="_blank" rel="noopener"><img class="icon" src="https://iaroki.github.io/img/mastodon.svg" alt="mastodon" /></a>
+        
+
+        
+            <a href="//linkedin.com/in/iaroki" target="_blank" rel="noopener"><img class="icon" src="https://iaroki.github.io/img/linkedin.svg" alt="linkedin" /></a>
+        
+
+        
+
+        
+            <a href="//instagram.com/homelessstreetcat" target="_blank" rel="noopener"><img class="icon" src="https://iaroki.github.io/img/instagram.svg" alt="instagram" /></a>
+        
+
+        
+            <a href="//500px.com/iaroki" target="_blank" rel="noopener"><img class="icon" src="https://iaroki.github.io/img/500px.svg" alt="500px" /></a>
+        
+
+        
+
+        
+            <a href="mailto:iaroki@protonmail.com"><img class="icon" src="https://iaroki.github.io/img/email.svg" alt="email" /></a>
+        
+
+        
+
+        
+        </div>
+    </div>
+</section>
+
+
+<section class="main post non-narrow zero-top-spacing">
+    <div class="container">
+        <div class="content">
+            <div class="front-matter">
+                <div class="title-container">
+                    <div class="page-heading">
+
+    Iptables setup
+
+</div>
+
+                    <div class="initials"><a href="https://iaroki.github.io"></a></div>
+                </div>
+                <div class="meta">
+                    
+                    <div class="date" title='Thu Nov 2 2017 12:42:51 &#43;0300'>Nov 2, 2017</div>
+                    
+                    
+		    <div class="reading-time"><div class="middot"></div>5 minutes read</div>
+                    
+                </div>
+            </div>
+            <div class="markdown">
+                <p>With iptables, several different packet matching tables are defined and each table can contain a number of built-in chains as well as some chains defined by the user. The chains are actually lists of rules that match set of packets and each rule specifies what to do with the matched packet.</p>
+
+<p>The default table is the <code>filter</code> table and it contains the built-in chains INPUT, FORWARD, and OUTPUT. The INPUT chain is used for packets destined to local sockets, the FORWARD chain is used for packets being routed through the box while the OUTPUT chain is used for locally-generated packets.</p>
+
+<p>Connect to your server via SSH and list the rules defined in a specific chain using the following syntax:</p>
+
+<pre><code>sudo iptables -L CHAIN
+</code></pre>
+
+<p>Replace CHAIN with one of the built-in chains to see the defined rules. If no chain is selected, all chains will be listed in the output.</p>
+
+<pre><code>sudo iptables -L
+Chain INPUT (policy ACCEPT)
+target     prot opt source               destination
+
+Chain FORWARD (policy ACCEPT)
+target     prot opt source               destination
+
+Chain OUTPUT (policy ACCEPT)
+target     prot opt source               destination
+</code></pre>
+
+<p>The firewall rules specify what to do with a certain packet if it matches certain criteria and in case the packet doesn’t match the criteria, the next firewall rule defined in the chain will be examined. This is a very important thing to know when defining the firewall rules because you can easily lock yourself out of your server if you define the rule which accepts packets from your local IP address after the blocking rule.</p>
+
+<p>The targets you can use for the firewall rules are ACCEPT, DROP, QUEUE and RETURN. ACCEPT will let the packet through, DROP will drop the packet, QUEUE will pass the packet to the userspace while RETURN will stop the packet traversing of the current chain and will resume at the next rule in the previous chain. The default chain policy will define what to do with a packet if it doesn’t match certain firewall rule. As you can see in the output of the first command, the default policy for all built-in chains is set to ACCEPT. ACCEPT will let the packet go through so basically there is no protection.</p>
+
+<p>Before adding any specific rules, add the following one:</p>
+
+<pre><code>sudo iptables -A INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
+</code></pre>
+
+<p>This will prevent the connections that are already established to be dropped and your current SSH session will remain active.</p>
+
+<p>Next, add rules to allow traffic on your loopback interface:</p>
+
+<pre><code>sudo iptables -A INPUT -i lo -j ACCEPT
+sudo iptables -A OUTPUT -o lo -j ACCEPT
+</code></pre>
+
+<p>Next, allow access to your server via SSH for your local IP address so only you can access the server:</p>
+
+<pre><code>sudo iptables -A INPUT -s 111.111.111.111 -p tcp --dport 22 -j ACCEPT
+</code></pre>
+
+<p>Where <code>111.111.111.111</code> is your local IP address and <code>2</code> is the listening port of your SSH daemon. In case your local IP address changes dynamically it is best to omit the <code>-s 111.111.111.111</code> part and use a different method to protect the SSH service from unwanted traffic.</p>
+
+<pre><code>sudo iptables -A INPUT -p tcp --dport 22 -j ACCEPT
+</code></pre>
+
+<p>Next, allow access to your important services like HTTP/HTTPS server:</p>
+
+<pre><code>sudo iptables -A INPUT -p tcp --dport 80 -j ACCEPT
+sudo iptables -A INPUT -p tcp --dport 443 -j ACCEPT
+</code></pre>
+
+<p>Now, list the current rules and check if everything is OK. For detailed output you can use the following command:</p>
+
+<pre><code>sudo iptables -nvL
+</code></pre>
+
+<p>If you have other services that you want to allow access to it is best to do that now. Once you are done, you can set the default policy for the INPUT built-in chain to DROP.</p>
+
+<pre><code>sudo iptables -P INPUT DROP
+</code></pre>
+
+<p>This will drop any packet that doesn’t match the firewall rules criteria. The final output should be similar to the following one:</p>
+
+<pre><code>Chain INPUT (policy DROP 0 packets, 0 bytes)
+ pkts bytes target     prot opt in     out     source               destination
+    0     0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0            ctstate RELATED,ESTABLISHED
+    0     0 ACCEPT     all  --  lo     *       0.0.0.0/0            0.0.0.0/0
+    0     0 ACCEPT     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:22
+    0     0 ACCEPT     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:80
+    0     0 ACCEPT     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:443
+
+Chain FORWARD (policy ACCEPT 0 packets, 0 bytes)
+ pkts bytes target     prot opt in     out     source               destination
+
+Chain OUTPUT (policy ACCEPT 0 packets, 0 bytes)
+ pkts bytes target     prot opt in     out     source               destination
+    0     0 ACCEPT     all  --  *      lo      0.0.0.0/0            0.0.0.0/0
+</code></pre>
+
+<p>However, if you now restart the server you will lose all the firewall rules you defined so it is really important to make the rules permanent.</p>
+
+<p>In case you are using an Ubuntu you need to install an additional package for that purpose. Go ahead and install the required package using the following command:</p>
+
+<pre><code>sudo apt-get install iptables-persistent
+</code></pre>
+
+<p>On Ubutnu 14.04 you can save and reload the firewall rules using the commands below:</p>
+
+<pre><code>sudo /etc/init.d/iptables-persistent save
+sudo /etc/init.d/iptables-persistent reload
+</code></pre>
+
+<p>On Ubuntu 16.04 use the following commands instead:</p>
+
+<pre><code>sudo netfilter-persistent save
+sudo netfilter-persistent reload
+</code></pre>
+
+<p>If you are using a CentOS you can save the firewall rules using the command below:</p>
+
+<pre><code>service iptables save
+</code></pre>
+
+<hr />
+
+                <br>
+                
+                  <div class="tags">
+                    <strong>Tags:</strong>
+                  
+                    <a href="https://iaroki.github.io/tags/linux">linux</a>
+                  
+                    <a href="https://iaroki.github.io/tags/iptables">iptables</a>
+                  
+                  </div>
+                  <br />
+                
+                <p class="back-to-posts"><a href="https://iaroki.github.io/blog">Back to posts</a></p>
+            </div>
+            <br>
+            <div class="disqus">
+                
+            </div>
+            
+        </div>
+    </div>
+</section>
+
+
+
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/highlight.min.js"></script>
+  
+
+  <script type="text/javascript">
+    hljs.initHighlightingOnLoad();
+  </script>
+
+
+
+
+
+</body>
+</html>
+

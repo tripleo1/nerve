@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Centos on iaroki&#39;s blog</title>
+    <link>https://iaroki.github.io/tags/centos/</link>
+    <description>Recent content in Centos on iaroki&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-US</language>
+    <lastBuildDate>Tue, 30 Oct 2018 12:01:52 +0000</lastBuildDate>
+    
+	<atom:link href="https://iaroki.github.io/tags/centos/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Centos 7 home router</title>
+      <link>https://iaroki.github.io/blog/centos-7-home-router/</link>
+      <pubDate>Tue, 30 Oct 2018 12:01:52 +0000</pubDate>
+      
+      <guid>https://iaroki.github.io/blog/centos-7-home-router/</guid>
+      <description>In this project I build home router based on a Centos 7. To my server connected two NICs: enp0s3 and enp0s8. * enp0s3 - will be WAN * enp0s8 - will be LAN
+First of all we need to enable IP forwarding:
+sysctl -w net.ipv4.ip_forward=1  Then tweak Firewalld rules:
+firewall-cmd --set-default-zone=external firewall-cmd --permanent --zone=internal --add-interface=enp0s8 firewall-cmd --permanent --zone=internal --add-service=dhcp firewall-cmd --permanent --zone=internal --add-service=dns firewall-cmd --direct --add-rule ipv4 nat POSTROUTING 0 -o eth_ext -j MASQUERADE firewall-cmd --direct --add-rule ipv4 filter FORWARD 0 -i eth_int -o eth_ext -j ACCEPT firewall-cmd --direct --add-rule ipv4 filter FORWARD 0 -i eth_ext -o eth_int -m state --state RELATED,ESTABLISHED -j ACCEPT  Install DHCP:</description>
+    </item>
+    
+    <item>
+      <title>CentOS 7 kickstart installation</title>
+      <link>https://iaroki.github.io/blog/centos-7-kickstart-installation/</link>
+      <pubDate>Thu, 07 Jun 2018 12:55:02 +0300</pubDate>
+      
+      <guid>https://iaroki.github.io/blog/centos-7-kickstart-installation/</guid>
+      <description>I have generated kickstart file located on my pc and to make it available over local network I just start python server:
+[iaroki@workstation ~]$ python -m http.server Serving HTTP on 0.0.0.0 port 8000 (http://0.0.0.0:8000/) ...  Now my kickstart config located at http://10.69.0.202:8000/ks.cfg.
+On another pc or vm I load installation media and in main menu hit Esc. To tell installer where ks.cfg is I must declare it and as it available on network I must assign IP address too:</description>
+    </item>
+    
+    <item>
+      <title>Enable graphical login in CentOS 7</title>
+      <link>https://iaroki.github.io/blog/enable-graphical-login-in-centos-7/</link>
+      <pubDate>Mon, 22 Jan 2018 12:53:25 +0300</pubDate>
+      
+      <guid>https://iaroki.github.io/blog/enable-graphical-login-in-centos-7/</guid>
+      <description>To start graphic login you need to enable two systemd services:
+$ sudo systemctl enable gdm.service $ sudo systemctl set-default graphical.target  Then reboot and you will see GDM login manager. If you want disable it, then run:
+$ sudo systemctl disable gdm.service $ sudo systemctl set-default multi-user.target  Now reboot.</description>
+    </item>
+    
+    <item>
+      <title>Jenkins installation on CentOS 7</title>
+      <link>https://iaroki.github.io/blog/jenkins-installation-on-centos-7/</link>
+      <pubDate>Fri, 03 Nov 2017 12:44:34 +0300</pubDate>
+      
+      <guid>https://iaroki.github.io/blog/jenkins-installation-on-centos-7/</guid>
+      <description>In this article we will install and configure Jenkins with Nginx as a reverse proxy on a CentOS 7.
+Jenkins is a leading open source automation server built with Java that monitors executions of repeated jobs, such as building a software project or jobs run by cron. With Jenkins, organizations can accelerate the software development process through automation. It manages and controls development life-cycle processes of all kinds, including build, document, test, package, stage, deployment, static analysis and many more.</description>
+    </item>
+    
+    <item>
+      <title>FirewallD in Centos 7</title>
+      <link>https://iaroki.github.io/blog/firewalld-in-centos-7/</link>
+      <pubDate>Wed, 01 Nov 2017 12:41:20 +0300</pubDate>
+      
+      <guid>https://iaroki.github.io/blog/firewalld-in-centos-7/</guid>
+      <description>FirewallD is a firewall management tool available by default on CentOS 7 servers. Basically, it is a wrapper around iptables and it comes with graphical configuration tool firewall-config and command line tool firewall-cmd. With the iptables service, every change requires flushing of the old rules and reading the new rules from the /etc/sysconfig/iptables file, while with firewalld only differences are applied.
+FirewallD zones FirewallD uses services and zones instead of iptables rules and chains.</description>
+    </item>
+    
+  </channel>
+</rss>

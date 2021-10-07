@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Nginx on iaroki&#39;s blog</title>
+    <link>https://iaroki.github.io/tags/nginx/</link>
+    <description>Recent content in Nginx on iaroki&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-US</language>
+    <lastBuildDate>Sat, 04 Nov 2017 12:46:36 +0300</lastBuildDate>
+    
+	<atom:link href="https://iaroki.github.io/tags/nginx/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Nginx load balancing</title>
+      <link>https://iaroki.github.io/blog/nginx-load-balancing/</link>
+      <pubDate>Sat, 04 Nov 2017 12:46:36 +0300</pubDate>
+      
+      <guid>https://iaroki.github.io/blog/nginx-load-balancing/</guid>
+      <description>Load balancing is a very useful technique to distribute the incoming network traffic across a number servers. With this technique you can reduce the resource usage, lower the response time and avoid server overload.
+Nginx Load Balancing is one of the most efficient options available to achieve full application redundancy, and it is relatively easy and quick to setup. We will configure Nginx load balancing using the Round robin mechanism.</description>
+    </item>
+    
+    <item>
+      <title>Jenkins installation on CentOS 7</title>
+      <link>https://iaroki.github.io/blog/jenkins-installation-on-centos-7/</link>
+      <pubDate>Fri, 03 Nov 2017 12:44:34 +0300</pubDate>
+      
+      <guid>https://iaroki.github.io/blog/jenkins-installation-on-centos-7/</guid>
+      <description>In this article we will install and configure Jenkins with Nginx as a reverse proxy on a CentOS 7.
+Jenkins is a leading open source automation server built with Java that monitors executions of repeated jobs, such as building a software project or jobs run by cron. With Jenkins, organizations can accelerate the software development process through automation. It manages and controls development life-cycle processes of all kinds, including build, document, test, package, stage, deployment, static analysis and many more.</description>
+    </item>
+    
+  </channel>
+</rss>

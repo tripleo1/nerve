@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>iaroki blog - Other</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">iaroki blog </a></h1>
+                <nav><ul>
+                    <li><a href="/pages/links.html">Links</a></li>
+                    <li><a href="/pages/tasks.html">Tasks</a></li>
+                    <li><a href="/category/docker.html">Docker</a></li>
+                    <li><a href="/category/git.html">Git</a></li>
+                    <li><a href="/category/linux.html">Linux</a></li>
+                    <li><a href="/category/markdown.html">Markdown</a></li>
+                    <li class="active"><a href="/category/other.html">Other</a></li>
+                    <li><a href="/category/python.html">Python</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+
+            <aside id="featured" class="body">
+                <article>
+                    <h1 class="entry-title"><a href="/diablo-2-multiple-copies.html">Diablo 2 multiple copies</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2012-07-29T13:56:00+03:00">
+                Published: Sun 29 July 2012
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/iaroki.html">iaroki</a>
+        </address>
+<p>In <a href="/category/other.html">Other</a>.</p>
+<p>tags: <a href="/tag/diablo.html">diablo</a> <a href="/tag/games.html">games</a> </p>
+</footer><!-- /.post-info --><p>This is a way to run 2 copies of D2 without any crashes on the same computer.
+You will need:
+<em> 2 CD keys for BNet
+</em> 1 Hex editor</p>
+<p>Instructions:
+1. Install D2 with key, patch it fully to 1.11 and enter battle.net.
+2. Exit Battle.net again
+3. Copy your whole D2 install to another directory, eg <code>c:gamesdiablo2a</code>
+3. Uninstall d2
+4. Install d2 with the 2nd key</p>
+<p>Now you have 2 installs of D2 on your computer but you can’t start a 2nd copy since D2 complains that only one copy can be run at the same time.</p>
+<ol>
+<li>Open <code>d2gfx.dll</code> from <code>c:gamesdiablo2a</code> in the hexeditor. I used UltraEdit32 for this.</li>
+<li>Search for the bytes <code>C0 74 45</code>. in Ultraedit: press <code>Ctrl-F</code> and make sure the <code>find ASCII</code> is <strong>UNCHECKED</strong>. Enter <code>C0 74 45</code>.</li>
+<li>The cursor will jump to offset <code>84ceh</code>. Change the byte <code>74</code> to <code>EB</code>.</li>
+<li>Save <code>d2gfx.dll</code> again.</li>
+</ol>
+<p>Now the install with the modified <code>d2gfx.dll</code> can be started while the other one is already running. It will work fine including the usual <code>diablo ii.exe -w -ns</code>.</p>                </article>
+            </aside><!-- /#featured -->
+        <section id="extras" class="body">
+                <div class="blogroll">
+                        <h2>links</h2>
+                        <ul>
+                            <li><a href="http://getpelican.com/">Pelican</a></li>
+                            <li><a href="http://python.org/">Python.org</a></li>
+                            <li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
+                        </ul>
+                </div><!-- /.blogroll -->
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+
+                            <li><a href="https://github.com/iaroki">Github</a></li>
+                            <li><a href="https://facebook.com/johnnymnemonic">Facebook</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+    <script type="text/javascript">
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-112838187-1', 'auto');
+    ga('send', 'pageview');
+    </script>
+</body>
+</html>

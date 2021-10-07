@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Firewalld on iaroki&#39;s blog</title>
+    <link>https://iaroki.github.io/tags/firewalld/</link>
+    <description>Recent content in Firewalld on iaroki&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-US</language>
+    <lastBuildDate>Wed, 01 Nov 2017 12:41:20 +0300</lastBuildDate>
+    
+	<atom:link href="https://iaroki.github.io/tags/firewalld/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>FirewallD in Centos 7</title>
+      <link>https://iaroki.github.io/blog/firewalld-in-centos-7/</link>
+      <pubDate>Wed, 01 Nov 2017 12:41:20 +0300</pubDate>
+      
+      <guid>https://iaroki.github.io/blog/firewalld-in-centos-7/</guid>
+      <description>FirewallD is a firewall management tool available by default on CentOS 7 servers. Basically, it is a wrapper around iptables and it comes with graphical configuration tool firewall-config and command line tool firewall-cmd. With the iptables service, every change requires flushing of the old rules and reading the new rules from the /etc/sysconfig/iptables file, while with firewalld only differences are applied.
+FirewallD zones FirewallD uses services and zones instead of iptables rules and chains.</description>
+    </item>
+    
+  </channel>
+</rss>

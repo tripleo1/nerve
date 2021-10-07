@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Dns on iaroki&#39;s blog</title>
+    <link>https://iaroki.github.io/tags/dns/</link>
+    <description>Recent content in Dns on iaroki&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-US</language>
+    <lastBuildDate>Wed, 01 Nov 2017 10:49:22 +0300</lastBuildDate>
+    
+	<atom:link href="https://iaroki.github.io/tags/dns/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>DNS explanation</title>
+      <link>https://iaroki.github.io/blog/dns-explanation/</link>
+      <pubDate>Wed, 01 Nov 2017 10:49:22 +0300</pubDate>
+      
+      <guid>https://iaroki.github.io/blog/dns-explanation/</guid>
+      <description>What is DNS? DNS is an acronym of Domain Name System and it’s widely used in different mediums. As the name suggests, DNS is a naming system that gives a name to any computer or service connected to a network. DNS is utterly important and everyone should use it. Without it, we’d have to visit websites through their IP addresses, rather than their domain. So, for example, if you wanted to visit our website through it’s IP address, you’d have to go to 209.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Vagrant on iaroki&#39;s blog</title>
+    <link>https://iaroki.github.io/tags/vagrant/</link>
+    <description>Recent content in Vagrant on iaroki&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-US</language>
+    <lastBuildDate>Mon, 30 Oct 2017 12:37:21 +0300</lastBuildDate>
+    
+	<atom:link href="https://iaroki.github.io/tags/vagrant/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Vagrant Tips</title>
+      <link>https://iaroki.github.io/blog/vagrant-tips/</link>
+      <pubDate>Mon, 30 Oct 2017 12:37:21 +0300</pubDate>
+      
+      <guid>https://iaroki.github.io/blog/vagrant-tips/</guid>
+      <description>Some useful tips to work with Vagrant:
+ Memory and CPU control:  Add vb.memory option to Vagrantfile to set desired memory capacity:
+[...] config.vm.provider &amp;quot;virtualbox&amp;quot; do |vb| vb.memory = &amp;quot;1024&amp;quot; end [...]  Add vb.cpus option to set CPU&amp;rsquo;s:
+[...] config.vm.provider &amp;quot;virtualbox&amp;quot; do |vb| vb.memory = &amp;quot;1024 vb.cpus = &amp;quot;2&amp;quot; end [...]   Show GUI:  To show GUI for machine:
+[...] config.vm.provider &amp;quot;virtualbox&amp;quot; do |vb| # Display the VirtualBox GUI when booting the machine vb.</description>
+    </item>
+    
+  </channel>
+</rss>

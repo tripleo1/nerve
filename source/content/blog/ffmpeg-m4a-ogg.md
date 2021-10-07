@@ -1,0 +1,40 @@
+---
+title: "Convert m4a to ogg with ffmpeg"
+date: 2017-12-05T12:49:08+03:00
+tags: ["linux", "ffmpeg", "m4a", "ogg"]
+---
+
+Recently i downloaded some lectures from youtube in `m4a` format.
+My hardware portable player doesn't support it so I converted files like this:
+
+```
+ffmpeg -i file.m4a -acodec libvorbis -aq 4 -vn -ac 2 -map_metadata 0 file.ogg
+```
+
+Complete script is:
+
+```bash
+#!/bin/bash
+# Author: Simon Legner <Simon.Legner@gmail.com>
+
+convert () {
+  in="$1"
+  out="${in%.m4a}.ogg"
+  ffmpeg -i "$in" \
+    -acodec libvorbis -aq 4 -vn -ac 2 \
+    -map_metadata 0 \
+    "$out"
+}
+
+if [[ $# == 0 ]]; then
+  echo Converts m4a files to Ogg Vorbis using ffmpeg.
+  echo Usage: $0 file1.m4a file2.m4a ... fileN.m4a
+  echo ... produces file1.ogg file2.ogg ... fileN.ogg
+fi
+
+for i in "$@"; do
+  convert "$i"
+done
+```
+
+---

@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="chrome=1">
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="referrer" content="no-referrer">
+<meta name="author" content="iaroki">
+<meta name="description" content="git log show you history, but it looks not so pretty:
+commit 244bf1ff360f6e4db6ce01829670306d9e0fa004 (HEAD -&gt; master) Author: hostmorke &lt;hostmorke@hostmorke.io&gt; Date: Mon Oct 30 17:13:33 2017 &#43;0200 Vagrant post commit 383de7b4e31c53e8ea008c9bd87e6bfa5f012677 (origin/master) Author: hostmorke &lt;hostmorke@hostmorke.io&gt; Date: Mon Oct 30 16:12:08 2017 &#43;0200 new theme commit 0d2111b692b208c4f8106abe49bd53695b5eb851 Author: iaroki &lt;iaroki@protonmail.com&gt; Date: Fri Oct 27 21:02:32 2017 &#43;0300 lxc backup commit 39f24f17d76e47f68f1d7cb64753159b084d2625 Author: hostmorke &lt;hostmorke@hostmorke.io&gt; Date: Fri Oct 27 19:17:45 2017 &#43;0300 lxc shared folder  It has a lot of waste information, so you can use option --oneline to show only commit id and comment:">
+
+<meta property="og:title" content="Git log customizsation" />
+<meta property="og:description" content="git log show you history, but it looks not so pretty:
+commit 244bf1ff360f6e4db6ce01829670306d9e0fa004 (HEAD -&gt; master) Author: hostmorke &lt;hostmorke@hostmorke.io&gt; Date: Mon Oct 30 17:13:33 2017 &#43;0200 Vagrant post commit 383de7b4e31c53e8ea008c9bd87e6bfa5f012677 (origin/master) Author: hostmorke &lt;hostmorke@hostmorke.io&gt; Date: Mon Oct 30 16:12:08 2017 &#43;0200 new theme commit 0d2111b692b208c4f8106abe49bd53695b5eb851 Author: iaroki &lt;iaroki@protonmail.com&gt; Date: Fri Oct 27 21:02:32 2017 &#43;0300 lxc backup commit 39f24f17d76e47f68f1d7cb64753159b084d2625 Author: hostmorke &lt;hostmorke@hostmorke.io&gt; Date: Fri Oct 27 19:17:45 2017 &#43;0300 lxc shared folder  It has a lot of waste information, so you can use option --oneline to show only commit id and comment:" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://iaroki.github.io/blog/git-log-customizsation/" />
+
+
+
+<meta property="article:published_time" content="2017-10-30T12:39:27&#43;03:00"/>
+
+<meta property="article:modified_time" content="2017-10-30T12:39:27&#43;03:00"/>
+
+
+
+
+
+
+
+
+
+
+
+
+<title>
+
+
+     Git log customizsation 
+
+</title>
+<link rel="canonical" href="https://iaroki.github.io/blog/git-log-customizsation/">
+
+
+
+
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/styles/default.min.css">
+
+
+
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Ubuntu+Mono:400,400i,700,700i|Raleway:500">
+
+
+
+    
+    <link rel="stylesheet" href="https://iaroki.github.io/css/reset.css?t=2018-11-21%2015%3a01%3a50.617939258%20%2b0000%20UTC%20m%3d%2b0.455282583">
+    <link rel="stylesheet" href="https://iaroki.github.io/css/pygments.css?t=2018-11-21%2015%3a01%3a50.617939258%20%2b0000%20UTC%20m%3d%2b0.455282583">
+    <link rel="stylesheet" href="https://iaroki.github.io/css/main.css?t=2018-11-21%2015%3a01%3a50.617939258%20%2b0000%20UTC%20m%3d%2b0.455282583">
+    
+        <link rel="stylesheet" href="https://iaroki.github.io/css/override.css?t=2018-11-21%2015%3a01%3a50.617939258%20%2b0000%20UTC%20m%3d%2b0.455282583">
+    
+
+
+
+
+<link rel="shortcut icon"
+
+    href="https://iaroki.github.io/img/zen.ico"
+
+>
+
+
+
+
+
+
+
+
+</head>
+
+
+<body lang="en">
+
+<section class="header">
+    <div class="container">
+        <div class="content">
+            
+                
+                
+                
+                
+                
+                    
+                
+                    
+                
+                
+                <a href="https://iaroki.github.io/"><img class="avatar" src="https://iaroki.github.io/img/zen.png" srcset="https://iaroki.github.io/img/zen.png 1x"></a>
+            
+            <a href="https://iaroki.github.io/"><div class="name">iaroki</div></a>
+            
+            <nav>
+                <ul>
+                    
+                        <li class="nav-blog"><a href="https://iaroki.github.io/blog/"><span>Blog</span></a></li>
+                    
+                        <li class="nav-about"><a href="https://iaroki.github.io/about/"><span>About</span></a></li>
+                    
+                        <li class="nav-code"><a href="https://iaroki.github.io/code/"><span>Code</span></a></li>
+                    
+                        <li class="nav-links"><a href="https://iaroki.github.io/links/"><span>Links</span></a></li>
+                    
+                </ul>
+            </nav>
+        </div>
+    </div>
+</section>
+
+<section class="icons">
+    <div class="container">
+        <div class="content">
+        
+            <a href="//github.com/iaroki" target="_blank" rel="noopener"><img class="icon" src="https://iaroki.github.io/img/github.svg" alt="github" /></a>
+        
+
+        
+            <a href="//gitlab.com/iaroki" target="_blank" rel="noopener"><img class="icon" src="https://iaroki.github.io/img/gitlab.svg" alt="gitlab" /></a>
+        
+
+        
+            <a href="//twitter.com/_iaroki" target="_blank" rel="noopener"><img class="icon" src="https://iaroki.github.io/img/twitter.svg" alt="twitter" /></a>
+        
+
+	
+
+        
+
+        
+            <a href="//mastodon.social/@iaroki" target="_blank" rel="noopener"><img class="icon" src="https://iaroki.github.io/img/mastodon.svg" alt="mastodon" /></a>
+        
+
+        
+            <a href="//linkedin.com/in/iaroki" target="_blank" rel="noopener"><img class="icon" src="https://iaroki.github.io/img/linkedin.svg" alt="linkedin" /></a>
+        
+
+        
+
+        
+            <a href="//instagram.com/homelessstreetcat" target="_blank" rel="noopener"><img class="icon" src="https://iaroki.github.io/img/instagram.svg" alt="instagram" /></a>
+        
+
+        
+            <a href="//500px.com/iaroki" target="_blank" rel="noopener"><img class="icon" src="https://iaroki.github.io/img/500px.svg" alt="500px" /></a>
+        
+
+        
+
+        
+            <a href="mailto:iaroki@protonmail.com"><img class="icon" src="https://iaroki.github.io/img/email.svg" alt="email" /></a>
+        
+
+        
+
+        
+        </div>
+    </div>
+</section>
+
+
+<section class="main post non-narrow zero-top-spacing">
+    <div class="container">
+        <div class="content">
+            <div class="front-matter">
+                <div class="title-container">
+                    <div class="page-heading">
+
+    Git log customizsation
+
+</div>
+
+                    <div class="initials"><a href="https://iaroki.github.io"></a></div>
+                </div>
+                <div class="meta">
+                    
+                    <div class="date" title='Mon Oct 30 2017 12:39:27 &#43;0300'>Oct 30, 2017</div>
+                    
+                    
+		    <div class="reading-time"><div class="middot"></div>3 minutes read</div>
+                    
+                </div>
+            </div>
+            <div class="markdown">
+                <p><code>git log</code> show you history, but it looks not so pretty:</p>
+
+<pre><code>commit 244bf1ff360f6e4db6ce01829670306d9e0fa004 (HEAD -&gt; master)
+Author: hostmorke &lt;hostmorke@hostmorke.io&gt;
+Date:   Mon Oct 30 17:13:33 2017 +0200
+
+    Vagrant post
+
+commit 383de7b4e31c53e8ea008c9bd87e6bfa5f012677 (origin/master)
+Author: hostmorke &lt;hostmorke@hostmorke.io&gt;
+Date:   Mon Oct 30 16:12:08 2017 +0200
+
+    new theme
+
+commit 0d2111b692b208c4f8106abe49bd53695b5eb851
+Author: iaroki &lt;iaroki@protonmail.com&gt;
+Date:   Fri Oct 27 21:02:32 2017 +0300
+
+    lxc backup
+
+commit 39f24f17d76e47f68f1d7cb64753159b084d2625
+Author: hostmorke &lt;hostmorke@hostmorke.io&gt;
+Date:   Fri Oct 27 19:17:45 2017 +0300
+
+    lxc shared folder
+</code></pre>
+
+<p>It has a lot of waste information, so you can use option <code>--oneline</code> to show only commit <em>id</em> and <em>comment</em>:</p>
+
+<pre><code>244bf1f (HEAD -&gt; master) Vagrant post
+383de7b (origin/master) new theme
+0d2111b lxc backup
+39f24f1 lxc shared folder
+ae4e3c9 lxc bridge
+9afcaa3 curl ip
+29d2493 wheezy script
+81ab5a1 old pages cleanup
+3171059 add Python page
+368bfe7 add Git page
+f5d9f12 add Markdown pages
+31af2b9 add docker pages
+743aa12 cleaning up
+f37cf4b Merge branch 'master' of https://github.com/iaroki/iaroki.github.io
+58e097d Migration to Pelican
+be31a64 asterisk install
+e49e96e systemd unit creation
+72ede8b ncat/nc variant
+0dc9d79 TOR hidden service
+f7b9d3f GUI apps in LXD on Fedora
+63bd83c Merge branch 'master' of https://github.com/iaroki/iaroki.github.io
+643da0b LXD on Fedora
+43f1a47 added Volumes
+39b8cc9 added HTTP server info
+20e922b tmux cheatsheet
+</code></pre>
+
+<p>To add visibility of merge point add <code>--graph</code>:</p>
+
+<pre><code>* 244bf1f (HEAD -&gt; master) Vagrant post
+* 383de7b (origin/master) new theme
+* 0d2111b lxc backup
+* 39f24f1 lxc shared folder
+* ae4e3c9 lxc bridge
+* 9afcaa3 curl ip
+* 29d2493 wheezy script
+* 3171059 add Python page
+* 368bfe7 add Git page
+* f5d9f12 add Markdown pages
+* cea9209 date fix
+* 31af2b9 add docker pages
+* cb1e028 old page
+*   f37cf4b Merge branch 'master' of https://github.com/iaroki/iaroki.github.io
+|\  
+| * be31a64 asterisk install
+* | 58e097d Migration to Pelican
+|/  
+* e49e96e systemd unit creation
+* 72ede8b ncat/nc variant
+* 0dc9d79 TOR hidden service
+* f7b9d3f GUI apps in LXD on Fedora
+*   63bd83c Merge branch 'master' of https://github.com/iaroki/iaroki.github.io
+|\  
+| * 43f1a47 added Volumes
+| * 39b8cc9 added HTTP server info
+* | 643da0b LXD on Fedora
+|/  
+* 20e922b tmux cheatsheet
+* dc6163d fiex typos
+</code></pre>
+
+<p>To see all the branches in the history  add the <code>--all</code> flag:</p>
+
+<pre><code>git log --graph --oneline --all
+</code></pre>
+
+<p>To shown every branch in a different colour set the <code>--decorate</code> flag:</p>
+
+<pre><code>git log --graph --oneline --all --decorate
+</code></pre>
+
+<p>So resulting alias may be: <code>alias gitgraph=&quot;git log --graph --oneline --all --decorate&quot;</code>:</p>
+
+<pre><code>* 244bf1f (HEAD -&gt; master) Vagrant post
+* 383de7b (origin/master) new theme
+* 0d2111b lxc backup
+* 39f24f1 lxc shared folder
+* ae4e3c9 lxc bridge
+* 9afcaa3 curl ip
+* 29d2493 wheezy script
+* 3171059 add Python page
+* 368bfe7 add Git page
+* 31af2b9 add docker pages
+* 743aa12 cleaning up
+* cb1e028 old page
+*   f37cf4b Merge branch 'master' of https://github.com/iaroki/iaroki.github.io
+|\  
+| * be31a64 asterisk install
+* | 58e097d Migration to Pelican
+|/  
+* e49e96e systemd unit creation
+* 72ede8b ncat/nc variant
+* 0dc9d79 TOR hidden service
+* f7b9d3f GUI apps in LXD on Fedora
+*   63bd83c Merge branch 'master' of https://github.com/iaroki/iaroki.github.io
+|\  
+| * 43f1a47 added Volumes
+| * 39b8cc9 added HTTP server info
+* | 643da0b LXD on Fedora
+|/  
+* 20e922b tmux cheatsheet
+* dc6163d fiex typos
+* 9714257 Flask docs link
+* fa3d929 electron info
+* cdc85f5 added markdown references
+* c30b24a main layout
+* f524e91 listed
+*   743c833 Merge branch 'master' of https://github.com/iaroki/iaroki.github.io
+|\  
+| * 4e163a8 Set theme jekyll-theme-tactile
+* | e03bb51 md
+|/  
+* 976f05e README added
+* 25e12ed the beginning
+</code></pre>
+
+<hr />
+
+                <br>
+                
+                  <div class="tags">
+                    <strong>Tags:</strong>
+                  
+                    <a href="https://iaroki.github.io/tags/linux">linux</a>
+                  
+                    <a href="https://iaroki.github.io/tags/git">git</a>
+                  
+                  </div>
+                  <br />
+                
+                <p class="back-to-posts"><a href="https://iaroki.github.io/blog">Back to posts</a></p>
+            </div>
+            <br>
+            <div class="disqus">
+                
+            </div>
+            
+        </div>
+    </div>
+</section>
+
+
+
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/highlight.min.js"></script>
+  
+
+  <script type="text/javascript">
+    hljs.initHighlightingOnLoad();
+  </script>
+
+
+
+
+
+</body>
+</html>
+

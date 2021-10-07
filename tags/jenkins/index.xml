@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Jenkins on iaroki&#39;s blog</title>
+    <link>https://iaroki.github.io/tags/jenkins/</link>
+    <description>Recent content in Jenkins on iaroki&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-US</language>
+    <lastBuildDate>Fri, 03 Nov 2017 12:44:34 +0300</lastBuildDate>
+    
+	<atom:link href="https://iaroki.github.io/tags/jenkins/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Jenkins installation on CentOS 7</title>
+      <link>https://iaroki.github.io/blog/jenkins-installation-on-centos-7/</link>
+      <pubDate>Fri, 03 Nov 2017 12:44:34 +0300</pubDate>
+      
+      <guid>https://iaroki.github.io/blog/jenkins-installation-on-centos-7/</guid>
+      <description>In this article we will install and configure Jenkins with Nginx as a reverse proxy on a CentOS 7.
+Jenkins is a leading open source automation server built with Java that monitors executions of repeated jobs, such as building a software project or jobs run by cron. With Jenkins, organizations can accelerate the software development process through automation. It manages and controls development life-cycle processes of all kinds, including build, document, test, package, stage, deployment, static analysis and many more.</description>
+    </item>
+    
+  </channel>
+</rss>

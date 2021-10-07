@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="chrome=1">
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="referrer" content="no-referrer">
+<meta name="author" content="iaroki">
+<meta name="description" content="In this project I build home router based on a Centos 7. To my server connected two NICs: enp0s3 and enp0s8. * enp0s3 - will be WAN * enp0s8 - will be LAN
+First of all we need to enable IP forwarding:
+sysctl -w net.ipv4.ip_forward=1  Then tweak Firewalld rules:
+firewall-cmd --set-default-zone=external firewall-cmd --permanent --zone=internal --add-interface=enp0s8 firewall-cmd --permanent --zone=internal --add-service=dhcp firewall-cmd --permanent --zone=internal --add-service=dns firewall-cmd --direct --add-rule ipv4 nat POSTROUTING 0 -o eth_ext -j MASQUERADE firewall-cmd --direct --add-rule ipv4 filter FORWARD 0 -i eth_int -o eth_ext -j ACCEPT firewall-cmd --direct --add-rule ipv4 filter FORWARD 0 -i eth_ext -o eth_int -m state --state RELATED,ESTABLISHED -j ACCEPT  Install DHCP:">
+
+<meta property="og:title" content="Centos 7 home router" />
+<meta property="og:description" content="In this project I build home router based on a Centos 7. To my server connected two NICs: enp0s3 and enp0s8. * enp0s3 - will be WAN * enp0s8 - will be LAN
+First of all we need to enable IP forwarding:
+sysctl -w net.ipv4.ip_forward=1  Then tweak Firewalld rules:
+firewall-cmd --set-default-zone=external firewall-cmd --permanent --zone=internal --add-interface=enp0s8 firewall-cmd --permanent --zone=internal --add-service=dhcp firewall-cmd --permanent --zone=internal --add-service=dns firewall-cmd --direct --add-rule ipv4 nat POSTROUTING 0 -o eth_ext -j MASQUERADE firewall-cmd --direct --add-rule ipv4 filter FORWARD 0 -i eth_int -o eth_ext -j ACCEPT firewall-cmd --direct --add-rule ipv4 filter FORWARD 0 -i eth_ext -o eth_int -m state --state RELATED,ESTABLISHED -j ACCEPT  Install DHCP:" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://iaroki.github.io/blog/centos-7-home-router/" />
+
+
+
+<meta property="article:published_time" content="2018-10-30T12:01:52&#43;00:00"/>
+
+<meta property="article:modified_time" content="2018-10-30T12:01:52&#43;00:00"/>
+
+
+
+
+
+
+
+
+
+
+
+
+<title>
+
+
+     Centos 7 home router 
+
+</title>
+<link rel="canonical" href="https://iaroki.github.io/blog/centos-7-home-router/">
+
+
+
+
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/styles/default.min.css">
+
+
+
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Ubuntu+Mono:400,400i,700,700i|Raleway:500">
+
+
+
+    
+    <link rel="stylesheet" href="https://iaroki.github.io/css/reset.css?t=2018-11-21%2015%3a01%3a50.574115682%20%2b0000%20UTC%20m%3d%2b0.411459016">
+    <link rel="stylesheet" href="https://iaroki.github.io/css/pygments.css?t=2018-11-21%2015%3a01%3a50.574115682%20%2b0000%20UTC%20m%3d%2b0.411459016">
+    <link rel="stylesheet" href="https://iaroki.github.io/css/main.css?t=2018-11-21%2015%3a01%3a50.574115682%20%2b0000%20UTC%20m%3d%2b0.411459016">
+    
+        <link rel="stylesheet" href="https://iaroki.github.io/css/override.css?t=2018-11-21%2015%3a01%3a50.574115682%20%2b0000%20UTC%20m%3d%2b0.411459016">
+    
+
+
+
+
+<link rel="shortcut icon"
+
+    href="https://iaroki.github.io/img/zen.ico"
+
+>
+
+
+
+
+
+
+
+
+</head>
+
+
+<body lang="en">
+
+<section class="header">
+    <div class="container">
+        <div class="content">
+            
+                
+                
+                
+                
+                
+                    
+                
+                    
+                
+                
+                <a href="https://iaroki.github.io/"><img class="avatar" src="https://iaroki.github.io/img/zen.png" srcset="https://iaroki.github.io/img/zen.png 1x"></a>
+            
+            <a href="https://iaroki.github.io/"><div class="name">iaroki</div></a>
+            
+            <nav>
+                <ul>
+                    
+                        <li class="nav-blog"><a href="https://iaroki.github.io/blog/"><span>Blog</span></a></li>
+                    
+                        <li class="nav-about"><a href="https://iaroki.github.io/about/"><span>About</span></a></li>
+                    
+                        <li class="nav-code"><a href="https://iaroki.github.io/code/"><span>Code</span></a></li>
+                    
+                        <li class="nav-links"><a href="https://iaroki.github.io/links/"><span>Links</span></a></li>
+                    
+                </ul>
+            </nav>
+        </div>
+    </div>
+</section>
+
+<section class="icons">
+    <div class="container">
+        <div class="content">
+        
+            <a href="//github.com/iaroki" target="_blank" rel="noopener"><img class="icon" src="https://iaroki.github.io/img/github.svg" alt="github" /></a>
+        
+
+        
+            <a href="//gitlab.com/iaroki" target="_blank" rel="noopener"><img class="icon" src="https://iaroki.github.io/img/gitlab.svg" alt="gitlab" /></a>
+        
+
+        
+            <a href="//twitter.com/_iaroki" target="_blank" rel="noopener"><img class="icon" src="https://iaroki.github.io/img/twitter.svg" alt="twitter" /></a>
+        
+
+	
+
+        
+
+        
+            <a href="//mastodon.social/@iaroki" target="_blank" rel="noopener"><img class="icon" src="https://iaroki.github.io/img/mastodon.svg" alt="mastodon" /></a>
+        
+
+        
+            <a href="//linkedin.com/in/iaroki" target="_blank" rel="noopener"><img class="icon" src="https://iaroki.github.io/img/linkedin.svg" alt="linkedin" /></a>
+        
+
+        
+
+        
+            <a href="//instagram.com/homelessstreetcat" target="_blank" rel="noopener"><img class="icon" src="https://iaroki.github.io/img/instagram.svg" alt="instagram" /></a>
+        
+
+        
+            <a href="//500px.com/iaroki" target="_blank" rel="noopener"><img class="icon" src="https://iaroki.github.io/img/500px.svg" alt="500px" /></a>
+        
+
+        
+
+        
+            <a href="mailto:iaroki@protonmail.com"><img class="icon" src="https://iaroki.github.io/img/email.svg" alt="email" /></a>
+        
+
+        
+
+        
+        </div>
+    </div>
+</section>
+
+
+<section class="main post non-narrow zero-top-spacing">
+    <div class="container">
+        <div class="content">
+            <div class="front-matter">
+                <div class="title-container">
+                    <div class="page-heading">
+
+    Centos 7 home router
+
+</div>
+
+                    <div class="initials"><a href="https://iaroki.github.io"></a></div>
+                </div>
+                <div class="meta">
+                    
+                    <div class="date" title='Tue Oct 30 2018 12:01:52 UTC'>Oct 30, 2018</div>
+                    
+                    
+		    <div class="reading-time"><div class="middot"></div>2 minutes read</div>
+                    
+                </div>
+            </div>
+            <div class="markdown">
+                <p>In this project I build home router based on a Centos 7.
+To my server connected two NICs: <code>enp0s3</code> and <code>enp0s8</code>.
+* <code>enp0s3</code> - will be WAN
+* <code>enp0s8</code> - will be LAN</p>
+
+<p>First of all we need to enable IP forwarding:</p>
+
+<pre><code>sysctl -w net.ipv4.ip_forward=1
+</code></pre>
+
+<p>Then tweak Firewalld rules:</p>
+
+<pre><code>firewall-cmd --set-default-zone=external
+firewall-cmd --permanent --zone=internal --add-interface=enp0s8
+firewall-cmd --permanent --zone=internal --add-service=dhcp
+firewall-cmd --permanent --zone=internal --add-service=dns
+firewall-cmd --direct --add-rule ipv4 nat POSTROUTING 0 -o eth_ext -j MASQUERADE
+firewall-cmd --direct --add-rule ipv4 filter FORWARD 0 -i eth_int -o eth_ext -j ACCEPT
+firewall-cmd --direct --add-rule ipv4 filter FORWARD 0 -i eth_ext -o eth_int -m state --state RELATED,ESTABLISHED -j ACCEPT
+</code></pre>
+
+<p>Install DHCP:</p>
+
+<pre><code>yum -y install dhcp
+vi /etc/dhcp/dhcpd.conf
+</code></pre>
+
+<p>And edit dhcp configuration file:</p>
+
+<pre><code># DHCP Server Configuration file.
+#   see /usr/share/doc/dhcp*/dhcpd.conf.example
+#   see dhcpd.conf(5) man page
+#
+
+option domain-name &quot;iaroki.io&quot;; 
+option domain-name-servers 10.0.0.1;
+default-lease-time 600; 
+max-lease-time 7200; 
+authoritative; 
+
+subnet 10.0.0.0 netmask 255.255.255.0 { 
+  range 10.0.0.100 10.0.0.254; 
+  option broadcast-address 10.0.0.255; 
+  option routers 10.0.0.1;
+  option interface-mtu 1500; 
+}
+
+#host nas { 
+#  option host-name &quot;nas.iaroki.io&quot;; 
+#  hardware ethernet f0:9f:c2:1f:c1:12; 
+#  fixed-address 10.0.0.2; 
+#}
+</code></pre>
+
+<p>Now enable and start your DHCP server:</p>
+
+<pre><code>systemctl start dhcpd
+systemctl enable dhcpd
+</code></pre>
+
+<p>Install DNS server:</p>
+
+<pre><code>yum -y install bind-chroot bind-utils
+</code></pre>
+
+<p>Configure <code>/etc/named.conf</code>:</p>
+
+<pre><code>//
+// named.conf
+//
+// Provided by Red Hat bind package to configure the ISC BIND named(8) DNS
+// server as a caching only nameserver (as a localhost DNS resolver only).
+//
+// See /usr/share/doc/bind*/sample/ for example named configuration files.
+//
+// See the BIND Administrator's Reference Manual (ARM) for details about the
+// configuration located in /usr/share/doc/bind-{version}/Bv9ARM.html
+
+options {
+	listen-on port 53 { 10.0.0.1; };
+	listen-on-v6 port 53 { none; };
+	directory 	&quot;/var/named&quot;;
+	dump-file 	&quot;/var/named/data/cache_dump.db&quot;;
+	statistics-file &quot;/var/named/data/named_stats.txt&quot;;
+	memstatistics-file &quot;/var/named/data/named_mem_stats.txt&quot;;
+	allow-query     { 10.0.0.0/24; };
+	recursion yes;
+	forwarders {1.1.1.1; 1.0.0.1; };
+	dnssec-enable yes;
+	dnssec-validation yes;
+
+	/* Path to ISC DLV key */
+	bindkeys-file &quot;/etc/named.iscdlv.key&quot;;
+
+	managed-keys-directory &quot;/var/named/dynamic&quot;;
+
+	pid-file &quot;/run/named/named.pid&quot;;
+	session-keyfile &quot;/run/named/session.key&quot;;
+};
+
+logging {
+        channel default_debug {
+                file &quot;data/named.run&quot;;
+                severity dynamic;
+        };
+};
+
+zone &quot;.&quot; IN {
+	type hint;
+	file &quot;named.ca&quot;;
+};
+
+zone &quot;iaroki.io&quot; IN {
+	type master;
+	file &quot;iaroki.io.zone&quot;;
+};
+
+include &quot;/etc/named.rfc1912.zones&quot;;
+include &quot;/etc/named.root.key&quot;;
+</code></pre>
+
+<p>Then create <code>/var/named/iaroki.io.zone</code> file:</p>
+
+<pre><code>$TTL 86400 
+@ IN SOA gw.iaroki.io. root.iaroki.io. ( 
+  2018103001	;Serial  
+  3600		;Refresh 
+  1800		;Retry 
+  604800	;Expire 
+  86400 )	;Minimum TTL
+
+		IN NS		gw.iaroki.io. 
+		IN A		10.0.0.1
+gw		IN A		10.0.0.1
+nas		IN A		10.0.0.2
+</code></pre>
+
+<p>Now enable and start your DNS server:</p>
+
+<pre><code>systemctl start named
+systemctl enable named
+</code></pre>
+
+<p>Configured server will send DHCP broadcast in 10.0.0.0 subnet with caching DNS server.</p>
+
+                <br>
+                
+                  <div class="tags">
+                    <strong>Tags:</strong>
+                  
+                    <a href="https://iaroki.github.io/tags/linux">linux</a>
+                  
+                    <a href="https://iaroki.github.io/tags/centos">centos</a>
+                  
+                  </div>
+                  <br />
+                
+                <p class="back-to-posts"><a href="https://iaroki.github.io/blog">Back to posts</a></p>
+            </div>
+            <br>
+            <div class="disqus">
+                
+            </div>
+            
+        </div>
+    </div>
+</section>
+
+
+
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/highlight.min.js"></script>
+  
+
+  <script type="text/javascript">
+    hljs.initHighlightingOnLoad();
+  </script>
+
+
+
+
+
+</body>
+</html>
+

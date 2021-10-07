@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Atomic on iaroki&#39;s blog</title>
+    <link>https://iaroki.github.io/tags/atomic/</link>
+    <description>Recent content in Atomic on iaroki&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-US</language>
+    <lastBuildDate>Wed, 17 Oct 2018 13:41:46 +0000</lastBuildDate>
+    
+	<atom:link href="https://iaroki.github.io/tags/atomic/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Fedora Atomic testdrive</title>
+      <link>https://iaroki.github.io/blog/fedora-atomic-testdrive/</link>
+      <pubDate>Wed, 17 Oct 2018 13:41:46 +0000</pubDate>
+      
+      <guid>https://iaroki.github.io/blog/fedora-atomic-testdrive/</guid>
+      <description> Fedora minimal setup Console utils  tmux (preinstalled) vim git wget tree htop  Xorg utils  xorg-x11-server-Xorg xorg-x11-server-utils xorg-x11-drv-ati xorg-x11-drv-vesa xorg-x11-drv-libinput xorg-x11-utils xorg-x11-xinit liberation-fonts-common liberation-mono-fonts network-manager-applet dmenu feh  </description>
+    </item>
+    
+  </channel>
+</rss>

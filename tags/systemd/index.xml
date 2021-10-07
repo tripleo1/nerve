@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Systemd on iaroki&#39;s blog</title>
+    <link>https://iaroki.github.io/tags/systemd/</link>
+    <description>Recent content in Systemd on iaroki&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-US</language>
+    <lastBuildDate>Mon, 22 Jan 2018 12:53:25 +0300</lastBuildDate>
+    
+	<atom:link href="https://iaroki.github.io/tags/systemd/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Enable graphical login in CentOS 7</title>
+      <link>https://iaroki.github.io/blog/enable-graphical-login-in-centos-7/</link>
+      <pubDate>Mon, 22 Jan 2018 12:53:25 +0300</pubDate>
+      
+      <guid>https://iaroki.github.io/blog/enable-graphical-login-in-centos-7/</guid>
+      <description>To start graphic login you need to enable two systemd services:
+$ sudo systemctl enable gdm.service $ sudo systemctl set-default graphical.target  Then reboot and you will see GDM login manager. If you want disable it, then run:
+$ sudo systemctl disable gdm.service $ sudo systemctl set-default multi-user.target  Now reboot.</description>
+    </item>
+    
+    <item>
+      <title>Tmux detach with systemd</title>
+      <link>https://iaroki.github.io/blog/tmux-detach-with-systemd/</link>
+      <pubDate>Fri, 19 Jan 2018 12:51:02 +0300</pubDate>
+      
+      <guid>https://iaroki.github.io/blog/tmux-detach-with-systemd/</guid>
+      <description>With systemd version 230+ detachind and logout from remote machine will kill tmux session.
+Systemd config First solution is to disable killing user processes systemwide. Edit /etc/systemd/logind.conf and set
+KillUserProcesses=no  Then restart systemd-logind.service:
+# systemctl restart systemd-logind  Tmux as a service Second solution is running tmux as a service. Just add RemainAfterExit=yes option to /etc/systemd/system/tmux@.service:
+[Unit] Description=tmux default session (detached) Documentation=man:tmux(1) [Service] Type=oneshot RemainAfterExit=yes ExecStart=/usr/bin/tmux new-session -d -s %I ExecStop=/usr/bin/tmux kill-server KillMode=none [Install] WantedBy=multiplexer.</description>
+    </item>
+    
+    <item>
+      <title>Creating systemd Unit file</title>
+      <link>https://iaroki.github.io/blog/creating-systemd-unit-file/</link>
+      <pubDate>Thu, 21 Sep 2017 12:30:07 +0300</pubDate>
+      
+      <guid>https://iaroki.github.io/blog/creating-systemd-unit-file/</guid>
+      <description>Create a unit file in the /etc/systemd/system/ directory and make sure it has correct file permissions. Execute as root:
+# touch /etc/systemd/system/name.service # chmod 664 /etc/systemd/system/name.service  Replace name with a name of the service to be created. Note that file does not need to be executable.
+Open the name.service file created in the previous step, and add the service configuration options. The following is an example unit configuration for a network-related service:</description>
+    </item>
+    
+  </channel>
+</rss>

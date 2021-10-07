@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="chrome=1">
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="referrer" content="no-referrer">
+<meta name="author" content="iaroki">
+<meta name="description" content="Create a unit file in the /etc/systemd/system/ directory and make sure it has correct file permissions. Execute as root:
+# touch /etc/systemd/system/name.service # chmod 664 /etc/systemd/system/name.service  Replace name with a name of the service to be created. Note that file does not need to be executable.
+Open the name.service file created in the previous step, and add the service configuration options. The following is an example unit configuration for a network-related service:">
+
+<meta property="og:title" content="Creating systemd Unit file" />
+<meta property="og:description" content="Create a unit file in the /etc/systemd/system/ directory and make sure it has correct file permissions. Execute as root:
+# touch /etc/systemd/system/name.service # chmod 664 /etc/systemd/system/name.service  Replace name with a name of the service to be created. Note that file does not need to be executable.
+Open the name.service file created in the previous step, and add the service configuration options. The following is an example unit configuration for a network-related service:" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://iaroki.github.io/blog/creating-systemd-unit-file/" />
+
+
+
+<meta property="article:published_time" content="2017-09-21T12:30:07&#43;03:00"/>
+
+<meta property="article:modified_time" content="2017-09-21T12:30:07&#43;03:00"/>
+
+
+
+
+
+
+
+
+
+
+
+
+<title>
+
+
+     Creating systemd Unit file 
+
+</title>
+<link rel="canonical" href="https://iaroki.github.io/blog/creating-systemd-unit-file/">
+
+
+
+
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/styles/default.min.css">
+
+
+
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Ubuntu+Mono:400,400i,700,700i|Raleway:500">
+
+
+
+    
+    <link rel="stylesheet" href="https://iaroki.github.io/css/reset.css?t=2018-11-21%2015%3a01%3a50.624053686%20%2b0000%20UTC%20m%3d%2b0.461397025">
+    <link rel="stylesheet" href="https://iaroki.github.io/css/pygments.css?t=2018-11-21%2015%3a01%3a50.624053686%20%2b0000%20UTC%20m%3d%2b0.461397025">
+    <link rel="stylesheet" href="https://iaroki.github.io/css/main.css?t=2018-11-21%2015%3a01%3a50.624053686%20%2b0000%20UTC%20m%3d%2b0.461397025">
+    
+        <link rel="stylesheet" href="https://iaroki.github.io/css/override.css?t=2018-11-21%2015%3a01%3a50.624053686%20%2b0000%20UTC%20m%3d%2b0.461397025">
+    
+
+
+
+
+<link rel="shortcut icon"
+
+    href="https://iaroki.github.io/img/zen.ico"
+
+>
+
+
+
+
+
+
+
+
+</head>
+
+
+<body lang="en">
+
+<section class="header">
+    <div class="container">
+        <div class="content">
+            
+                
+                
+                
+                
+                
+                    
+                
+                    
+                
+                
+                <a href="https://iaroki.github.io/"><img class="avatar" src="https://iaroki.github.io/img/zen.png" srcset="https://iaroki.github.io/img/zen.png 1x"></a>
+            
+            <a href="https://iaroki.github.io/"><div class="name">iaroki</div></a>
+            
+            <nav>
+                <ul>
+                    
+                        <li class="nav-blog"><a href="https://iaroki.github.io/blog/"><span>Blog</span></a></li>
+                    
+                        <li class="nav-about"><a href="https://iaroki.github.io/about/"><span>About</span></a></li>
+                    
+                        <li class="nav-code"><a href="https://iaroki.github.io/code/"><span>Code</span></a></li>
+                    
+                        <li class="nav-links"><a href="https://iaroki.github.io/links/"><span>Links</span></a></li>
+                    
+                </ul>
+            </nav>
+        </div>
+    </div>
+</section>
+
+<section class="icons">
+    <div class="container">
+        <div class="content">
+        
+            <a href="//github.com/iaroki" target="_blank" rel="noopener"><img class="icon" src="https://iaroki.github.io/img/github.svg" alt="github" /></a>
+        
+
+        
+            <a href="//gitlab.com/iaroki" target="_blank" rel="noopener"><img class="icon" src="https://iaroki.github.io/img/gitlab.svg" alt="gitlab" /></a>
+        
+
+        
+            <a href="//twitter.com/_iaroki" target="_blank" rel="noopener"><img class="icon" src="https://iaroki.github.io/img/twitter.svg" alt="twitter" /></a>
+        
+
+	
+
+        
+
+        
+            <a href="//mastodon.social/@iaroki" target="_blank" rel="noopener"><img class="icon" src="https://iaroki.github.io/img/mastodon.svg" alt="mastodon" /></a>
+        
+
+        
+            <a href="//linkedin.com/in/iaroki" target="_blank" rel="noopener"><img class="icon" src="https://iaroki.github.io/img/linkedin.svg" alt="linkedin" /></a>
+        
+
+        
+
+        
+            <a href="//instagram.com/homelessstreetcat" target="_blank" rel="noopener"><img class="icon" src="https://iaroki.github.io/img/instagram.svg" alt="instagram" /></a>
+        
+
+        
+            <a href="//500px.com/iaroki" target="_blank" rel="noopener"><img class="icon" src="https://iaroki.github.io/img/500px.svg" alt="500px" /></a>
+        
+
+        
+
+        
+            <a href="mailto:iaroki@protonmail.com"><img class="icon" src="https://iaroki.github.io/img/email.svg" alt="email" /></a>
+        
+
+        
+
+        
+        </div>
+    </div>
+</section>
+
+
+<section class="main post non-narrow zero-top-spacing">
+    <div class="container">
+        <div class="content">
+            <div class="front-matter">
+                <div class="title-container">
+                    <div class="page-heading">
+
+    Creating systemd Unit file
+
+</div>
+
+                    <div class="initials"><a href="https://iaroki.github.io"></a></div>
+                </div>
+                <div class="meta">
+                    
+                    <div class="date" title='Thu Sep 21 2017 12:30:07 &#43;0300'>Sep 21, 2017</div>
+                    
+                    
+		    <div class="reading-time"><div class="middot"></div>One minute read</div>
+                    
+                </div>
+            </div>
+            <div class="markdown">
+                <p>Create a unit file in the <code>/etc/systemd/system/</code> directory and make sure it has correct file permissions. Execute as <code>root</code>:</p>
+
+<pre><code># touch /etc/systemd/system/name.service
+# chmod 664 /etc/systemd/system/name.service
+</code></pre>
+
+<p>Replace <code>name</code> with a name of the service to be created. Note that file does not need to be executable.</p>
+
+<p>Open the <code>name.service</code> file created in the previous step, and add the service configuration options. The following is an example unit configuration for a network-related service:</p>
+
+<pre><code class="language-ini">[Unit]
+Description=service_description
+After=network.target
+
+[Service]
+ExecStart=path_to_executable
+Type=forking
+
+[Install]
+WantedBy=default.target
+</code></pre>
+
+<p>Notify systemd that a new <code>name.service</code> file exists by executing the following command as root:</p>
+
+<pre><code># systemctl daemon-reload
+# systemctl enable name.service
+# systemctl start name.service
+</code></pre>
+
+<hr />
+
+                <br>
+                
+                  <div class="tags">
+                    <strong>Tags:</strong>
+                  
+                    <a href="https://iaroki.github.io/tags/linux">linux</a>
+                  
+                    <a href="https://iaroki.github.io/tags/systemd">systemd</a>
+                  
+                  </div>
+                  <br />
+                
+                <p class="back-to-posts"><a href="https://iaroki.github.io/blog">Back to posts</a></p>
+            </div>
+            <br>
+            <div class="disqus">
+                
+            </div>
+            
+        </div>
+    </div>
+</section>
+
+
+
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/highlight.min.js"></script>
+  
+
+  <script type="text/javascript">
+    hljs.initHighlightingOnLoad();
+  </script>
+
+
+
+
+
+</body>
+</html>
+

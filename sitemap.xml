@@ -1,0 +1,411 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  
+  <url>
+    <loc>https://iaroki.github.io/blog/running-docker-containers-with-systemd/</loc>
+    <lastmod>2018-11-21T14:57:10+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://iaroki.github.io/blog/vagrant-with-libvirt-provider/</loc>
+    <lastmod>2018-11-21T14:24:45+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://iaroki.github.io/blog/gpg2-keys-cheatsheet/</loc>
+    <lastmod>2018-11-20T14:35:26+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://iaroki.github.io/blog/centos-7-home-router/</loc>
+    <lastmod>2018-10-30T12:01:52+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://iaroki.github.io/blog/using-traefik-with-docker/</loc>
+    <lastmod>2018-10-26T13:20:25+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://iaroki.github.io/blog/systemd-nspawn/</loc>
+    <lastmod>2018-10-22T14:13:30+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://iaroki.github.io/blog/fedora-atomic-testdrive/</loc>
+    <lastmod>2018-10-17T13:41:46+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://iaroki.github.io/blog/voidlinux-lxd-image/</loc>
+    <lastmod>2018-10-11T09:34:49+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://iaroki.github.io/code/d2sets/</loc>
+    <lastmod>2018-09-21T20:29:37-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://iaroki.github.io/code/d2uniq/</loc>
+    <lastmod>2018-09-20T20:29:37-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://iaroki.github.io/blog/lxd-container-with-second-network-interface/</loc>
+    <lastmod>2018-09-20T07:58:56+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://iaroki.github.io/code/ps4games/</loc>
+    <lastmod>2018-09-19T20:29:37-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://iaroki.github.io/links/</loc>
+    <lastmod>2018-06-20T13:00:52+03:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://iaroki.github.io/blog/centos-7-kickstart-installation/</loc>
+    <lastmod>2018-06-07T12:55:02+03:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://iaroki.github.io/blog/enable-graphical-login-in-centos-7/</loc>
+    <lastmod>2018-01-22T12:53:25+03:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://iaroki.github.io/blog/tmux-detach-with-systemd/</loc>
+    <lastmod>2018-01-19T12:51:02+03:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://iaroki.github.io/blog/convert-m4a-to-ogg-with-ffmpeg/</loc>
+    <lastmod>2017-12-05T12:49:08+03:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://iaroki.github.io/blog/nginx-load-balancing/</loc>
+    <lastmod>2017-11-04T12:46:36+03:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://iaroki.github.io/blog/jenkins-installation-on-centos-7/</loc>
+    <lastmod>2017-11-03T12:44:34+03:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://iaroki.github.io/blog/iptables-setup/</loc>
+    <lastmod>2017-11-02T12:42:51+03:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://iaroki.github.io/blog/firewalld-in-centos-7/</loc>
+    <lastmod>2017-11-01T12:41:20+03:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://iaroki.github.io/blog/dns-explanation/</loc>
+    <lastmod>2017-11-01T10:49:22+03:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://iaroki.github.io/blog/git-log-customizsation/</loc>
+    <lastmod>2017-10-30T12:39:27+03:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://iaroki.github.io/blog/vagrant-tips/</loc>
+    <lastmod>2017-10-30T12:37:21+03:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://iaroki.github.io/blog/installation-asterisk-13-on-ubuntu-16.04/</loc>
+    <lastmod>2017-10-25T12:35:22+03:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://iaroki.github.io/blog/creating-systemd-unit-file/</loc>
+    <lastmod>2017-09-21T12:30:07+03:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://iaroki.github.io/blog/running-gui-applications-in-lxd-on-fedora-26/</loc>
+    <lastmod>2017-09-20T12:28:27+03:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://iaroki.github.io/blog/tor-hidden-service/</loc>
+    <lastmod>2017-06-16T11:46:07+03:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://iaroki.github.io/blog/simple-way-to-quickly-setup-http-server/</loc>
+    <lastmod>2017-06-08T12:57:22+03:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://iaroki.github.io/blog/tmux-cheatsheet/</loc>
+    <lastmod>2017-06-08T12:26:29+03:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://iaroki.github.io/blog/linux-i/o-redirection/</loc>
+    <lastmod>2017-03-22T12:24:33+03:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://iaroki.github.io/blog/passwordless-ssh-key-based-authentication/</loc>
+    <lastmod>2017-03-20T12:22:43+03:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://iaroki.github.io/blog/archlinux-on-luks/</loc>
+    <lastmod>2017-03-16T12:20:55+03:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://iaroki.github.io/about/</loc>
+    <lastmod>2015-08-22T06:42:21-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://iaroki.github.io/about/colophon/</loc>
+    <lastmod>2015-08-22T06:28:26-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://iaroki.github.io/code/</loc>
+    <lastmod>2015-08-19T20:29:37-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://iaroki.github.io/blog/curl-ip-address/</loc>
+    <lastmod>2015-02-01T12:18:07+03:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://iaroki.github.io/tags/asterisk/</loc>
+    <lastmod>2017-10-25T12:35:22+03:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://iaroki.github.io/tags/atomic/</loc>
+    <lastmod>2018-10-17T13:41:46+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://iaroki.github.io/blog/</loc>
+    <lastmod>2018-11-21T14:57:10+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://iaroki.github.io/categories/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://iaroki.github.io/tags/centos/</loc>
+    <lastmod>2018-10-30T12:01:52+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://iaroki.github.io/tags/containers/</loc>
+    <lastmod>2018-10-26T13:20:25+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://iaroki.github.io/tags/curl/</loc>
+    <lastmod>2015-02-01T12:18:07+03:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://iaroki.github.io/tags/dns/</loc>
+    <lastmod>2017-11-01T10:49:22+03:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://iaroki.github.io/tags/docker/</loc>
+    <lastmod>2018-10-26T13:20:25+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://iaroki.github.io/tags/fedora/</loc>
+    <lastmod>2018-10-22T14:13:30+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://iaroki.github.io/tags/ffmpeg/</loc>
+    <lastmod>2017-12-05T12:49:08+03:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://iaroki.github.io/tags/firewalld/</loc>
+    <lastmod>2017-11-01T12:41:20+03:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://iaroki.github.io/tags/git/</loc>
+    <lastmod>2017-10-30T12:39:27+03:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://iaroki.github.io/tags/iptables/</loc>
+    <lastmod>2017-11-02T12:42:51+03:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://iaroki.github.io/tags/jenkins/</loc>
+    <lastmod>2017-11-03T12:44:34+03:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://iaroki.github.io/tags/kickstart/</loc>
+    <lastmod>2018-06-07T12:55:02+03:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://iaroki.github.io/tags/linux/</loc>
+    <lastmod>2018-10-30T12:01:52+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://iaroki.github.io/tags/luks/</loc>
+    <lastmod>2017-03-16T12:20:55+03:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://iaroki.github.io/tags/lvm/</loc>
+    <lastmod>2017-03-16T12:20:55+03:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://iaroki.github.io/tags/lxd/</loc>
+    <lastmod>2018-10-11T09:34:49+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://iaroki.github.io/tags/m4a/</loc>
+    <lastmod>2017-12-05T12:49:08+03:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://iaroki.github.io/tags/nginx/</loc>
+    <lastmod>2017-11-04T12:46:36+03:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://iaroki.github.io/tags/ogg/</loc>
+    <lastmod>2017-12-05T12:49:08+03:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://iaroki.github.io/tags/ostree/</loc>
+    <lastmod>2018-10-17T13:41:46+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://iaroki.github.io/tags/podman/</loc>
+    <lastmod>2018-10-17T13:41:46+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://iaroki.github.io/tags/python/</loc>
+    <lastmod>2017-06-08T12:57:22+03:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://iaroki.github.io/tags/rhel/</loc>
+    <lastmod>2018-06-07T12:55:02+03:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://iaroki.github.io/tags/rpm-ostree/</loc>
+    <lastmod>2018-10-17T13:41:46+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://iaroki.github.io/tags/ssh/</loc>
+    <lastmod>2017-03-20T12:22:43+03:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://iaroki.github.io/tags/systemd/</loc>
+    <lastmod>2018-01-22T12:53:25+03:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://iaroki.github.io/tags/</loc>
+    <lastmod>2017-10-25T12:35:22+03:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://iaroki.github.io/tags/tmux/</loc>
+    <lastmod>2018-01-19T12:51:02+03:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://iaroki.github.io/tags/tor/</loc>
+    <lastmod>2017-06-16T11:46:07+03:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://iaroki.github.io/tags/traefik/</loc>
+    <lastmod>2018-10-26T13:20:25+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://iaroki.github.io/tags/ubuntu/</loc>
+    <lastmod>2017-10-25T12:35:22+03:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://iaroki.github.io/tags/vagrant/</loc>
+    <lastmod>2017-10-30T12:37:21+03:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://iaroki.github.io/</loc>
+    <lastmod>2018-11-21T14:57:10+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+</urlset>

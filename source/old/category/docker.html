@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>iaroki blog - Docker</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">iaroki blog </a></h1>
+                <nav><ul>
+                    <li><a href="/pages/links.html">Links</a></li>
+                    <li><a href="/pages/tasks.html">Tasks</a></li>
+                    <li class="active"><a href="/category/docker.html">Docker</a></li>
+                    <li><a href="/category/git.html">Git</a></li>
+                    <li><a href="/category/linux.html">Linux</a></li>
+                    <li><a href="/category/markdown.html">Markdown</a></li>
+                    <li><a href="/category/other.html">Other</a></li>
+                    <li><a href="/category/python.html">Python</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+
+            <aside id="featured" class="body">
+                <article>
+                    <h1 class="entry-title"><a href="/docker-local-registry.html">Docker local registry</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2018-09-07T16:57:00+03:00">
+                Published: Fri 07 September 2018
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/iaroki.html">iaroki</a>
+        </address>
+<p>In <a href="/category/docker.html">Docker</a>.</p>
+<p>tags: <a href="/tag/linux.html">linux</a> <a href="/tag/docker.html">docker</a> <a href="/tag/containers.html">containers</a> </p>
+</footer><!-- /.post-info --><h1>Run a local registry</h1>
+<p>Use a command like the following to start the registry container:</p>
+<div class="highlight"><pre><span></span>$ docker run -d -p <span class="m">5000</span>:5000 --restart<span class="o">=</span>always --name registry registry:2
+</pre></div>
+
+
+<p>The registry is now ready to use.</p>
+<h1>Copy an image from Docker Hub to your registry</h1>
+<p>You can pull an image from Docker Hub and push it to your registry. The following example pulls the ubuntu:16.04 image from Docker Hub and re-tags it as my-ubuntu, then pushes it to the local registry. Finally, the ubuntu:16.04 and my-ubuntu images are deleted locally and the my-ubuntu image is pulled from the local registry.</p>
+<ol>
+<li>Pull the ubuntu:16.04 image from Docker Hub.</li>
+</ol>
+<div class="highlight"><pre><span></span>$ docker pull ubuntu:16.04
+</pre></div>
+
+
+<ol>
+<li>Tag the image as localhost:5000/my-ubuntu. This creates an additional tag for the existing image. When the first part of the tag is a hostname and port, Docker interprets this as the location of a registry, when pushing.</li>
+</ol>
+<div class="highlight"><pre><span></span>$ docker tag ubuntu:16.04 localhost:5000/my-ubuntu
+</pre></div>
+
+
+<ol>
+<li>Push the image to the local registry running at localhost:5000:</li>
+</ol>
+<div class="highlight"><pre><span></span>$ docker push localhost:5000/my-ubuntu
+</pre></div>
+
+
+<ol>
+<li>Remove the locally-cached ubuntu:16.04 and localhost:5000/my-ubuntu images, so that you can test pulling the image from your registry. This does not remove the localhost:5000/my-ubuntu image from your registry.</li>
+</ol>
+<div class="highlight"><pre><span></span>$ docker image remove ubuntu:16.04
+$ docker image remove localhost:5000/my-ubuntu
+</pre></div>
+
+
+<ol>
+<li>Pull the localhost:5000/my-ubuntu image from your local registry.</li>
+</ol>
+<div class="highlight"><pre><span></span>$ docker pull localhost:5000/my-ubuntu
+</pre></div>
+
+
+<h1>Stop a local registry</h1>
+<p>To stop the registry, use the same docker container stop command as with any other container.</p>
+<div class="highlight"><pre><span></span>$ docker container stop registry
+</pre></div>
+
+
+<p>To remove the container, use docker container rm.</p>
+<div class="highlight"><pre><span></span>$ docker container stop registry <span class="o">&amp;&amp;</span> docker container rm -v registry
+</pre></div>
+
+
+<h1>Basic configuration</h1>
+<p>To configure the container, you can pass additional or modified options to the docker run command.</p>
+<p>The following sections provide basic guidelines for configuring your registry. For more details, see the registry configuration reference.</p>
+<h2>Start the registry automatically</h2>
+<p>If you want to use the registry as part of your permanent infrastructure, you should set it to restart automatically when Docker restarts or if it exits. This example uses the --restart always flag to set a restart policy for the registry.</p>
+<div class="highlight"><pre><span></span>$ docker run -d <span class="se">\</span>
+  -p <span class="m">5000</span>:5000 <span class="se">\</span>
+  --restart<span class="o">=</span>always <span class="se">\</span>
+  --name registry <span class="se">\</span>
+  registry:2
+</pre></div>
+
+
+<h2>Customize the published port</h2>
+<p>If you are already using port 5000, or you want to run multiple local registries to separate areas of concern, you can customize the registry’s port settings. This example runs the registry on port 5001 and also names it registry-test. Remember, the first part of the -p value is the host port and the second part is the port within the container. Within the container, the registry listens on port 5000 by default.</p>
+<div class="highlight"><pre><span></span>$ docker run -d <span class="se">\</span>
+  -p <span class="m">5001</span>:5000 <span class="se">\</span>
+  --name registry-test <span class="se">\</span>
+  registry:2
+</pre></div>
+
+
+<p>If you want to change the port the registry listens on within the container, you can use the environment variable REGISTRY_HTTP_ADDR to change it. This command causes the registry to listen on port 5001 within the container:</p>
+<div class="highlight"><pre><span></span>$ docker run -d <span class="se">\</span>
+  -e <span class="nv">REGISTRY_HTTP_ADDR</span><span class="o">=</span><span class="m">0</span>.0.0.0:5001 <span class="se">\</span>
+  -p <span class="m">5001</span>:5001 <span class="se">\</span>
+  --name registry-test <span class="se">\</span>
+  registry:2
+</pre></div>
+
+
+<h1>Storage customization</h1>
+<h2>Customize the storage location</h2>
+<p>By default, your registry data is persisted as a docker volume on the host filesystem. If you want to store your registry contents at a specific location on your host filesystem, such as if you have an SSD or SAN mounted into a particular directory, you might decide to use a bind mount instead. A bind mount is more dependent on the filesystem layout of the Docker host, but more performant in many situations. The following example bind-mounts the host directory /mnt/registry into the registry container at /var/lib/registry/.</p>
+<div class="highlight"><pre><span></span>$ docker run -d <span class="se">\</span>
+  -p <span class="m">5000</span>:5000 <span class="se">\</span>
+  --restart<span class="o">=</span>always <span class="se">\</span>
+  --name registry <span class="se">\</span>
+  -v /mnt/registry:/var/lib/registry <span class="se">\</span>
+  registry:2
+</pre></div>
+
+
+<hr>                </article>
+            </aside><!-- /#featured -->
+                <section id="content" class="body">
+                    <h1>Other articles</h1>
+                    <hr />
+                    <ol id="posts-list" class="hfeed">
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/dockerfile-description.html" rel="bookmark"
+                           title="Permalink to Dockerfile description">Dockerfile description</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2017-11-04T13:17:00+02:00">
+                Published: Sat 04 November 2017
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/iaroki.html">iaroki</a>
+        </address>
+<p>In <a href="/category/docker.html">Docker</a>.</p>
+<p>tags: <a href="/tag/linux.html">linux</a> <a href="/tag/docker.html">docker</a> <a href="/tag/containers.html">containers</a> <a href="/tag/dockerfile.html">dockerfile</a> </p>
+</footer><!-- /.post-info -->                <h3>Creating image from file</h3>
+<p>Go to the directory with Dockerfile and run:</p>
+<div class="highlight"><pre><span></span>docker build -t imagename .
+</pre></div>
+
+
+<h3>Dockerfile instructions</h3>
+<p><strong>FROM</strong></p>
+<p><code>FROM</code> - This instruction is used to set the base image for subsequent instructions. It is mandatory to set this in the first line of a Dockerfile. You can use it any …</p>
+                <a class="readmore" href="/dockerfile-description.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/container-volumes.html" rel="bookmark"
+                           title="Permalink to Container Volumes">Container Volumes</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2017-06-18T20:04:00+03:00">
+                Published: Sun 18 June 2017
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/iaroki.html">iaroki</a>
+        </address>
+<p>In <a href="/category/docker.html">Docker</a>.</p>
+<p>tags: <a href="/tag/linux.html">linux</a> <a href="/tag/docker.html">docker</a> <a href="/tag/containers.html">containers</a> </p>
+</footer><!-- /.post-info -->                <p>To create Storage Container we can use:</p>
+<div class="highlight"><pre><span></span>docker create -v /data --name dataContainer busybox
+</pre></div>
+
+
+<p>Let's add some files to it:</p>
+<div class="highlight"><pre><span></span>docker cp someFile.big dataContainer:/data/
+</pre></div>
+
+
+<p>Now mount storage container to other running container using option <code>--volumes-from &lt;container&gt;</code>:</p>
+<div class="highlight"><pre><span></span>docker run --volumes-from dataContainer alpine ls /data
+</pre></div>
+
+
+<p>The output will be <code>someFile …</code></p>
+                <a class="readmore" href="/container-volumes.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/docker-usage.html" rel="bookmark"
+                           title="Permalink to Docker usage">Docker usage</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2017-04-15T12:37:00+03:00">
+                Published: Sat 15 April 2017
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/iaroki.html">iaroki</a>
+        </address>
+<p>In <a href="/category/docker.html">Docker</a>.</p>
+<p>tags: <a href="/tag/linux.html">linux</a> <a href="/tag/docker.html">docker</a> <a href="/tag/containers.html">containers</a> </p>
+</footer><!-- /.post-info -->                <p>Running container from image:
+<code>docker run &lt;image-name&gt;</code></p>
+<p>Enable interactive shell by adding next keys:
+<code>-i</code> - intercative
+<code>-t</code> - use tty</p>
+<p><code>docker run -it python</code></p>
+<p>To remove container after it dies add:
+<code>--rm</code> - remove after exit</p>
+<p><code>docker run -it --rm python</code></p>
+<p>To name container for later use add:
+<code>--name &lt;name&gt;</code> - name container …</p>
+                <a class="readmore" href="/docker-usage.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+                </ol><!-- /#posts-list -->
+                </section><!-- /#content -->
+        <section id="extras" class="body">
+                <div class="blogroll">
+                        <h2>links</h2>
+                        <ul>
+                            <li><a href="http://getpelican.com/">Pelican</a></li>
+                            <li><a href="http://python.org/">Python.org</a></li>
+                            <li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
+                        </ul>
+                </div><!-- /.blogroll -->
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+
+                            <li><a href="https://github.com/iaroki">Github</a></li>
+                            <li><a href="https://facebook.com/johnnymnemonic">Facebook</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+    <script type="text/javascript">
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-112838187-1', 'auto');
+    ga('send', 'pageview');
+    </script>
+</body>
+</html>
