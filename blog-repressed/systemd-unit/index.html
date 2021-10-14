@@ -1,0 +1,94 @@
+<!doctype html><html lang=en-us>
+<head>
+<meta charset=utf-8>
+<meta http-equiv=x-ua-compatible content="chrome=1">
+<meta name=HandheldFriendly content="True">
+<meta name=MobileOptimized content="320">
+<meta name=viewport content="width=device-width,initial-scale=1">
+<meta name=referrer content="no-referrer">
+<meta name=author content="tripleo1">
+<meta name=description content="Create a unit file in the /etc/systemd/system/ directory and make sure it has correct file permissions. Execute as root:
+# touch /etc/systemd/system/name.service # chmod 664 /etc/systemd/system/name.service Replace name with a name of the service to be created. Note that file does not need to be executable.
+Open the name.service file created in the previous step, and add the service configuration options. The following is an example unit configuration for a network-related service:">
+<meta property="og:title" content="Creating systemd Unit file">
+<meta property="og:description" content="Create a unit file in the /etc/systemd/system/ directory and make sure it has correct file permissions. Execute as root:
+# touch /etc/systemd/system/name.service # chmod 664 /etc/systemd/system/name.service Replace name with a name of the service to be created. Note that file does not need to be executable.
+Open the name.service file created in the previous step, and add the service configuration options. The following is an example unit configuration for a network-related service:">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://tripleo1.github.io/blog-repressed/systemd-unit/"><meta property="article:section" content="blog-repressed">
+<meta property="article:published_time" content="2017-09-21T12:30:07+03:00">
+<meta property="article:modified_time" content="2017-09-21T12:30:07+03:00">
+<title>
+Creating systemd Unit file
+</title>
+<link rel=canonical href=https://tripleo1.github.io/blog-repressed/systemd-unit/>
+<link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/styles/default.min.css>
+<link rel=stylesheet href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Ubuntu+Mono:400,400i,700,700i|Raleway:500">
+<link rel=stylesheet href="https://tripleo1.github.io/css/reset.css?t=2021-10-14%2011%3a25%3a05.803439276%20%2b0000%20UTC%20m%3d%2b0.075408220">
+<link rel=stylesheet href="https://tripleo1.github.io/css/pygments.css?t=2021-10-14%2011%3a25%3a05.803439276%20%2b0000%20UTC%20m%3d%2b0.075408220">
+<link rel=stylesheet href="https://tripleo1.github.io/css/main.css?t=2021-10-14%2011%3a25%3a05.803439276%20%2b0000%20UTC%20m%3d%2b0.075408220">
+<link rel=stylesheet href="https://tripleo1.github.io/css/override.css?t=2021-10-14%2011%3a25%3a05.803439276%20%2b0000%20UTC%20m%3d%2b0.075408220">
+<link rel="shortcut icon" href=https://tripleo1.github.io/img/zen.ico>
+</head>
+<body lang=en>
+<section class=header>
+<div class=container>
+<div class=content>
+<a href=https://tripleo1.github.io/><img class=avatar src=https://tripleo1.github.io/img/zen.png srcset="https://tripleo1.github.io/img/zen.png 1x"></a>
+<a href=https://tripleo1.github.io/><div class=name>tripleo1</div></a>
+<nav>
+<ul>
+<li class=nav-blog><a href=https://tripleo1.github.io/blog/><span>Blog</span></a></li>
+<li class=nav-about><a href=https://tripleo1.github.io/about/><span>About</span></a></li>
+<li class=nav-code><a href=https://tripleo1.github.io/code/><span>Code</span></a></li>
+<li class=nav-links><a href=https://tripleo1.github.io/links/><span>Links</span></a></li>
+</ul>
+</nav>
+</div>
+</div>
+</section>
+<section class=icons>
+<div class=container>
+<div class=content>
+<a href=//github.com/tripleo1 target=_blank rel=noopener><img class=icon src=https://tripleo1.github.io/img/github.svg alt=github></a>
+<a href=//gitlab.com/tripleo1 target=_blank rel=noopener><img class=icon src=https://tripleo1.github.io/img/gitlab.svg alt=gitlab></a>
+<a href=//twitter.com/tripleo_sw target=_blank rel=noopener><img class=icon src=https://tripleo1.github.io/img/twitter.svg alt=twitter></a>
+<a href=mailto:oluoluolu@gmail.com><img class=icon src=https://tripleo1.github.io/img/email.svg alt=email></a>
+</div>
+</div>
+</section>
+<section class=main>
+<div class=container>
+<div class=content>
+<div class=page-heading>
+Creating systemd Unit file
+</div>
+<div class=markdown>
+<p>Create a unit file in the <code>/etc/systemd/system/</code> directory and make sure it has correct file permissions. Execute as <code>root</code>:</p>
+<pre tabindex=0><code># touch /etc/systemd/system/name.service
+# chmod 664 /etc/systemd/system/name.service
+</code></pre><p>Replace <code>name</code> with a name of the service to be created. Note that file does not need to be executable.</p>
+<p>Open the <code>name.service</code> file created in the previous step, and add the service configuration options. The following is an example unit configuration for a network-related service:</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-ini data-lang=ini><span class=k>[Unit]</span>
+<span class=na>Description</span><span class=o>=</span><span class=s>service_description</span>
+<span class=na>After</span><span class=o>=</span><span class=s>network.target</span>
+
+<span class=k>[Service]</span>
+<span class=na>ExecStart</span><span class=o>=</span><span class=s>path_to_executable</span>
+<span class=na>Type</span><span class=o>=</span><span class=s>forking</span>
+
+<span class=k>[Install]</span>
+<span class=na>WantedBy</span><span class=o>=</span><span class=s>default.target</span>
+</code></pre></div><p>Notify systemd that a new <code>name.service</code> file exists by executing the following command as root:</p>
+<pre tabindex=0><code># systemctl daemon-reload
+# systemctl enable name.service
+# systemctl start name.service
+</code></pre><hr>
+</div>
+</div>
+</div>
+</section>
+<script src=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/highlight.min.js></script>
+<script type=text/javascript>hljs.initHighlightingOnLoad()</script>
+</body>
+</html>
