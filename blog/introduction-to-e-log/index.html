@@ -1,0 +1,88 @@
+<!doctype html><html lang=en-us>
+<head>
+<meta charset=utf-8>
+<meta http-equiv=x-ua-compatible content="chrome=1">
+<meta name=HandheldFriendly content="True">
+<meta name=MobileOptimized content="320">
+<meta name=viewport content="width=device-width,initial-scale=1">
+<meta name=referrer content="no-referrer">
+<meta name=author content="tripleo1">
+<meta name=description content="I printed out my examples to see what was really happening with them. I&rsquo;ve been doing this thing for a while now called problem sets or problem statements, that detail the difference between the expected output and the output that is generated (by GenerateC, and by extension, by DeduceTypes2). The object of that exercise is that there is somewhere between the source code of the examples (and the accompanying standard library (alot of stubs in its current incarnation)), and the output, which is not generating the right results, and that is THE PROCESS.">
+<meta property="og:title" content="Introduction to E-LOG">
+<meta property="og:description" content="I printed out my examples to see what was really happening with them. I&rsquo;ve been doing this thing for a while now called problem sets or problem statements, that detail the difference between the expected output and the output that is generated (by GenerateC, and by extension, by DeduceTypes2). The object of that exercise is that there is somewhere between the source code of the examples (and the accompanying standard library (alot of stubs in its current incarnation)), and the output, which is not generating the right results, and that is THE PROCESS.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://tripleo1.github.io/blog/introduction-to-e-log/"><meta property="article:section" content="blog">
+<meta property="article:published_time" content="2021-12-05T19:53:00-05:00">
+<meta property="article:modified_time" content="2021-12-05T19:53:00-05:00">
+<title>
+Introduction to E-LOG
+</title>
+<link rel=canonical href=https://tripleo1.github.io/blog/introduction-to-e-log/>
+<link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/styles/default.min.css>
+<link rel=stylesheet href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Ubuntu+Mono:400,400i,700,700i|Raleway:500">
+<link rel=stylesheet href="https://tripleo1.github.io/css/reset.css?t=2021-12-07%2006%3a54%3a30.71753223%20%2b0000%20UTC%20m%3d%2b0.081654981">
+<link rel=stylesheet href="https://tripleo1.github.io/css/pygments.css?t=2021-12-07%2006%3a54%3a30.71753223%20%2b0000%20UTC%20m%3d%2b0.081654981">
+<link rel=stylesheet href="https://tripleo1.github.io/css/main.css?t=2021-12-07%2006%3a54%3a30.71753223%20%2b0000%20UTC%20m%3d%2b0.081654981">
+<link rel=stylesheet href="https://tripleo1.github.io/css/override.css?t=2021-12-07%2006%3a54%3a30.71753223%20%2b0000%20UTC%20m%3d%2b0.081654981">
+<link rel="shortcut icon" href=https://tripleo1.github.io/img/zen.ico>
+</head>
+<body lang=en>
+<section class=header>
+<div class=container>
+<div class=content>
+<a href=https://tripleo1.github.io/><img class=avatar src=https://tripleo1.github.io/img/zen.png srcset="https://tripleo1.github.io/img/zen.png 1x"></a>
+<a href=https://tripleo1.github.io/><div class=name>tripleo1</div></a>
+<nav>
+<ul>
+<li class=nav-blog><a href=https://tripleo1.github.io/blog/><span>Blog</span></a></li>
+<li class=nav-about><a href=https://tripleo1.github.io/about/><span>About</span></a></li>
+<li class=nav-code><a href=https://tripleo1.github.io/code/><span>Code</span></a></li>
+<li class=nav-links><a href=https://tripleo1.github.io/links/><span>Links</span></a></li>
+</ul>
+</nav>
+</div>
+</div>
+</section>
+<section class=icons>
+<div class=container>
+<div class=content>
+<a href=//github.com/tripleo1 target=_blank rel=noopener><img class=icon src=https://tripleo1.github.io/img/github.svg alt=github></a>
+<a href=//gitlab.com/tripleo target=_blank rel=noopener><img class=icon src=https://tripleo1.github.io/img/gitlab.svg alt=gitlab></a>
+<a href=//twitter.com/tripleo_sw target=_blank rel=noopener><img class=icon src=https://tripleo1.github.io/img/twitter.svg alt=twitter></a>
+<a href=mailto:oluoluolu+blog@gmail.com><img class=icon src=https://tripleo1.github.io/img/email.svg alt=email></a>
+</div>
+</div>
+</section>
+<section class="main post non-narrow zero-top-spacing">
+<div class=container>
+<div class=content>
+<div class=front-matter>
+<div class=title-container>
+<div class=page-heading>
+Introduction to E-LOG
+</div>
+<div class=initials><a href=https://tripleo1.github.io></a></div>
+</div>
+<div class=meta>
+<div class=date title="Sun Dec 5 2021 19:53:00 -0500">Dec 5, 2021</div>
+<div class=reading-time><div class=middot></div>6 minutes read</div>
+</div>
+</div>
+<div class=markdown>
+<p>I printed out my examples to see what was really happening with them. I&rsquo;ve been doing this thing for a while now called problem sets or problem statements, that detail the difference between the expected output and the output that is generated (by GenerateC, and by extension, by DeduceTypes2). The object of that exercise is that there is somewhere between the source code of the examples (and the accompanying standard library (alot of stubs in its current incarnation)), and the output, which is not generating the right results, and that is THE PROCESS. The process is a monster to debug &ndash; it&rsquo;s not a terrible monster, but it&rsquo;s a monster nevertheless. It&rsquo;s a couple thousand lines of code. It&rsquo;s really confusing. It&rsquo;s spaghetti code &ndash; ravioli code, whatever you might want to call it. I been doing a couple of projects intended to help it get a little bit clearer &ndash; DeduceObjects are slowly creeping in. There is DeduceLocalVariable, which at this point I believe only does typeResolution, and it doesn&rsquo;t do it completely and it doesn&rsquo;t do it in all cases. In any event typeResolution is not depended upon (integrated with) by any other part of the program. We have a number of other classes which are pretty much stubs, which means that they are not doing anything right now, but the plan is to fill them out, fill them in and let them take some of the complexity out of DeduceTypes, having them in their own separate classes so that they can be TESTED. Hopefully we can get to something which can be tested. The classes as they stand are pretty much coupled with the Generated/Deduce layer &ndash; well let&rsquo;s say they are related, in that there is the possibility of coupling if the design isn&rsquo;t carefully thought out, and the design isn&rsquo;t really even there yet. And I mean coupling for the sake of not having to generate mocks for their eventual tests &ndash; they of course have to use the defining classes of their environment.</p>
+<p>So I printed out these examples, and I don&rsquo;t know what was on my mind when I printed them out except that I wanted to figure out what was going on with them. And I don&rsquo;t know how I got to the point where I created E-Log. E-Log, at the current moment, is a set of logical statements &ndash; facts &ndash; about the program as it&rsquo;s understood. It&rsquo;s not complete by any means. In other words, there&rsquo;s information that is in the Deduce(Types2) layer that is not represented in the E-Log. I&rsquo;ve been jumping back and forth between the Deduce layer, namely I started with dp.generatedClasses and use GeneratedNodes, and then we kind of jump into the elements. And until I get DeduceElements all the way up and running, it looks like its going to be like that for a while. The only other place (not true &ndash; DeduceTypes2 uses plenty of OS_Elements) where I jump between the Deduce layer (meaning GeneratedNodes and its ilk) and OS_Elements is where I&rsquo;m translating the OS_Elements into GeneratedNodes, and that is GeneratedFunctions. And I was thinking that when this proof of concept gets finished or mature enough, then it can be moved over there. Maybe. Because I always want, part of my vision of the refactoring that I&rsquo;ve been talking about to get the manipulation and analysis of data as close to the access (or creation) of the data as possible, so that there is only one function (or class) that touches each piece of data. I think that in certain languages, this is the norm, and Java doesn&rsquo;t enforce that, and that why you get spaghetti code. Otherwise, maybe the code would have been much cleaner if I had chose a different paradigm. Maybe.</p>
+<p>Anyway, I have this E-Log, and a lot of the facts I generate are primitive; they don&rsquo;t represent the full knowledge of the program; and they&rsquo;re incorrect &ndash; they don&rsquo;t use the type system (and that&rsquo;s another reason to integrate it &ndash; to get it into the type system). And instead of having a monolith, which is how I created DeduceTypes2 and GenerateFunctions (and DeduceTypes 1, that came before both), I envision small, type-centered modifications or transformations (or whatever word you&rsquo;d like to use) to ensure types are correct. And E-Log is also not type correct. I want to do a type checker, but then that means I need to create a query language and execution engine taht would allow me to express what I call Conjectures. (Maybe I call individual facts predicates, or maybe the predicates are the clauses of the execution engine &ndash; this is all based on a Prolog-like imagining, and even though the syntax is different, it wouldn&rsquo;t much trouble to translate what I have into standard Prolog, especially since I am in such early days. It would be a bigger deal to find a Prolog library and see how it works, and how it integrates with Java, and integrate all that into the final product in Elijah, though at second thought I don&rsquo;t think this would be that hard. The difficulty I foresee is from it being in C (but remember I&rsquo;m not writing any C, or minimal C at the most&mldr;), which I get less and less excited about every day, even less excited than about Java, but then, what choices do you have? There&rsquo;s LLVM, and this other guy is having problems with LLVM (although I don&rsquo;t know that status of LLVM in other projects like Haskell and Rust, and he chose an early version &ndash; the API stability might be solved by now), and we know that it&rsquo;s really slow. And GCC is a beast to work with. Of course there are other languages, but it&rsquo;s not like I&rsquo;m mad about it.) The objective now is to all the facts are well formed &ndash; facts form a graph, just like the other representations of the program (in the Deduce layer especially, even if it&rsquo;s not complete). This is a project to help me reason about this graph.</p>
+<p>The reason why there is a dependency on OS_Elements is that I derived E-Log representation directly from the source of the examples, but with knowledge of what the type are supposed to be. DeduceTypes2 is supposed to provide help in the form of it&rsquo;s namesake, that is, to deduce types from the source where they are not specified in the source.</p>
+<br>
+<p class=back-to-posts><a href=https://tripleo1.github.io/blog>Back to posts</a></p>
+</div>
+<br>
+<div class=disqus>
+</div>
+</div>
+</div>
+</section>
+<script src=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/highlight.min.js></script>
+<script type=text/javascript>hljs.initHighlightingOnLoad()</script>
+</body>
+</html>

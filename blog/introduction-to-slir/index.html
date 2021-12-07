@@ -1,0 +1,99 @@
+<!doctype html><html lang=en-us>
+<head>
+<meta charset=utf-8>
+<meta http-equiv=x-ua-compatible content="chrome=1">
+<meta name=HandheldFriendly content="True">
+<meta name=MobileOptimized content="320">
+<meta name=viewport content="width=device-width,initial-scale=1">
+<meta name=referrer content="no-referrer">
+<meta name=author content="tripleo1">
+<meta name=description content="There is a branch in git I have called pull-model. What it&rsquo;s designed to do is assert the liveness of certain parts of a [set of] source code. These certain parts are classes/namespaces, functions and member variables. [What about deciding the types of specifically member variables?] It&rsquo;s not meant to work on the inside of a function (code paths and things like that). Specifically, it was created to create ClassInvocations and FunctionInvocations.">
+<meta property="og:title" content="Introduction to SLIR">
+<meta property="og:description" content="There is a branch in git I have called pull-model. What it&rsquo;s designed to do is assert the liveness of certain parts of a [set of] source code. These certain parts are classes/namespaces, functions and member variables. [What about deciding the types of specifically member variables?] It&rsquo;s not meant to work on the inside of a function (code paths and things like that). Specifically, it was created to create ClassInvocations and FunctionInvocations.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://tripleo1.github.io/blog/introduction-to-slir/"><meta property="article:section" content="blog">
+<meta property="article:published_time" content="2021-11-08T20:54:00-05:00">
+<meta property="article:modified_time" content="2021-11-08T20:54:00-05:00">
+<title>
+Introduction to SLIR
+</title>
+<link rel=canonical href=https://tripleo1.github.io/blog/introduction-to-slir/>
+<link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/styles/default.min.css>
+<link rel=stylesheet href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Ubuntu+Mono:400,400i,700,700i|Raleway:500">
+<link rel=stylesheet href="https://tripleo1.github.io/css/reset.css?t=2021-12-07%2006%3a54%3a30.721795274%20%2b0000%20UTC%20m%3d%2b0.085918125">
+<link rel=stylesheet href="https://tripleo1.github.io/css/pygments.css?t=2021-12-07%2006%3a54%3a30.721795274%20%2b0000%20UTC%20m%3d%2b0.085918125">
+<link rel=stylesheet href="https://tripleo1.github.io/css/main.css?t=2021-12-07%2006%3a54%3a30.721795274%20%2b0000%20UTC%20m%3d%2b0.085918125">
+<link rel=stylesheet href="https://tripleo1.github.io/css/override.css?t=2021-12-07%2006%3a54%3a30.721795274%20%2b0000%20UTC%20m%3d%2b0.085918125">
+<link rel="shortcut icon" href=https://tripleo1.github.io/img/zen.ico>
+</head>
+<body lang=en>
+<section class=header>
+<div class=container>
+<div class=content>
+<a href=https://tripleo1.github.io/><img class=avatar src=https://tripleo1.github.io/img/zen.png srcset="https://tripleo1.github.io/img/zen.png 1x"></a>
+<a href=https://tripleo1.github.io/><div class=name>tripleo1</div></a>
+<nav>
+<ul>
+<li class=nav-blog><a href=https://tripleo1.github.io/blog/><span>Blog</span></a></li>
+<li class=nav-about><a href=https://tripleo1.github.io/about/><span>About</span></a></li>
+<li class=nav-code><a href=https://tripleo1.github.io/code/><span>Code</span></a></li>
+<li class=nav-links><a href=https://tripleo1.github.io/links/><span>Links</span></a></li>
+</ul>
+</nav>
+</div>
+</div>
+</section>
+<section class=icons>
+<div class=container>
+<div class=content>
+<a href=//github.com/tripleo1 target=_blank rel=noopener><img class=icon src=https://tripleo1.github.io/img/github.svg alt=github></a>
+<a href=//gitlab.com/tripleo target=_blank rel=noopener><img class=icon src=https://tripleo1.github.io/img/gitlab.svg alt=gitlab></a>
+<a href=//twitter.com/tripleo_sw target=_blank rel=noopener><img class=icon src=https://tripleo1.github.io/img/twitter.svg alt=twitter></a>
+<a href=mailto:oluoluolu+blog@gmail.com><img class=icon src=https://tripleo1.github.io/img/email.svg alt=email></a>
+</div>
+</div>
+</section>
+<section class="main post non-narrow zero-top-spacing">
+<div class=container>
+<div class=content>
+<div class=front-matter>
+<div class=title-container>
+<div class=page-heading>
+Introduction to SLIR
+</div>
+<div class=initials><a href=https://tripleo1.github.io></a></div>
+</div>
+<div class=meta>
+<div class=date title="Mon Nov 8 2021 20:54:00 -0500">Nov 8, 2021</div>
+<div class=reading-time><div class=middot></div>6 minutes read</div>
+</div>
+</div>
+<div class=markdown>
+<p>There is a branch in git I have called pull-model. What it&rsquo;s designed to do is assert the liveness of certain parts of a [set of] source code. These certain parts are classes/namespaces, functions and member variables. [What about deciding the types of specifically member variables?] It&rsquo;s not meant to work on the inside of a function (code paths and things like that). Specifically, it was created to create ClassInvocations and FunctionInvocations. (As a note, FunctionInvocations existed before the creation of pull-model and ClassInvocations). pull-model was created because I ran into a problem where ClassInvocations were needed (most likely the representation of generic constructor calls) but weren&rsquo;t being created and a code reorganization was necessary.</p>
+<p>One of the problems I&rsquo;ve been having is I&rsquo;ve been working on this branch for a long time, for so long, in fact, that I created a branch called post-pull-model that focuses on things that are beyond the scope of pull-model. And the scope of pull-model was defined to be something in DeduceTypes2 that specifically created a ClassInvocation (and FunctionInvocation) everywhere it was needed.</p>
+<p>A related problem is the co-evolution of the compiler code where there is no overlap with the mandate of pull-model. (This has led me to want to create another branch call pre-post-pull-model to house changes which would fit this.) This inability to close the pull-model branch (and integrate it with post-pull-model and genericA) meant something was amiss. It was a design smell. It meant that I didn&rsquo;t have enough tests. But what to test? I didn&rsquo;t have anything that could easily be queried. This led to the creation of a methodology (or framework, you choose) to test pull-model called SLIR. SLIR stands for Source Level Internal Representation. What it does is it records the liveness of nodes or elements or whatever the proper term is. A Node is created by the Deduce layer, and you&rsquo;ll find them in GeneratedClass, GeneratedFunction and GeneratedNamespace. By Node, I also mean the DeferredMembers that represent member variables (which haven&rsquo;t been deduced yet.) By Element, I mean an [Java level] object that points back to the programmer&rsquo;s original source, basically an AST Node.</p>
+<p>&ndash;</p>
+<p>pull-model is likely going to have to be extended to expressions becauase live expressions eventually point to an element, (think IdentExpression or StatementWrapper over an ProcedureCallExpression), whether that element is directly in the source or virtual (created by the compiler).</p>
+<p>Right now, I just have an outline of what we&rsquo;ll call nodes that are live, and it&rsquo;s actually not complete because I did not put in the dependencies of Prelude.println. Also, one interesting thing is I have a not-live node (on paper), and I don&rsquo;t know how to represent that.</p>
+<p>So, let&rsquo;s go into the code that I have right now. There is a root node, then there&rsquo;s SourceFiles. One thing about the RootNode is here it&rsquo;s attached to a compilation, so I think it&rsquo;s obvious that the compilation is going to play a big part in the discovery of these nodes. You go into the compilation and you select a module by iteration or by knowing the SourceNode that you need. Or maybe you could just pick it up by the element (or maybe even an expression).</p>
+<p>A question is where does this go in the compiler code? Do I attach one of these SlirNodes to each element and each expression? As much as I don&rsquo;t want to change those interfaces, maybe that&rsquo;s the best way&mldr; But look at everything done with DeduceTypes2 and GenereateFunctions and those two don&rsquo;t modify what I&rsquo;m calling the parse tree. So that&rsquo;s why I say with Compilation or Module (SourceNode), maybe we could have a hash table or something like that, or maybe even a mirror hierarchy. A lot to think about.</p>
+<p>So we have the RootNode and we have the SourceFile, and right now it&rsquo;s not connected to the module, and then we have the SourceNode, which at some level, represents the module. They are not connected at this point, but they probably will be at some point int the future.</p>
+<p>One of the problems &ndash; a design goal &ndash; is the query language. How do I find out whether something is live or not? And that&rsquo;s not represented now in the test. What is represented is just the building up of these data structures, and I have 3 TODOs. 1) &ldquo;Finish function&rdquo;, because I haven&rsquo;t translated everything I have on paper to code. 2) &ldquo;Refactor the sources&rdquo;. This is attaching SLIR into the code, and maybe that&rsquo;s solved by SourceNode or maybe it is solved by extending those 2 classes OS_Element and IExpression. Or maybe, it can be attached in the Deduce layer, where it&rsquo;s likely alot of the information for this will be coming from. A related design goal I have is for the parse tree &ndash; it should be completely immutable after creation. So, after the parse stage (or phase) is finished, that&rsquo;s it &ndash; it stays like it is. Something else is, once I integrate post-pull-model, I want to rip out types from IExpression, because that&rsquo;s not being used &ndash; a relic of DeduceTypes 1, and DeduceTypes2 has it&rsquo;s own way to represent the types it finds.</p>
+<p>One benefit to integration is it&rsquo;s going to create all of this information &ldquo;automatically&rdquo; (with greater ease that me typing all this stuff out), or at least that&rsquo;s the hope. So I wanted to decide on an API and hope I get it right the first time. And of course you have to add asserts (that&rsquo;s TODO #3). After &ldquo;finish function&rdquo; that&rsquo;s the second thing I&rsquo;ll likely do, and I&rsquo;ll refactor to sources a little later, after I add the asserts for the queries, making sure that everything that&rsquo;s supposed to be live is live. And this will show that pull-model is working.</p>
+<p>Now the funny thing about all this is that, in my mind at least, is that SLIR has no connection to either ClassInstantiation or FunctionInvocation. (ClassInvocation is really supposed to be ClassInstantiation and ClassInvocation, ie: two separate classes but I have left them as only one in the curernt source as there is no real semantic (??) demand to keep them separate. One is meant to represent the calling of a constructor and one is meant to represent the creation of an instance of a type, a nuanced distinction, but one that has presented no problems in the compiler source as of yet.)</p>
+<p>&ndash;</p>
+<p>After adding assertions and a query language, where do you stop? Do you stop right there or do you do ahead and manually test some of the other files (or all of them). Of course, that&rsquo;s what tests are for. This requires alot ot trial and error. It&rsquo;s not really a problem, it just seems like alot of typing to do, especially if you get all greens on the first go, because it means you did all that typing for nothing. But then again, that&rsquo;s what tests are for &ndash; to get greens.</p>
+<p>Beyond that, there&rsquo;s usages and the parts of the nodes that we have to check, for example in an import statement. We are testing what we are using from each one of those imports. Just like we test what is being used from each one of those types. And then this extends down into conditionals like matches as well, so how can we test that? This is a question for when SLIR is more mature and develops a code path analysis function.</p>
+<br>
+<p class=back-to-posts><a href=https://tripleo1.github.io/blog>Back to posts</a></p>
+</div>
+<br>
+<div class=disqus>
+</div>
+</div>
+</div>
+</section>
+<script src=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/highlight.min.js></script>
+<script type=text/javascript>hljs.initHighlightingOnLoad()</script>
+</body>
+</html>
