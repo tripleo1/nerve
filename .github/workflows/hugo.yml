@@ -1,4 +1,4 @@
-name: github pages
+name: build and deploy with hugo to github pages
 
 on:
   push:

@@ -8,7 +8,7 @@ title: Code
 
 Elijah
 
-* [Project](https://gitlab.com/elijah-team/elijah-lang/)
+* [Project](https://github.com/elijah-team/fluffy-umbrella/)
 * [The Elijah Book](https://tripleo1.github.io/elijjah-book/)
 * [Documentation on Gitlab](https://elijah-team.gitlab.io/elijah-lang/)
 * [Programming with Elijah](https://elijah-team.github.io/programming-with-elijah/)
