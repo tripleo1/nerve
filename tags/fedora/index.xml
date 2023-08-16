@@ -10,5 +10,5 @@ sudo setenforce 0 Start container:</description></item><item><title>Fedora Atomi
 On another pc or vm I load installation media and in main menu hit Esc. To tell installer where ks.cfg is I must declare it and as it available on network I must assign IP address too:</description></item><item><title>Running GUI applications in LXD on Fedora 26</title><link>https://tripleo1.github.io/blog-repressed/lxd-gui/</link><pubDate>Wed, 20 Sep 2017 12:28:27 +0300</pubDate><guid>https://tripleo1.github.io/blog-repressed/lxd-gui/</guid><description>Create container:
 [tripleo1@fedora ~]$ lxc launch images:debian/stretch chrome Install needed tools:
 [tripleo1@fedora ~]$ lxc exec chrome bash root@chrome:~# adduser tripleo1 root@chrome:~# apt update root@chrome:~# apt install x11-apps mesa-utils alsa-utils Map UID and GID ramges:
-[tripleo1@fedora ~]$ echo &amp;quot;root:1000:1&amp;quot; | sudo tee -a /etc/subuid /etc/subgid Set UID/GUID ranges for container:
-[tripleo1@fedora ~]$ lxc config set chrome raw.idmap &amp;quot;both $UID 1000&amp;quot; [tripleo1@fedora ~]$ lxc restart chrome Mount X11 socket and .Xauthority file:</description></item></channel></rss>
+[tripleo1@fedora ~]$ echo &amp;#34;root:1000:1&amp;#34; | sudo tee -a /etc/subuid /etc/subgid Set UID/GUID ranges for container:
+[tripleo1@fedora ~]$ lxc config set chrome raw.idmap &amp;#34;both $UID 1000&amp;#34; [tripleo1@fedora ~]$ lxc restart chrome Mount X11 socket and .Xauthority file:</description></item></channel></rss>

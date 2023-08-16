@@ -1,125 +1,39 @@
-<!doctype html><html lang=en-us>
-<head>
-<meta charset=utf-8>
-<meta http-equiv=x-ua-compatible content="chrome=1">
-<meta name=HandheldFriendly content="True">
-<meta name=MobileOptimized content="320">
-<meta name=viewport content="width=device-width,initial-scale=1">
-<meta name=referrer content="no-referrer">
-<meta name=author content="tripleo1">
-<meta name=description content="First thing to do is update our system:  root@asterisk:~# apt update root@asterisk:~# apt upgrade root@asterisk:~# reboot Download sources:  root@asterisk:~# cd /usr/src root@asterisk:/usr/src# wget https://downloads.asterisk.org/pub/telephony/asterisk/asterisk-14-current.tar.gz root@asterisk:/usr/src# wget https://downloads.asterisk.org/pub/telephony/libpri/libpri-current.tar.gz root@asterisk:/usr/src# wget https://downloads.asterisk.org/pub/telephony/dahdi-linux-complete/dahdi-linux-complete-current.tar.gz Install build tools:  root@asterisk:/usr/src# apt install build-essential wget libssl-dev libncurses5-dev libnewt-dev libxml2-dev linux-headers-$(uname -r) libsqlite3-dev uuid-dev libjansson-dev Extract the files from the tarballs:  root@asterisk:/usr/src# tar xvf asterisk-13-current.tar.gz root@asterisk:/usr/src# tar xvf libpri-current.tar.gz root@asterisk:/usr/src# tar xvf dahdi-linux-complete-current.tar.gz Install DAHDI:  root@asterisk:/usr/src/dahdi-linux-complete-2.">
-<meta property="og:title" content="Installation Asterisk 13 on Ubuntu 16.04">
-<meta property="og:description" content="First thing to do is update our system:  root@asterisk:~# apt update root@asterisk:~# apt upgrade root@asterisk:~# reboot Download sources:  root@asterisk:~# cd /usr/src root@asterisk:/usr/src# wget https://downloads.asterisk.org/pub/telephony/asterisk/asterisk-14-current.tar.gz root@asterisk:/usr/src# wget https://downloads.asterisk.org/pub/telephony/libpri/libpri-current.tar.gz root@asterisk:/usr/src# wget https://downloads.asterisk.org/pub/telephony/dahdi-linux-complete/dahdi-linux-complete-current.tar.gz Install build tools:  root@asterisk:/usr/src# apt install build-essential wget libssl-dev libncurses5-dev libnewt-dev libxml2-dev linux-headers-$(uname -r) libsqlite3-dev uuid-dev libjansson-dev Extract the files from the tarballs:  root@asterisk:/usr/src# tar xvf asterisk-13-current.tar.gz root@asterisk:/usr/src# tar xvf libpri-current.tar.gz root@asterisk:/usr/src# tar xvf dahdi-linux-complete-current.tar.gz Install DAHDI:  root@asterisk:/usr/src/dahdi-linux-complete-2.">
-<meta property="og:type" content="article">
-<meta property="og:url" content="https://tripleo1.github.io/blog-repressed/asterisk/"><meta property="article:section" content="blog-repressed">
-<meta property="article:published_time" content="2017-10-25T12:35:22+03:00">
-<meta property="article:modified_time" content="2017-10-25T12:35:22+03:00">
-<title>
-Installation Asterisk 13 on Ubuntu 16.04
-</title>
-<link rel=canonical href=https://tripleo1.github.io/blog-repressed/asterisk/>
-<link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/styles/default.min.css>
-<link rel=stylesheet href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Ubuntu+Mono:400,400i,700,700i|Raleway:500">
-<link rel=stylesheet href="https://tripleo1.github.io/css/reset.css?t=2021-12-07%2006%3a54%3a30.682917946%20%2b0000%20UTC%20m%3d%2b0.047040797">
-<link rel=stylesheet href="https://tripleo1.github.io/css/pygments.css?t=2021-12-07%2006%3a54%3a30.682917946%20%2b0000%20UTC%20m%3d%2b0.047040797">
-<link rel=stylesheet href="https://tripleo1.github.io/css/main.css?t=2021-12-07%2006%3a54%3a30.682917946%20%2b0000%20UTC%20m%3d%2b0.047040797">
-<link rel=stylesheet href="https://tripleo1.github.io/css/override.css?t=2021-12-07%2006%3a54%3a30.682917946%20%2b0000%20UTC%20m%3d%2b0.047040797">
-<link rel="shortcut icon" href=https://tripleo1.github.io/img/zen.ico>
-</head>
-<body lang=en>
-<section class=header>
-<div class=container>
-<div class=content>
-<a href=https://tripleo1.github.io/><img class=avatar src=https://tripleo1.github.io/img/zen.png srcset="https://tripleo1.github.io/img/zen.png 1x"></a>
-<a href=https://tripleo1.github.io/><div class=name>tripleo1</div></a>
-<nav>
-<ul>
-<li class=nav-blog><a href=https://tripleo1.github.io/blog/><span>Blog</span></a></li>
-<li class=nav-about><a href=https://tripleo1.github.io/about/><span>About</span></a></li>
-<li class=nav-code><a href=https://tripleo1.github.io/code/><span>Code</span></a></li>
-<li class=nav-links><a href=https://tripleo1.github.io/links/><span>Links</span></a></li>
-</ul>
-</nav>
-</div>
-</div>
-</section>
-<section class=icons>
-<div class=container>
-<div class=content>
-<a href=//github.com/tripleo1 target=_blank rel=noopener><img class=icon src=https://tripleo1.github.io/img/github.svg alt=github></a>
-<a href=//gitlab.com/tripleo target=_blank rel=noopener><img class=icon src=https://tripleo1.github.io/img/gitlab.svg alt=gitlab></a>
+<!doctype html><html lang=en-US><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="chrome=1"><meta name=HandheldFriendly content="True"><meta name=MobileOptimized content="320"><meta name=viewport content="width=device-width,initial-scale=1"><meta name=referrer content="no-referrer"><meta name=author content="tripleo1"><meta name=description content="First thing to do is update our system: root@asterisk:~# apt update root@asterisk:~# apt upgrade root@asterisk:~# reboot Download sources: root@asterisk:~# cd /usr/src root@asterisk:/usr/src# wget https://downloads.asterisk.org/pub/telephony/asterisk/asterisk-14-current.tar.gz root@asterisk:/usr/src# wget https://downloads.asterisk.org/pub/telephony/libpri/libpri-current.tar.gz root@asterisk:/usr/src# wget https://downloads.asterisk.org/pub/telephony/dahdi-linux-complete/dahdi-linux-complete-current.tar.gz Install build tools: root@asterisk:/usr/src# apt install build-essential wget libssl-dev libncurses5-dev libnewt-dev libxml2-dev linux-headers-$(uname -r) libsqlite3-dev uuid-dev libjansson-dev Extract the files from the tarballs: root@asterisk:/usr/src# tar xvf asterisk-13-current.tar.gz root@asterisk:/usr/src# tar xvf libpri-current.tar.gz root@asterisk:/usr/src# tar xvf dahdi-linux-complete-current.tar.gz Install DAHDI: root@asterisk:/usr/src/dahdi-linux-complete-2.11.1+2.11.1# root@asterisk:/usr/src/dahdi-linux-complete-2.11.1+2.11.1# make root@asterisk:/usr/src/dahdi-linux-complete-2."><meta property="og:title" content="Installation Asterisk 13 on Ubuntu 16.04"><meta property="og:description" content="First thing to do is update our system: root@asterisk:~# apt update root@asterisk:~# apt upgrade root@asterisk:~# reboot Download sources: root@asterisk:~# cd /usr/src root@asterisk:/usr/src# wget https://downloads.asterisk.org/pub/telephony/asterisk/asterisk-14-current.tar.gz root@asterisk:/usr/src# wget https://downloads.asterisk.org/pub/telephony/libpri/libpri-current.tar.gz root@asterisk:/usr/src# wget https://downloads.asterisk.org/pub/telephony/dahdi-linux-complete/dahdi-linux-complete-current.tar.gz Install build tools: root@asterisk:/usr/src# apt install build-essential wget libssl-dev libncurses5-dev libnewt-dev libxml2-dev linux-headers-$(uname -r) libsqlite3-dev uuid-dev libjansson-dev Extract the files from the tarballs: root@asterisk:/usr/src# tar xvf asterisk-13-current.tar.gz root@asterisk:/usr/src# tar xvf libpri-current.tar.gz root@asterisk:/usr/src# tar xvf dahdi-linux-complete-current.tar.gz Install DAHDI: root@asterisk:/usr/src/dahdi-linux-complete-2.11.1+2.11.1# root@asterisk:/usr/src/dahdi-linux-complete-2.11.1+2.11.1# make root@asterisk:/usr/src/dahdi-linux-complete-2."><meta property="og:type" content="article"><meta property="og:url" content="https://tripleo1.github.io/blog-repressed/asterisk/"><meta property="article:section" content="blog-repressed"><meta property="article:published_time" content="2017-10-25T12:35:22+03:00"><meta property="article:modified_time" content="2017-10-25T12:35:22+03:00"><title>Installation Asterisk 13 on Ubuntu 16.04</title><link rel=canonical href=https://tripleo1.github.io/blog-repressed/asterisk/><link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/styles/default.min.css><link rel=stylesheet href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Ubuntu+Mono:400,400i,700,700i|Raleway:500"><link rel=stylesheet href="https://tripleo1.github.io/css/reset.css?t=2023-08-16%2019%3a02%3a07.096987266%20%2b0000%20UTC%20m%3d%2b0.090125827"><link rel=stylesheet href="https://tripleo1.github.io/css/pygments.css?t=2023-08-16%2019%3a02%3a07.096987266%20%2b0000%20UTC%20m%3d%2b0.090125827"><link rel=stylesheet href="https://tripleo1.github.io/css/main.css?t=2023-08-16%2019%3a02%3a07.096987266%20%2b0000%20UTC%20m%3d%2b0.090125827"><link rel=stylesheet href="https://tripleo1.github.io/css/override.css?t=2023-08-16%2019%3a02%3a07.096987266%20%2b0000%20UTC%20m%3d%2b0.090125827"><link rel="shortcut icon" href=https://tripleo1.github.io/img/zen.ico></head><body lang=en><section class=header><div class=container><div class=content><a href=https://tripleo1.github.io/><img class=avatar src=https://tripleo1.github.io/img/zen.png alt=avatar srcset="https://tripleo1.github.io/img/zen.png 1x"></a>
+<a href=https://tripleo1.github.io/><div class=name>tripleo1</div></a><nav><ul><li class=nav-blog><a href=https://tripleo1.github.io/blog/><span>Blog</span></a></li><li class=nav-about><a href=https://tripleo1.github.io/about/><span>About</span></a></li><li class=nav-code><a href=https://tripleo1.github.io/code/><span>Code</span></a></li><li class=nav-links><a href=https://tripleo1.github.io/links/><span>Links</span></a></li></ul></nav></div></div></section><section class=icons><div class=container><div class=content><a href=//github.com/tripleo1 target=_blank rel=noopener><img class=icon src=https://tripleo1.github.io/img/github.svg alt=github></a>
 <a href=//twitter.com/tripleo_sw target=_blank rel=noopener><img class=icon src=https://tripleo1.github.io/img/twitter.svg alt=twitter></a>
-<a href=mailto:oluoluolu+blog@gmail.com><img class=icon src=https://tripleo1.github.io/img/email.svg alt=email></a>
-</div>
-</div>
-</section>
-<section class=main>
-<div class=container>
-<div class=content>
-<div class=page-heading>
-Installation Asterisk 13 on Ubuntu 16.04
-</div>
-<div class=markdown>
-<ol>
-<li>First thing to do is update our system:</li>
-</ol>
-<pre tabindex=0><code>root@asterisk:~# apt update
+<a href=mailto:oluoluolu+blog@gmail.com><img class=icon src=https://tripleo1.github.io/img/email.svg alt=email></a></div></div></section><section class=main><div class=container><div class=content><div class=page-heading>Installation Asterisk 13 on Ubuntu 16.04</div><div class=markdown><ol><li>First thing to do is update our system:</li></ol><pre tabindex=0><code>root@asterisk:~# apt update
 root@asterisk:~# apt upgrade
 root@asterisk:~# reboot
-</code></pre><ol start=2>
-<li>Download sources:</li>
-</ol>
-<pre tabindex=0><code>root@asterisk:~# cd /usr/src
+</code></pre><ol start=2><li>Download sources:</li></ol><pre tabindex=0><code>root@asterisk:~# cd /usr/src
 root@asterisk:/usr/src# wget https://downloads.asterisk.org/pub/telephony/asterisk/asterisk-14-current.tar.gz
 root@asterisk:/usr/src# wget https://downloads.asterisk.org/pub/telephony/libpri/libpri-current.tar.gz
 root@asterisk:/usr/src# wget https://downloads.asterisk.org/pub/telephony/dahdi-linux-complete/dahdi-linux-complete-current.tar.gz
-</code></pre><ol start=3>
-<li>Install build tools:</li>
-</ol>
-<pre tabindex=0><code>root@asterisk:/usr/src# apt install build-essential wget libssl-dev libncurses5-dev libnewt-dev  libxml2-dev linux-headers-$(uname -r) libsqlite3-dev uuid-dev libjansson-dev
-</code></pre><ol start=4>
-<li>Extract the files from the tarballs:</li>
-</ol>
-<pre tabindex=0><code>root@asterisk:/usr/src# tar xvf asterisk-13-current.tar.gz
+</code></pre><ol start=3><li>Install build tools:</li></ol><pre tabindex=0><code>root@asterisk:/usr/src# apt install build-essential wget libssl-dev libncurses5-dev libnewt-dev  libxml2-dev linux-headers-$(uname -r) libsqlite3-dev uuid-dev libjansson-dev
+</code></pre><ol start=4><li>Extract the files from the tarballs:</li></ol><pre tabindex=0><code>root@asterisk:/usr/src# tar xvf asterisk-13-current.tar.gz
 root@asterisk:/usr/src# tar xvf libpri-current.tar.gz
 root@asterisk:/usr/src# tar xvf dahdi-linux-complete-current.tar.gz
-</code></pre><ol start=5>
-<li>Install <strong>DAHDI</strong>:</li>
-</ol>
-<pre tabindex=0><code>root@asterisk:/usr/src/dahdi-linux-complete-2.11.1+2.11.1# 
+</code></pre><ol start=5><li>Install <strong>DAHDI</strong>:</li></ol><pre tabindex=0><code>root@asterisk:/usr/src/dahdi-linux-complete-2.11.1+2.11.1# 
 root@asterisk:/usr/src/dahdi-linux-complete-2.11.1+2.11.1# make
 root@asterisk:/usr/src/dahdi-linux-complete-2.11.1+2.11.1# make install
 root@asterisk:/usr/src/dahdi-linux-complete-2.11.1+2.11.1# make config
-</code></pre><ol start=6>
-<li>Install <strong>libpri</strong>:</li>
-</ol>
-<pre tabindex=0><code>root@asterisk:/usr/src# cd libpri-1.6.0/
+</code></pre><ol start=6><li>Install <strong>libpri</strong>:</li></ol><pre tabindex=0><code>root@asterisk:/usr/src# cd libpri-1.6.0/
 root@asterisk:/usr/src/libpri-1.6.0# make
 root@asterisk:/usr/src/libpri-1.6.0# make install
-</code></pre><ol start=7>
-<li>Install <strong>Asterisk</strong>:</li>
-</ol>
-<pre tabindex=0><code>root@asterisk:/usr/src# cd asterisk-13.17.2/
+</code></pre><ol start=7><li>Install <strong>Asterisk</strong>:</li></ol><pre tabindex=0><code>root@asterisk:/usr/src# cd asterisk-13.17.2/
 root@asterisk:/usr/src/asterisk-13.17.2# ./configure
 root@asterisk:/usr/src/asterisk-13.17.2# make menuselect 
 root@asterisk:/usr/src/asterisk-13.17.2# make
 root@asterisk:/usr/src/asterisk-13.17.2# make install
 root@asterisk:/usr/src/asterisk-13.17.2# make samples
 root@asterisk:/usr/src/asterisk-13.17.2# make config
-</code></pre><ol start=8>
-<li>Start <strong>DAHDI</strong> and <strong>Asterisk</strong>:</li>
-</ol>
-<pre tabindex=0><code>root@asterisk:/usr/src/asterisk-13.17.2# systemctl start asterisk
-</code></pre><ol start=9>
-<li>Check results:</li>
-</ol>
-<pre tabindex=0><code>root@asterisk:/usr/src/asterisk-13.17.2# asterisk -rvvv
+</code></pre><ol start=8><li>Start <strong>DAHDI</strong> and <strong>Asterisk</strong>:</li></ol><pre tabindex=0><code>root@asterisk:/usr/src/asterisk-13.17.2# systemctl start asterisk
+</code></pre><ol start=9><li>Check results:</li></ol><pre tabindex=0><code>root@asterisk:/usr/src/asterisk-13.17.2# asterisk -rvvv
 Asterisk 13.17.2, Copyright (C) 1999 - 2014, Digium, Inc. and others.
 Created by Mark Spencer &lt;markster@digium.com&gt;
-Asterisk comes with ABSOLUTELY NO WARRANTY; type 'core show warranty' for details.
+Asterisk comes with ABSOLUTELY NO WARRANTY; type &#39;core show warranty&#39; for details.
 This is free software, with components licensed under the GNU General Public
 License version 2 and other licenses; you are welcome to redistribute it under
-certain conditions. Type 'core show license' for details.
+certain conditions. Type &#39;core show license&#39; for details.
 =========================================================================
 Connected to Asterisk 13.17.2 currently running on asterisk (pid = 7007)
 asterisk*CLI&gt; dahdi show version
@@ -127,12 +41,5 @@ DAHDI Version: 2.6.1 Echo Canceller: HWEC
 asterisk*CLI&gt; pri show version
 libpri version: 1.6.0
 asterisk*CLI&gt; 
-</code></pre><hr>
-</div>
-</div>
-</div>
-</section>
-<script src=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/highlight.min.js></script>
-<script type=text/javascript>hljs.initHighlightingOnLoad()</script>
-</body>
-</html>
+</code></pre><hr></div></div></div></section><script src=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/highlight.min.js></script>
+<script type=text/javascript>hljs.initHighlightingOnLoad()</script></body></html>
