@@ -1,8 +1,11 @@
 # Cocoa
 
+**NOTE:** I don't actively work on this theme now. Pull requests for bug fixes or new features are welcome however.
+Before working on a substantial change, please discuss it in an issue. Thanks. :)
+
 A consistent and responsive [Hugo](https://gohugo.io) [theme](https://github.com/spf13/hugoThemes/) with clean typography. The primary typefaces are Open Sans, Raleway, and Ubuntu Mono.
 
-[__Demo__](https://themes.gohugo.io/theme/cocoa/) / [__Screenshots__](https://github.com/nishanths/cocoa-hugo-theme/blob/master/screenshots.md)
+[__Demo__](https://cocoa-hugo-theme-demo.netlify.app/) / [__Screenshots__](https://github.com/nishanths/cocoa-hugo-theme/blob/master/screenshots.md)
 
 ## Features
 
@@ -68,9 +71,9 @@ hugo new fixed/about.md
 
 ## Development
 
-This theme is built and improved upon by open source [contributions](https://github.com/nishanths/cocoa-hugo-theme/graphs/contributors). Pull requests, bug fixes, and new features are welcome!
-
-If you're contributing CSS changes, please see the README at [`dev/`](dev).
+This theme is built and improved upon by open source
+[contributions](https://github.com/nishanths/cocoa-hugo-theme/graphs/contributors).
+Pull requests, bug fixes, and new features are welcome!
 
 ## License
 
