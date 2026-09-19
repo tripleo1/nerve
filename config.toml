@@ -1,4 +1,4 @@
-baseurl             = "https://tripleo1.github.io/nerve/"
+baseurl             = "https://tripleo1.github.io/"
 builddrafts         = false
 canonifyurls        = true
 contentdir          = "content"
@@ -15,7 +15,7 @@ pluralizelisttitles = false
 #googleAnalytics     = "UA-123-45"
 
 [permalinks]
-blog  = "blog/:slug/"
+blog  = "nerve/:slug/"
 
 [[menu.main]]
 name                   = "Blog"
