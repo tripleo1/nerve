@@ -1,4 +1,4 @@
-baseurl             = "https://tripleo1.github.io"
+baseurl             = "https://tripleo1.github.io/nerve/"
 builddrafts         = false
 canonifyurls        = true
 contentdir          = "content"
