@@ -3,7 +3,7 @@ builddrafts         = false
 canonifyurls        = true
 contentdir          = "content"
 languageCode        = "en-US"
-layoutdir           = "layouts"
+layoutdir           = "layouts" 
 publishdir          = "public"
 #theme               = "cocoa"
 theme = "vex"
@@ -61,7 +61,7 @@ lang                   = "en"
 #linkedin               = "//linkedin.com/in/tripleo1"
 noshowreadtime         = false                         # if true, don't show "<x> minutes read" in posts
 selfintro              = ""                            # appears in the site header when set to a non-empty string
-twitter                = "//twitter.com/tripleo_sw"
+#twitter                = "//twitter.com/tripleo_sw"
 #mastodon               = "//mastodon.social/@tripleo1"
 
 highlightjs            = true
